@@ -1,0 +1,54 @@
+{"ts":"2026-06-27T13:53:34.979Z","cmd":"goto","args":"https://landonorris.com/","origin":"https://landonorris.com/","durationMs":2783,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T13:53:38.662Z","cmd":"screenshot","args":"/tmp/ln1.png","origin":"https://landonorris.com/","durationMs":595,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T13:53:46.311Z","cmd":"viewport","args":"1440x900","origin":"https://landonorris.com/","durationMs":37,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T13:53:46.442Z","cmd":"screenshot","args":"/tmp/ln2.png --clip 0,0,1440,900","origin":"https://landonorris.com/","durationMs":64,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T13:53:58.617Z","cmd":"screenshot","args":"/tmp/ln3.png --clip 0,0,1440,900","origin":"https://landonorris.com/","durationMs":44,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:06:43.252Z","cmd":"viewport","args":"1440x900","origin":"https://landonorris.com/","durationMs":6,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:06:44.448Z","cmd":"goto","args":"https://qiaooli.com/","origin":"https://qiaooli.com/","durationMs":1125,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:06:47.664Z","cmd":"screenshot","args":"/tmp/q1.png --clip 0,0,1440,900","origin":"https://qiaooli.com/","durationMs":114,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:08:00.162Z","cmd":"goto","args":"https://www.mprez.fr/","origin":"https://www.mprez.fr/","durationMs":1919,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:08:03.679Z","cmd":"screenshot","args":"/tmp/m1.png --clip 0,0,1440,900","origin":"https://www.mprez.fr/","durationMs":286,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:08:14.017Z","cmd":"goto","args":"https://terminal-industries.com/","origin":"https://terminal-industries.com/","durationMs":2948,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T14:08:17.221Z","cmd":"screenshot","args":"/tmp/t1.png --clip 0,0,1440,900","origin":"https://terminal-industries.com/","durationMs":75,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T16:50:40.359Z","cmd":"viewport","args":"1440x900","origin":"about:blank","durationMs":6,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T16:50:42.302Z","cmd":"goto","args":"https://landonorris.com/","origin":"https://landonorris.com/","durationMs":1869,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T16:50:47.469Z","cmd":"screenshot","args":"/tmp/ln_hero.png --clip 0,0,1440,900","origin":"https://landonorris.com/","durationMs":59,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T16:50:48.708Z","cmd":"goto","args":"https://qiaooli.com/","origin":"https://qiaooli.com/","durationMs":1175,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T16:50:51.884Z","cmd":"screenshot","args":"/tmp/qi_hero.png --clip 0,0,1440,900","origin":"https://qiaooli.com/","durationMs":88,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:27.211Z","cmd":"goto","args":"https://cherchesusan.com/en/","origin":"https://cherchesusan.com/en/","durationMs":3383,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:30.679Z","cmd":"screenshot","args":"/tmp/cherche-hero.png","origin":"https://cherchesusan.com/en/","durationMs":268,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:40.230Z","cmd":"viewport","args":"1440x900","origin":"https://cherchesusan.com/en/","durationMs":15,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:41.753Z","cmd":"goto","args":"https://cherchesusan.com/en/","origin":"https://cherchesusan.com/en/","durationMs":1458,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:44.063Z","cmd":"screenshot","args":"/tmp/cherche-1.png","origin":"https://cherchesusan.com/en/","durationMs":242,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:44.123Z","cmd":"scroll","args":"","origin":"https://cherchesusan.com/en/","durationMs":2,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:45.387Z","cmd":"screenshot","args":"/tmp/cherche-2.png","origin":"https://cherchesusan.com/en/","durationMs":168,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:25:59.602Z","cmd":"viewport","args":"1440x900","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:00.298Z","cmd":"goto","args":"https://cherchesusan.com/en/","origin":"https://cherchesusan.com/en/","durationMs":621,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:02.585Z","cmd":"screenshot","args":"/tmp/cherche-hero.png --clip 0,0,1440,900","origin":"https://cherchesusan.com/en/","durationMs":102,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:02.656Z","cmd":"text","args":"","origin":"https://cherchesusan.com/en/","durationMs":11,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:16.793Z","cmd":"js","args":"window.scrollTo(0, 900)","origin":"https://cherchesusan.com/en/","durationMs":3,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:17.924Z","cmd":"screenshot","args":"/tmp/cherche-s2.png --clip 0,0,1440,900","origin":"https://cherchesusan.com/en/","durationMs":38,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:17.982Z","cmd":"js","args":"window.scrollTo(0, 1800)","origin":"https://cherchesusan.com/en/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:19.072Z","cmd":"screenshot","args":"/tmp/cherche-s3.png --clip 0,0,1440,900","origin":"https://cherchesusan.com/en/","durationMs":19,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:30.556Z","cmd":"js","args":"window.scrollTo(0,0)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:31.641Z","cmd":"js","args":"window.scrollTo(0,300)","origin":"https://cherchesusan.com/en/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:32.115Z","cmd":"js","args":"window.scrollTo(0,600)","origin":"https://cherchesusan.com/en/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:32.582Z","cmd":"js","args":"window.scrollTo(0,900)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:33.051Z","cmd":"js","args":"window.scrollTo(0,1200)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:33.519Z","cmd":"js","args":"window.scrollTo(0,1500)","origin":"https://cherchesusan.com/en/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:34.011Z","cmd":"js","args":"window.scrollTo(0,1800)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:34.486Z","cmd":"js","args":"window.scrollTo(0,2200)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:34.960Z","cmd":"js","args":"window.scrollTo(0,2600)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:35.436Z","cmd":"js","args":"window.scrollTo(0,3000)","origin":"https://cherchesusan.com/en/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:37.457Z","cmd":"screenshot","args":"/tmp/cherche-mid.png --clip 0,0,1440,900","origin":"https://cherchesusan.com/en/","durationMs":25,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:37.514Z","cmd":"js","args":"window.scrollTo(0,2200)","origin":"https://cherchesusan.com/en/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-06-27T17:26:38.625Z","cmd":"screenshot","args":"/tmp/cherche-s4.png --clip 0,0,1440,900","origin":"https://cherchesusan.com/en/","durationMs":33,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-01T17:35:47.076Z","cmd":"goto","args":"https://ops.aarna.rjglobalgroup.in","origin":"https://ops.aarna.rjglobalgroup.in/","durationMs":825,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-01T17:35:47.647Z","cmd":"console","args":"","origin":"https://ops.aarna.rjglobalgroup.in/","durationMs":17,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-01T17:35:48.438Z","cmd":"network","args":"","origin":"https://ops.aarna.rjglobalgroup.in/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-02T12:44:15.298Z","cmd":"goto","args":"https://aarna.rjglobalgroup.in/","origin":"https://aarna.rjglobalgroup.in/","durationMs":2509,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-02T12:44:16.036Z","cmd":"screenshot","args":"/tmp/aarna-home.png","origin":"https://aarna.rjglobalgroup.in/","durationMs":517,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-02T12:44:26.494Z","cmd":"viewport","args":"1440x900","origin":"https://aarna.rjglobalgroup.in/","durationMs":14,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-02T12:44:26.899Z","cmd":"goto","args":"https://aarna.rjglobalgroup.in/","origin":"https://aarna.rjglobalgroup.in/","durationMs":286,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-02T12:44:30.525Z","cmd":"prettyscreenshot","args":"--width 1440 /tmp/aarna-viewport.png","origin":"https://aarna.rjglobalgroup.in/","durationMs":524,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-02T12:44:30.602Z","cmd":"text","args":"","origin":"https://aarna.rjglobalgroup.in/","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}

@@ -1,0 +1,86 @@
+<h2>Which design direction speaks to you?</h2>
+<p class="subtitle">Three distinct approaches — all Apple-level in execution. Pick the one that feels most like <em>you</em>.</p>
+
+<div class="cards">
+
+  <!-- DIRECTION A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000; padding:24px; font-family:-apple-system,sans-serif; min-height:220px; display:flex; flex-direction:column; justify-content:flex-end; position:relative; overflow:hidden;">
+      <!-- Simulated cinematic dark -->
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#000 0%,#0a0a1a 50%,#000 100%);"></div>
+      <div style="position:absolute;top:18px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;z-index:2;">
+        <span style="color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:.15em;text-transform:uppercase;">Rohan RJ</span>
+        <div style="display:flex;gap:16px;">
+          <span style="color:rgba(255,255,255,0.25);font-size:10px;">Work</span>
+          <span style="color:rgba(255,255,255,0.25);font-size:10px;">About</span>
+        </div>
+      </div>
+      <div style="position:relative;z-index:2;padding-bottom:8px;">
+        <div style="font-size:9px;letter-spacing:.2em;color:#2563EB;text-transform:uppercase;margin-bottom:10px;">↓ Scroll</div>
+        <div style="font-size:36px;font-weight:700;color:#fff;line-height:1;letter-spacing:-1px;">I build<br><span style="color:#2563EB;">systems.</span></div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;letter-spacing:.04em;">Revenue · AI · Operations</div>
+      </div>
+      <!-- Particle dots -->
+      <div style="position:absolute;top:50px;right:30px;width:60px;height:60px;z-index:1;">
+        <div style="width:3px;height:3px;background:rgba(37,99,235,.4);border-radius:50%;position:absolute;top:0;left:20px;"></div>
+        <div style="width:2px;height:2px;background:rgba(37,99,235,.25);border-radius:50%;position:absolute;top:15px;left:40px;"></div>
+        <div style="width:4px;height:4px;background:rgba(6,182,212,.3);border-radius:50%;position:absolute;top:35px;left:5px;"></div>
+        <div style="width:2px;height:2px;background:rgba(255,255,255,.15);border-radius:50%;position:absolute;top:50px;left:55px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Cinematic Dark</h3>
+      <p>Full-viewport scroll sections that transition cinematically. Each section reveals one message. Scroll-jacked smooth motion. Magnetic cursor. Custom scroll progress. Text masks that wipe as you scroll — exactly like Apple's iPhone pages. <strong>Most ambitious, most "wow".</strong></p>
+    </div>
+  </div>
+
+  <!-- DIRECTION B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f5f4f0; padding:24px; min-height:220px; display:flex; flex-direction:column; justify-content:flex-end; position:relative; overflow:hidden; font-family:Georgia,serif;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#000;"></div>
+      <div style="position:absolute;top:18px;left:20px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#888;font-family:-apple-system,sans-serif;">GTM Engineer</div>
+      <!-- Giant R -->
+      <div style="position:absolute;top:-10px;right:-10px;font-size:180px;font-weight:900;color:rgba(0,0,0,0.06);line-height:1;font-family:Georgia,serif;user-select:none;">R</div>
+      <div style="position:relative;z-index:2;">
+        <div style="font-size:13px;color:#555;margin-bottom:6px;font-family:-apple-system,sans-serif;letter-spacing:.02em;">No. 001 — Portfolio</div>
+        <div style="font-size:42px;font-weight:400;color:#000;line-height:.95;letter-spacing:-1.5px;">Rohan<br>RJ.</div>
+        <div style="width:40px;height:2px;background:#000;margin-top:14px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Editorial Monochrome</h3>
+      <p>Light cream/off-white background. Massive typographic scale — headings fill the screen. Bold horizontal rules. Grid-breaking oversized letters. Ink-on-paper feel with precision micro-interactions. Flip to dark for projects. <strong>Most distinctive, unexpected for a tech portfolio.</strong></p>
+    </div>
+  </div>
+
+  <!-- DIRECTION C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#060610; padding:20px 24px; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; font-family:-apple-system,sans-serif;">
+      <!-- Scanline texture -->
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 4px);pointer-events:none;z-index:1;"></div>
+      <div style="position:relative;z-index:2;">
+        <div style="display:flex;gap:6px;margin-bottom:16px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:#febb2c;"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:#28c840;"></div>
+        </div>
+        <div style="color:#0f0;font-size:10px;font-family:'Menlo','Courier New',monospace;line-height:1.8;">
+          <span style="color:rgba(255,255,255,.3);">$</span> <span style="color:#fff;">whoami</span><br>
+          <span style="color:#0f0;">Rohan RJ — GTM Engineer</span><br>
+          <span style="color:rgba(255,255,255,.3);">$</span> <span style="color:#fff;">./show_work</span><br>
+          <span style="color:#06B6D4;">→ Loading 6 production systems...</span>
+        </div>
+      </div>
+      <div style="position:relative;z-index:2;">
+        <div style="font-size:26px;font-weight:700;color:#fff;letter-spacing:-0.5px;line-height:1.1;">Revenue<br><span style="color:#06B6D4;">Infrastructure</span><br><span style="color:rgba(255,255,255,.35);">Builder.</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Terminal Meets Premium</h3>
+      <p>Starts with a "terminal boot sequence" hero — text types itself out as the page loads. Then transitions to a premium dark design. System-diagnostic visual language for project cards. Subtle scanline textures. Code-meets-luxury. <strong>Most on-brand for a systems builder, most technically impressive.</strong></p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:24px; text-align:center;">Click a card to select. All three will have scroll animations, hover effects, and premium interactions — the direction sets the <em>feel</em>.</p>

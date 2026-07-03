@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masterpiece Vision — Rohan RJ Portfolio</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #000;
+    --bg: #06060e;
+    --accent: #2563EB;
+    --cyan: #06B6D4;
+    --text: #fff;
+    --muted: rgba(255,255,255,0.38);
+    --border: rgba(255,255,255,0.08);
+  }
+
+  body {
+    background: #09090f;
+    color: #fff;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    padding: 0 0 80px;
+  }
+
+  /* HEADER */
+  .page-header {
+    padding: 40px 48px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 32px;
+    margin-bottom: 0;
+  }
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+  .page-header h1 span { color: #2563EB; }
+  .page-header p {
+    color: rgba(255,255,255,0.45);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 0 48px;
+    margin-top: 48px;
+  }
+
+  .section-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: #2563EB;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(37,99,235,0.2);
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+    margin-bottom: 20px;
+  }
+
+  /* HERO MOCKUP */
+  .hero-mockup {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    background: #000;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-photo-area {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0a18 0%, #000 100%);
+    overflow: hidden;
+  }
+
+  /* Simulated photo silhouette */
+  .photo-sim {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.05) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .photo-person {
+    width: 200px;
+    height: 320px;
+    background: linear-gradient(180deg, rgba(37,99,235,0.15) 0%, rgba(6,182,212,0.08) 60%, rgba(0,0,0,0) 100%);
+    border-radius: 100px 100px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-person::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(37,99,235,0.2);
+    border: 1px solid rgba(37,99,235,0.3);
+  }
+
+  .photo-glow {
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(37,99,235,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .photo-label {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(37,99,235,0.15);
+    border: 1px solid rgba(37,99,235,0.3);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 10px;
+    color: #2563EB;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .photo-label::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #06B6D4;
+    box-shadow: 0 0 8px #06B6D4;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* Grid overlay on hero */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(37,99,235,0.2) 1px, transparent 1px),
+      linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.6;
+  }
+
+  /* Higgsfield badge */
+  .hf-badge {
+    position: absolute;
+    bottom: 180px;
+    right: 20px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hf-badge span { color: #06B6D4; }
+
+  .hero-text {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+  }
+
+  .hero-h1 {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    color: #fff;
+    font-family: Georgia, serif;
+  }
+  .hero-h1 .blue { color: #2563EB; }
+  .hero-h1 .cyan { color: #06B6D4; }
+
+  .hero-sub {
+    margin-top: 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  /* Interaction tags on hero */
+  .interaction-tags {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 3;
+  }
+  .itag {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .itag .dot { width: 5px; height: 5px; border-radius: 50%; }
+  .dot-blue { background: #2563EB; }
+  .dot-cyan { background: #06B6D4; }
+  .dot-green { background: #22C55E; }
+  .dot-amber { background: #F59E0B; }
+  .dot-pink { background: #ec4899; }
+  .dot-purple { background: #8b5cf6; }
+
+  /* INTERACTIONS MAP */
+  .interactions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .interaction-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+  .interaction-card:hover { border-color: rgba(37,99,235,0.4); }
+
+  .ic-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(37,99,235,0.12);
+    border: 1px solid rgba(37,99,235,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .ic-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 5px;
+  }
+
+  .ic-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.38);
+    line-height: 1.5;
+  }
+
+  /* SECTION FLOW */
+  .flow-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .flow-section {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    align-items: start;
+    gap: 20px;
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+  .flow-section:hover {
+    background: rgba(37,99,235,0.05);
+    border-color: rgba(37,99,235,0.2);
+  }
+
+  .fs-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .fs-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 3px;
+  }
+
+  .fs-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  .fs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: flex-end;
+  }
+
+  .fs-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .tag-scroll { background: rgba(37,99,235,0.15); color: #2563EB; }
+  .tag-hover  { background: rgba(6,182,212,0.15);  color: #06B6D4; }
+  .tag-cursor { background: rgba(236,72,153,0.15); color: #ec4899; }
+  .tag-video  { background: rgba(139,92,246,0.15); color: #8b5cf6; }
+  .tag-photo  { background: rgba(34,197,94,0.15);  color: #22C55E; }
+  .tag-type   { background: rgba(245,158,11,0.15); color: #F59E0B; }
+  .tag-3d     { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+
+  /* CTA */
+  .cta-bar {
+    margin: 48px 48px 0;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.06) 100%);
+    border: 1px solid rgba(37,99,235,0.25);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .cta-text h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  .cta-text p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .cta-btn {
+    padding: 12px 28px;
+    background: #2563EB;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: .02em;
+  }
+  .cta-btn:hover { background: #1d4ed8; }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+    margin: 40px 48px;
+  }
+
+  @media (max-width: 700px) {
+    .interactions-grid { grid-template-columns: 1fr 1fr; }
+    .flow-section { grid-template-columns: 1fr; }
+    .fs-tags { justify-content: flex-start; }
+    .cta-bar { flex-direction: column; align-items: flex-start; }
+    .section { padding: 0 20px; }
+    .page-header { padding: 24px 20px 20px; }
+    .divider { margin: 32px 20px; }
+    .cta-bar { margin: 32px 20px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>The <span>Masterpiece</span> — Full Vision</h1>
+  <p>Apple-level portfolio for Rohan RJ · Scroll to explore every section and interaction</p>
+</div>
+
+<!-- HERO PREVIEW -->
+<div class="section" style="margin-top:36px;">
+  <div class="section-tag">01 — Hero</div>
+  <div class="section-title">Cinematic Full-Bleed Entry — Your Face, Animated</div>
+
+  <div class="hero-mockup">
+    <div class="hero-photo-area">
+      <div class="hero-grid"></div>
+      <div class="photo-sim">
+        <div class="photo-person"></div>
+      </div>
+      <div class="photo-glow"></div>
+    </div>
+
+    <!-- Higgsfield badge -->
+    <div class="hf-badge">
+      ▶ <span>Higgsfield</span> · Cinematic loop · Silent autoplay
+    </div>
+
+    <div class="photo-label">Your Photo · Higgsfield Animated</div>
+
+    <!-- Interaction tags floating on hero -->
+    <div class="interaction-tags">
+      <div class="itag"><div class="dot dot-pink"></div>Magnetic cursor</div>
+      <div class="itag"><div class="dot dot-blue"></div>Scroll text reveal</div>
+      <div class="itag"><div class="dot dot-cyan"></div>Parallax photo</div>
+      <div class="itag"><div class="dot dot-green"></div>Counter animation</div>
+      <div class="itag"><div class="dot dot-purple"></div>Video loop bg</div>
+    </div>
+
+    <div class="hero-text">
+      <div class="hero-eyebrow">Rohan RJ · GTM Engineer · Mangaluru, India</div>
+      <div class="hero-h1">
+        I build<br>
+        <span class="blue">AI systems</span><br>
+        that <span class="cyan">close</span><br>revenue.
+      </div>
+      <div class="hero-sub">Scroll to enter — or click any project to go straight there.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ALL INTERACTIONS -->
+<div class="section">
+  <div class="section-tag">Interactions</div>
+  <div class="section-title">Every Interaction — 10 of them</div>
+
+  <div class="interactions-grid">
+    <div class="interaction-card">
+      <div class="ic-icon">🧲</div>
+      <div class="ic-title">Magnetic Cursor</div>
+      <div class="ic-desc">Cursor deforms and pulls toward buttons and links. Premium feel seen on high-end agency sites and Apple promo pages.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">📜</div>
+      <div class="ic-title">Scroll Text Masking</div>
+      <div class="ic-desc">Words are masked and wipe in line-by-line as you scroll past them. Exactly like Apple's "Shot on iPhone" pages.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">🎬</div>
+      <div class="ic-title">Higgsfield Video Hero</div>
+      <div class="ic-desc">Your real photo animated by Higgsfield into a silent cinematic loop. Plays behind the headline on the hero.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">🎭</div>
+      <div class="ic-title">3D Card Tilt</div>
+      <div class="ic-desc">Project cards respond to mouse position with a 3D perspective tilt — like the iOS app icon tilt on the home screen.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">🔢</div>
+      <div class="ic-title">Counter Animations</div>
+      <div class="ic-desc">"6 Production Systems" — the numbers count up from 0 as they scroll into view. Satisfying, signals precision.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">✍️</div>
+      <div class="ic-title">Typewriter Sequence</div>
+      <div class="ic-desc">One section types out a terminal-style line: "$ building revenue infrastructure..." before revealing the work.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">🌊</div>
+      <div class="ic-title">Smooth Scroll Inertia</div>
+      <div class="ic-desc">Custom smooth scroll with momentum — content glides rather than jumps. The single biggest feel upgrade.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">📐</div>
+      <div class="ic-title">Parallax Layers</div>
+      <div class="ic-desc">Your photo moves at a different speed from the text above it. Creates real depth — like looking through a window.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">🌡️</div>
+      <div class="ic-title">Scroll Progress Bar</div>
+      <div class="ic-desc">Thin electric-blue line at the top of the viewport grows as you scroll. Signals depth and craftsmanship.</div>
+    </div>
+    <div class="interaction-card">
+      <div class="ic-icon">⚡</div>
+      <div class="ic-title">Section Color Shifts</div>
+      <div class="ic-desc">Background temperature subtly shifts between sections — slightly warmer on About, cooler on Projects. Imperceptible but felt.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION FLOW -->
+<div class="section">
+  <div class="section-tag">Page Architecture</div>
+  <div class="section-title">Every Section — What It Does & How It Moves</div>
+
+  <div class="flow-grid">
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">01 · Hero</div>
+        <div class="fs-sub">Full viewport</div>
+      </div>
+      <div class="fs-desc">Your Higgsfield-animated photo fills the right side. Name and tagline animate in from left with stagger. Stats count up. Scroll indicator pulses. Grid breathes.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-video">Video</span>
+        <span class="fs-tag tag-scroll">Scroll</span>
+        <span class="fs-tag tag-cursor">Cursor</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">02 · Manifesto</div>
+        <div class="fs-sub">Text reveal section</div>
+      </div>
+      <div class="fs-desc">One powerful statement fills the screen: "Most businesses don't lose revenue from bad marketing. They lose it from broken execution." Each word reveals as you scroll — Apple style.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-scroll">Mask reveal</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">03 · What I Build</div>
+        <div class="fs-sub">3-column grid</div>
+      </div>
+      <div class="fs-desc">Cards slide in from bottom with stagger delay. Hover triggers a subtle glow + icon animation. Clean, structured, confident.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-hover">Hover glow</span>
+        <span class="fs-tag tag-scroll">Stagger in</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">04 · Projects</div>
+        <div class="fs-sub">Feature cards</div>
+      </div>
+      <div class="fs-desc">Full-width cards with 3D tilt on mouse move. Architecture diagram animates when card enters view. Tech tags scatter in with spring physics.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-3d">3D tilt</span>
+        <span class="fs-tag tag-scroll">Draw in</span>
+        <span class="fs-tag tag-hover">Hover</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">05 · Stats Bar</div>
+        <div class="fs-sub">Full-width strip</div>
+      </div>
+      <div class="fs-desc">Dark strip with 3 giant counters — 6, 3, 1 — that animate up from 0 when they scroll into view. Clean typographic moment.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-scroll">Counter</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">06 · About + Photo</div>
+        <div class="fs-sub">Split layout</div>
+      </div>
+      <div class="fs-desc">Your real photo on the left — full height, parallax on scroll. Text on the right reveals paragraph by paragraph. A rare human moment in the portfolio.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-photo">Photo</span>
+        <span class="fs-tag tag-scroll">Parallax</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">07 · Stack</div>
+        <div class="fs-sub">Tag cloud</div>
+      </div>
+      <div class="fs-desc">Tags scatter in from center with spring animation. Hover lifts individual tags with a micro-glow. Grouped by category with a rotating header label.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-hover">Spring</span>
+        <span class="fs-tag tag-scroll">Scatter in</span>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div>
+        <div class="fs-name">08 · Contact</div>
+        <div class="fs-sub">Terminal-style CTA</div>
+      </div>
+      <div class="fs-desc">A typewriter types: "rohanrj4519@gmail.com" followed by a blinking cursor. Email link is large, magnetic. One strong CTA, nothing else.</div>
+      <div class="fs-tags">
+        <span class="fs-tag tag-type">Typewriter</span>
+        <span class="fs-tag tag-cursor">Magnetic</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-bar">
+  <div class="cta-text">
+    <h3>Ready to build this?</h3>
+    <p>Approving this locks in the direction — next step is a full written spec, then implementation.</p>
+  </div>
+  <button class="cta-btn" onclick="window.parent && window.parent.postMessage({type:'choice',choice:'approved',text:'Approved — build the masterpiece'}, '*'); this.textContent='✓ Approved'; this.style.background='#16a34a';">
+    Approve This Direction →
+  </button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MENZO — Restaurant Operations Platform · Case Study by Rohan RJ</title>
+<meta name="description" content="A unified operating system for restaurants combining POS, kitchen operations, inventory, delivery, WhatsApp commerce and analytics. Built solo from architecture to production.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05070B;
+  --surface:#0D1117;
+  --surface-2:#161B22;
+  --fg:#F5F7FA;
+  --fg-m:#98A2B3;
+  --fg-d:#4B5563;
+  --accent:#E8602C;
+  --accent-dim:rgba(232,96,44,0.12);
+  --green:#22C55E;
+  --border:rgba(255,255,255,0.06);
+  --border-h:rgba(255,255,255,0.14);
+  --gutter:clamp(24px,5vw,80px);
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Inter','General Sans',system-ui,sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ── SCROLL PROGRESS ── */
+#prog{position:fixed;top:0;left:0;right:0;z-index:9999;height:2px;background:var(--accent);transform-origin:left;transform:scaleX(0);will-change:transform;transition:transform .1s linear}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);background:rgba(5,7,11,0.85);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.nav-back{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-m);transition:color .2s}
+.nav-back:hover{color:var(--fg)}
+.nav-back-arrow{font-size:16px}
+.nav-logo{font-family:'General Sans',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.03em}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:24px;font-size:13px;color:var(--fg-m)}
+.nav-links a:hover{color:var(--fg)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ── EYEBROW ── */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
+.eyebrow-dim{color:var(--fg-d)}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:120px var(--gutter) 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(232,96,44,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 100%)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:6px 14px;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--fg-m);margin-bottom:28px}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-title{font-family:'General Sans',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.03em;margin-bottom:24px}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-desc{font-size:17px;color:var(--fg-m);line-height:1.75;max-width:520px;margin-bottom:36px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;transition:opacity .2s,transform .2s}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--fg-m);border:1px solid var(--border);padding:12px 24px;border-radius:8px;font-size:14px;transition:border-color .2s,color .2s}
+.btn-ghost:hover{border-color:var(--border-h);color:var(--fg)}
+.hero-screens{position:relative;height:520px}
+.hero-screen{position:absolute;border-radius:var(--r);overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.6);border:1px solid var(--border)}
+.hero-screen img{width:100%;height:100%;object-fit:cover}
+.hs-main{width:90%;top:0;right:0;height:340px}
+.hs-sec{width:55%;bottom:0;left:0;height:220px}
+.hs-tri{width:42%;bottom:60px;right:5%;height:160px;border:1px solid rgba(232,96,44,.3)}
+@media(max-width:900px){#hero{grid-template-columns:1fr;min-height:auto;padding-bottom:60px}.hero-screens{height:300px;margin-top:40px}.hs-main{width:100%;height:220px}.hs-sec{display:none}.hs-tri{display:none}}
+
+/* ── SECTION WRAPPER ── */
+.sec{padding:clamp(60px,10vh,120px) var(--gutter);border-top:1px solid var(--border)}
+.sec-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:clamp(28px,3.5vw,48px);letter-spacing:-.025em;line-height:1.1;margin-bottom:16px}
+.sec-title em{font-style:normal;color:var(--accent)}
+.sec-lead{font-size:17px;color:var(--fg-m);max-width:600px;line-height:1.75;margin-bottom:48px}
+
+/* ── EXECUTIVE SUMMARY ── */
+.exec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.exec-cell{background:var(--surface);padding:24px;display:flex;flex-direction:column;gap:6px}
+.exec-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-d)}
+.exec-value{font-family:'General Sans',sans-serif;font-weight:600;font-size:15px;color:var(--fg)}
+.exec-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);color:var(--green);border-radius:100px;padding:3px 10px;font-size:12px;font-weight:600}
+
+/* ── PROBLEM ── */
+.problem-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+@media(max-width:768px){.problem-layout{grid-template-columns:1fr}}
+.problem-text p{font-size:16px;color:var(--fg-m);line-height:1.8;margin-bottom:16px}
+.problem-text p strong{color:var(--fg)}
+.chaos-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chaos-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.chaos-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(232,96,44,.4),transparent)}
+.chaos-icon{font-size:20px;margin-bottom:10px}
+.chaos-name{font-family:'General Sans',sans-serif;font-weight:600;font-size:13px;margin-bottom:4px}
+.chaos-desc{font-size:12px;color:var(--fg-d);line-height:1.5}
+.chaos-cost{display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);background:var(--accent-dim);border-radius:4px;padding:2px 8px}
+.pain-list{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.pain-item{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:14px;color:var(--fg-m)}
+.pain-item::before{content:'↳';color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px}
+
+/* ── SOLUTION ── */
+.solution-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@media(max-width:768px){.solution-layout{grid-template-columns:1fr}}
+.solution-text p{font-size:16px;color:var(--fg-m);line-height:1.8;margin-bottom:16px}
+.flow-chain{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.flow-node{display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:500;width:100%;transition:border-color .2s,background .2s;cursor:default}
+.flow-node:hover{border-color:var(--accent);background:var(--surface-2)}
+.flow-node-icon{width:32px;height:32px;border-radius:6px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.flow-node-label{flex:1}
+.flow-node-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-d);letter-spacing:.05em}
+.flow-arrow{width:2px;height:20px;background:linear-gradient(to bottom,var(--accent),transparent);margin-left:35px;opacity:.5}
+
+/* ── BUSINESS OBJECTIVES ── */
+.objectives-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.obj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s}
+.obj-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+.obj-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:.08em}
+.obj-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:18px}
+.obj-desc{font-size:14px;color:var(--fg-m);line-height:1.65}
+
+/* ── PLATFORM OVERVIEW ── */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.pf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s}
+.pf-card:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.pf-img{aspect-ratio:16/9;overflow:hidden;background:var(--surface-2);position:relative}
+.pf-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.pf-card:hover .pf-img img{transform:scale(1.04)}
+.pf-body{padding:20px}
+.pf-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.pf-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:17px;margin-bottom:8px}
+.pf-desc{font-size:13px;color:var(--fg-m);line-height:1.6}
+
+/* ── SYSTEM ARCHITECTURE ── */
+#arch-diagram{position:relative;margin:0 auto;max-width:900px;padding:40px 20px}
+.arch-nodes{display:flex;flex-direction:column;align-items:center;gap:0}
+.arch-row{display:flex;justify-content:center;gap:16px;width:100%}
+.arch-node{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 22px;font-family:'General Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:center;min-width:140px;user-select:none}
+.arch-node:hover,.arch-node.active{border-color:var(--accent);background:var(--surface-2);transform:scale(1.04)}
+.arch-node.core{border-color:rgba(232,96,44,.4);background:rgba(232,96,44,.06)}
+.arch-node-sub{font-size:10px;color:var(--fg-d);font-weight:400;font-family:'JetBrains Mono',monospace;margin-top:3px}
+.arch-connector{display:flex;justify-content:center;height:28px}
+.arch-connector-line{width:2px;background:linear-gradient(to bottom,rgba(232,96,44,.5),rgba(232,96,44,.1));border-radius:2px}
+.arch-connector-split{display:flex;justify-content:center;gap:60px;height:28px;position:relative}
+.arch-connector-split::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:rgba(232,96,44,.3)}
+.arch-connector-split .arch-connector-line{height:100%}
+.arch-detail-panel{background:var(--surface);border:1px solid var(--border-h);border-radius:var(--r);padding:24px;margin-top:32px;display:none}
+.arch-detail-panel.visible{display:block}
+.arch-detail-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:18px;margin-bottom:8px}
+.arch-detail-body{font-size:14px;color:var(--fg-m);line-height:1.7}
+.arch-detail-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.arch-detail-tag{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--fg-m)}
+
+/* ── USER JOURNEY ── */
+.journey-steps{display:flex;flex-direction:column;gap:0;max-width:700px;margin:0 auto}
+.journey-step{display:grid;grid-template-columns:60px 1fr;gap:24px;position:relative}
+.journey-step:not(:last-child)::before{content:'';position:absolute;left:29px;top:52px;bottom:-1px;width:2px;background:linear-gradient(to bottom,rgba(232,96,44,.4),rgba(232,96,44,.05))}
+.journey-num{width:42px;height:42px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--accent);flex-shrink:0;z-index:1;margin-top:4px}
+.journey-body{padding-bottom:40px}
+.journey-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:18px;margin-bottom:8px}
+.journey-desc{font-size:14px;color:var(--fg-m);line-height:1.7}
+.journey-tech{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.journey-tech span{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--fg-d)}
+
+/* ── CORE MODULES ── */
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.mod-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;display:flex;flex-direction:column;gap:10px}
+.mod-card:hover,.mod-card.active{border-color:var(--accent);background:var(--surface-2);transform:translateY(-2px)}
+.mod-icon{font-size:22px}
+.mod-name{font-family:'General Sans',sans-serif;font-weight:700;font-size:14px}
+.mod-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-d)}
+.mod-detail{background:var(--surface);border:1px solid var(--border-h);border-radius:var(--r);padding:24px;margin-top:16px;display:none;grid-column:1/-1}
+.mod-detail.visible{display:block}
+.mod-detail-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;color:var(--fg)}
+.mod-detail-desc{font-size:14px;color:var(--fg-m);line-height:1.75;margin-bottom:14px}
+.mod-detail-features{display:flex;flex-wrap:wrap;gap:8px}
+.mod-detail-features span{font-size:12px;background:var(--accent-dim);color:var(--accent);border-radius:6px;padding:4px 12px}
+
+/* ── AI & AUTOMATION ── */
+.ai-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+@media(max-width:768px){.ai-layout{grid-template-columns:1fr}}
+.ai-feature{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.ai-feature:last-child{border:none}
+.ai-feature-icon{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ai-feature-body h4{font-family:'General Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:4px}
+.ai-feature-body p{font-size:13px;color:var(--fg-m);line-height:1.65}
+.ai-automation-list{display:flex;flex-direction:column;gap:12px}
+.auto-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;align-items:flex-start;gap:12px}
+.auto-badge{font-family:'JetBrains Mono',monospace;font-size:10px;background:rgba(34,197,94,.1);color:var(--green);border-radius:4px;padding:3px 8px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.auto-text{font-size:13px;color:var(--fg-m);line-height:1.6}
+.auto-text strong{color:var(--fg);font-size:14px;display:block;margin-bottom:3px}
+
+/* ── TECH ARCHITECTURE ── */
+.tech-arch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.ta-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.ta-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.ta-icon{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:16px}
+.ta-layer{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-d)}
+.ta-name{font-family:'General Sans',sans-serif;font-weight:700;font-size:16px}
+.ta-items{display:flex;flex-direction:column;gap:10px}
+.ta-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--fg-m)}
+.ta-item-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.5;flex-shrink:0}
+.ta-item strong{color:var(--fg);font-size:13px}
+
+/* ── SCREENSHOTS ── */
+.ss-hero{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:20px}
+.ss-hero img{width:100%;display:block}
+.ss-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ss-cell{border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.ss-cell img{width:100%;display:block;transition:transform .4s var(--ease)}
+.ss-cell:hover img{transform:scale(1.02)}
+.ss-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-d);margin-top:8px;text-align:center}
+
+/* ── CHALLENGES ── */
+.challenges-list{display:flex;flex-direction:column;gap:24px}
+.challenge-card{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.challenge-card:hover{border-color:var(--border-h)}
+.challenge-problem{padding:28px;border-right:1px solid var(--border)}
+.challenge-solution{padding:28px;position:relative}
+.challenge-solution::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent)}
+.ch-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:block}
+.ch-label-problem{color:var(--fg-d)}
+.ch-label-solution{color:var(--accent)}
+.ch-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px}
+.ch-desc{font-size:13px;color:var(--fg-m);line-height:1.65}
+@media(max-width:640px){.challenge-card{grid-template-columns:1fr}.challenge-problem{border-right:none;border-bottom:1px solid var(--border)}}
+
+/* ── LEARNINGS ── */
+.learnings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.learn-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s}
+.learn-card:hover{border-color:var(--border-h)}
+.learn-num{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:var(--border-h);line-height:1}
+.learn-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:16px}
+.learn-body{font-size:13px;color:var(--fg-m);line-height:1.65}
+
+/* ── ROADMAP ── */
+.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.road-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s}
+.road-card:hover{border-color:var(--border-h)}
+.road-icon{font-size:24px}
+.road-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:14px}
+.road-desc{font-size:12px;color:var(--fg-d);line-height:1.5}
+.road-phase{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-top:4px}
+
+/* ── TECH STACK ── */
+.stack-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.stack-group{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.stack-group-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-d);margin-bottom:16px}
+.stack-items{display:flex;flex-wrap:wrap;gap:8px}
+.stack-chip{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:500;transition:border-color .2s}
+.stack-chip:hover{border-color:var(--accent)}
+
+/* ── GALLERY ── */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery-cell{border-radius:10px;overflow:hidden;border:1px solid var(--border);cursor:pointer;position:relative}
+.gallery-cell img{width:100%;display:block;transition:transform .4s var(--ease)}
+.gallery-cell:hover img{transform:scale(1.05)}
+.gallery-cell-overlay{position:absolute;inset:0;background:rgba(5,7,11,.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.gallery-cell:hover .gallery-cell-overlay{opacity:1}
+.gallery-cell-overlay span{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-m)}
+@media(max-width:640px){.gallery-grid{grid-template-columns:1fr 1fr}}
+
+/* ── LIGHTBOX ── */
+#lightbox{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;cursor:pointer}
+#lightbox.open{display:flex}
+#lightbox img{max-width:90vw;max-height:88vh;border-radius:var(--r);box-shadow:0 40px 120px rgba(0,0,0,.8)}
+#lightbox-close{position:absolute;top:24px;right:24px;font-size:28px;color:var(--fg-m);cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--surface);border:1px solid var(--border)}
+
+/* ── PROJECT OUTCOME ── */
+.outcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media(max-width:768px){.outcome-grid{grid-template-columns:1fr}}
+.outcome-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.outcome-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.outcome-stat-num{font-family:'General Sans',sans-serif;font-weight:800;font-size:40px;color:var(--accent);line-height:1;margin-bottom:6px}
+.outcome-stat-label{font-size:13px;color:var(--fg-m)}
+.outcome-list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.outcome-item{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--fg-m);line-height:1.6}
+.outcome-check{color:var(--green);font-size:16px;flex-shrink:0;margin-top:2px}
+
+/* ── RELATED PROJECTS ── */
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.related-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s;cursor:pointer}
+.related-card:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.related-arrow{font-size:20px;color:var(--accent)}
+.related-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-d)}
+.related-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:20px}
+.related-desc{font-size:13px;color:var(--fg-m);line-height:1.6}
+
+/* ── CONTACT CTA ── */
+#contact{padding:clamp(80px,12vh,140px) var(--gutter);border-top:1px solid var(--border);text-align:center;background:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(232,96,44,.07) 0%,transparent 70%)}
+.contact-title{font-family:'General Sans',sans-serif;font-weight:800;font-size:clamp(32px,4vw,56px);letter-spacing:-.03em;line-height:1.1;margin-bottom:20px}
+.contact-title em{font-style:normal;color:var(--accent)}
+.contact-desc{font-size:17px;color:var(--fg-m);max-width:520px;margin:0 auto 40px}
+.contact-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+#foot{padding:28px var(--gutter);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-d)}
+#foot a{color:var(--fg-d);transition:color .2s}
+#foot a:hover{color:var(--accent)}
+
+/* ── SCROLL REVEAL ── */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-back">
+    <span class="nav-back-arrow">←</span>
+    <span>Back to Portfolio</span>
+  </a>
+  <div class="nav-logo">MEN<span>Z</span>O</div>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#modules">Modules</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+  1. HERO
+══════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-bg"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Production Ready · Solo Build · Full Stack
+    </div>
+    <h1 class="hero-title">
+      MENZO —<br>
+      <em>Restaurant OS</em><br>
+      That Thinks for You
+    </h1>
+    <p class="hero-desc">
+      A unified operating system for restaurants that combines POS, kitchen operations, inventory, delivery management, WhatsApp commerce, and business analytics into a single production-ready platform.
+    </p>
+    <div class="hero-ctas">
+      <a href="#problem" class="btn-primary">Read the Case Study →</a>
+      <a href="#contact" class="btn-ghost">Work Together</a>
+    </div>
+  </div>
+
+  <div class="hero-screens">
+    <div class="hero-screen hs-main">
+      <img src="assets/ai/hero-dashboard-v3.png" alt="MENZO Dashboard">
+    </div>
+    <div class="hero-screen hs-sec">
+      <img src="assets/ai/hero-billing-v3.png" alt="MENZO Billing">
+    </div>
+    <div class="hero-screen hs-tri">
+      <img src="assets/ai/hero-orders-v3.png" alt="MENZO Orders">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  2. EXECUTIVE SUMMARY
+══════════════════════════════════════ -->
+<section class="sec" id="summary">
+  <div class="rv">
+    <span class="eyebrow">Executive Summary</span>
+    <h2 class="sec-title">At a Glance</h2>
+  </div>
+  <div class="exec-grid rv" style="transition-delay:.08s">
+    <div class="exec-cell">
+      <span class="exec-label">Industry</span>
+      <span class="exec-value">Restaurant / Café</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Status</span>
+      <span class="exec-badge">● Production Ready</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Platform</span>
+      <span class="exec-value">Web Application</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Architecture</span>
+      <span class="exec-value">Full Stack</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Built By</span>
+      <span class="exec-value">Solo — Rohan RJ</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Modules</span>
+      <span class="exec-value">19 Modules</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Target Users</span>
+      <span class="exec-value">Owners &amp; Staff</span>
+    </div>
+    <div class="exec-cell">
+      <span class="exec-label">Parent Platform</span>
+      <span class="exec-value">STEMLYN OS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  3. THE PROBLEM
+══════════════════════════════════════ -->
+<section class="sec" id="problem">
+  <span class="eyebrow rv">The Problem</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Why restaurants<br><em>break at scale</em></h2>
+  <div class="problem-layout">
+    <div class="problem-text rv" style="transition-delay:.08s">
+      <p>Most restaurants don't fail because of the food. They fail because <strong>their operations are stitched together with disconnected tools.</strong></p>
+      <p>A typical mid-size restaurant runs on 5–7 separate systems that were never designed to talk to each other. Orders fall through the cracks. Inventory counts are always wrong. Kitchen staff are shouting across the pass. The owner sees reports only at end of month — by which time nothing can be fixed.</p>
+      <p>The real cost isn't the software subscriptions. It's the <strong>operational drag</strong> — slower service, food waste, billing errors, and the manager spending 3 hours every day reconciling what should be automatic.</p>
+      <div class="pain-list">
+        <div class="pain-item">One order touches 4 different systems before it reaches the kitchen</div>
+        <div class="pain-item">Inventory is updated manually, usually the next morning — too late to stop waste</div>
+        <div class="pain-item">The billing system doesn't know what the kitchen confirmed — errors compound</div>
+        <div class="pain-item">WhatsApp orders are handled on a personal phone, never entering the POS</div>
+        <div class="pain-item">Swiggy and Zomato run on separate tablets — no unified delivery view</div>
+        <div class="pain-item">GST reports require an accountant to reconcile three data sources manually</div>
+      </div>
+    </div>
+    <div class="rv" style="transition-delay:.12s">
+      <div class="chaos-grid">
+        <div class="chaos-card">
+          <div class="chaos-icon">🧾</div>
+          <div class="chaos-name">Billing Software</div>
+          <div class="chaos-desc">Standalone POS that doesn't connect to inventory or kitchen</div>
+          <span class="chaos-cost">Isolated</span>
+        </div>
+        <div class="chaos-card">
+          <div class="chaos-icon">📋</div>
+          <div class="chaos-name">Paper KOTs</div>
+          <div class="chaos-desc">Kitchen tickets handwritten, lost, or read incorrectly</div>
+          <span class="chaos-cost">Error-prone</span>
+        </div>
+        <div class="chaos-card">
+          <div class="chaos-icon">📊</div>
+          <div class="chaos-name">Inventory Spreadsheets</div>
+          <div class="chaos-desc">Updated manually, always a day behind, never trusted</div>
+          <span class="chaos-cost">Manual</span>
+        </div>
+        <div class="chaos-card">
+          <div class="chaos-icon">📱</div>
+          <div class="chaos-name">WhatsApp Orders</div>
+          <div class="chaos-desc">Personal phone, no tracking, no integration with billing</div>
+          <span class="chaos-cost">Invisible</span>
+        </div>
+        <div class="chaos-card">
+          <div class="chaos-icon">🛵</div>
+          <div class="chaos-name">Delivery Tablets</div>
+          <div class="chaos-desc">Separate Swiggy / Zomato devices the kitchen never sees</div>
+          <span class="chaos-cost">Fragmented</span>
+        </div>
+        <div class="chaos-card">
+          <div class="chaos-icon">📉</div>
+          <div class="chaos-name">Month-End Reports</div>
+          <div class="chaos-desc">CA manually reconciles from 3 sources — already too late</div>
+          <span class="chaos-cost">Reactive</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  4. THE SOLUTION
+══════════════════════════════════════ -->
+<section class="sec" id="solution">
+  <span class="eyebrow rv">The Solution</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">One platform.<br><em>Every operation.</em></h2>
+  <div class="solution-layout">
+    <div class="solution-text rv" style="transition-delay:.08s">
+      <p>MENZO replaces every disconnected tool with a single operating system built for how restaurants actually work. The moment a guest is seated, MENZO orchestrates everything downstream — automatically.</p>
+      <p>A table opens. An order is taken. The kitchen gets an instant digital ticket. Inventory deducts the right ingredients. The billing session accumulates live. Payment closes the loop, generates a GST invoice, and pushes the revenue into real-time analytics — all without a single manual entry.</p>
+      <p>For WhatsApp orders, MENZO's AI parses natural language messages, validates stock, creates the order, and routes it through the same kitchen pipeline as a dine-in order. No second device. No separate workflow.</p>
+      <p>The owner sees their business in real time — not at month-end.</p>
+    </div>
+    <div class="flow-chain rv" style="transition-delay:.12s">
+      <div class="flow-node">
+        <div class="flow-node-icon">👤</div>
+        <div>
+          <div class="flow-node-label">Customer Arrives</div>
+          <div class="flow-node-tag">Dine-in · Takeaway · Delivery · WhatsApp</div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-icon">📱</div>
+        <div>
+          <div class="flow-node-label">Order Placed</div>
+          <div class="flow-node-tag">POS · WhatsApp AI · Swiggy · Zomato</div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-icon">🍳</div>
+        <div>
+          <div class="flow-node-label">Kitchen Ticket Fires</div>
+          <div class="flow-node-tag">Real-time KOT · Multi-station</div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-icon">📦</div>
+        <div>
+          <div class="flow-node-label">Inventory Updates</div>
+          <div class="flow-node-tag">Recipe-linked auto-deduction</div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-icon">💳</div>
+        <div>
+          <div class="flow-node-label">Payment Processed</div>
+          <div class="flow-node-tag">Cash · UPI · Card · Wallet</div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-icon">🧾</div>
+        <div>
+          <div class="flow-node-label">GST Invoice Generated</div>
+          <div class="flow-node-tag">Auto-calculated · WhatsApp delivery</div>
+        </div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="flow-node-icon">📊</div>
+        <div>
+          <div class="flow-node-label">Analytics Updated</div>
+          <div class="flow-node-tag">Owner dashboard · Real-time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  5. BUSINESS OBJECTIVES
+══════════════════════════════════════ -->
+<section class="sec" id="objectives">
+  <span class="eyebrow rv">Business Objectives</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">What MENZO<br><em>is built to achieve</em></h2>
+  <div class="objectives-grid">
+    <div class="obj-card rv">
+      <span class="obj-num">01</span>
+      <h3 class="obj-title">Faster Order Processing</h3>
+      <p class="obj-desc">Eliminate the 2–3 minute lag between order taken and kitchen awareness. Digital KOTs fire instantly to the right station.</p>
+    </div>
+    <div class="obj-card rv" style="transition-delay:.05s">
+      <span class="obj-num">02</span>
+      <h3 class="obj-title">Reduce Inventory Waste</h3>
+      <p class="obj-desc">Recipe-linked inventory means every dish sold auto-deducts the right ingredients. Low-stock alerts fire before service breaks down.</p>
+    </div>
+    <div class="obj-card rv" style="transition-delay:.1s">
+      <span class="obj-num">03</span>
+      <h3 class="obj-title">Centralize Operations</h3>
+      <p class="obj-desc">Replace 6–7 disconnected tools with a single platform that everyone — owner, manager, waiter, kitchen — uses from one interface.</p>
+    </div>
+    <div class="obj-card rv" style="transition-delay:.15s">
+      <span class="obj-num">04</span>
+      <h3 class="obj-title">Improve Customer Experience</h3>
+      <p class="obj-desc">Faster service, accurate bills, and WhatsApp invoices create a hospitality experience that builds repeat business.</p>
+    </div>
+    <div class="obj-card rv" style="transition-delay:.2s">
+      <span class="obj-num">05</span>
+      <h3 class="obj-title">Automate Daily Workflows</h3>
+      <p class="obj-desc">GST reports, daily summaries, stock alerts, and invoice dispatch run automatically. The manager's day gets shorter.</p>
+    </div>
+    <div class="obj-card rv" style="transition-delay:.25s">
+      <span class="obj-num">06</span>
+      <h3 class="obj-title">Support Franchise Expansion</h3>
+      <p class="obj-desc">Multi-location architecture with centralized menu, inventory visibility, and unified reporting for restaurant groups and chains.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  6. PLATFORM OVERVIEW
+══════════════════════════════════════ -->
+<section class="sec" id="platform">
+  <span class="eyebrow rv">Platform Overview</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Every module.<br><em>One unbroken flow.</em></h2>
+  <p class="sec-lead rv" style="transition-delay:.08s">MENZO isn't a collection of features. Every module feeds the next — data flows automatically across billing, kitchen, inventory, and analytics.</p>
+  <div class="platform-grid">
+    <div class="pf-card rv">
+      <div class="pf-img"><img src="assets/ai/mockup-dashboard-v2.png" alt="Dashboard" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">Command Center</div>
+        <h3 class="pf-title">Owner Dashboard</h3>
+        <p class="pf-desc">Real-time revenue, table status, recent orders, and hourly performance — everything an owner needs to manage the floor without being on it.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.05s">
+      <div class="pf-img"><img src="assets/ai/mockup-billing-v2.png" alt="Billing" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">POS</div>
+        <h3 class="pf-title">Billing &amp; POS</h3>
+        <p class="pf-desc">Live table sessions with running totals. One tap generates a GST-compliant bill and closes the session. No manual math, no billing errors.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.1s">
+      <div class="pf-img"><img src="assets/ai/mockup-orders-v2.png" alt="Orders" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">Kitchen Operations</div>
+        <h3 class="pf-title">Kitchen Order Tickets</h3>
+        <p class="pf-desc">Every order fires an instant digital KOT to the kitchen. No paper, no shouting, no lost tickets. The kitchen sees every item in real time.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.15s">
+      <div class="pf-img"><img src="assets/ai/mockup-inventory.png" alt="Inventory" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">Stock Control</div>
+        <h3 class="pf-title">Recipe-Linked Inventory</h3>
+        <p class="pf-desc">Inventory deducts automatically when dishes are sold. Ingredient-level tracking with low-stock alerts before service is disrupted.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.2s">
+      <div class="pf-img"><img src="assets/ai/mockup-delivery.png" alt="Delivery" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">Delivery Management</div>
+        <h3 class="pf-title">Unified Delivery Board</h3>
+        <p class="pf-desc">Swiggy, Zomato, and direct orders on one Kanban board. Rider assignment, live status tracking, and delivery confirmation — all in one place.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.25s">
+      <div class="pf-img"><img src="assets/ai/mockup-reports.png" alt="Reports" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">Analytics</div>
+        <h3 class="pf-title">GST Reports &amp; Analytics</h3>
+        <p class="pf-desc">Daily revenue, GST-ready exports, item performance, and payment split reports. CA-ready, auto-generated, zero manual reconciliation.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.3s">
+      <div class="pf-img"><img src="assets/ai/mockup-tables-v2.png" alt="Tables" loading="lazy"></div>
+      <div class="pf-body">
+        <div class="pf-tag">Floor Management</div>
+        <h3 class="pf-title">Table &amp; Floor Plan</h3>
+        <p class="pf-desc">Visual floor plan showing live table status — occupied, available, reserved. One tap to open a session or take a reservation.</p>
+      </div>
+    </div>
+    <div class="pf-card rv" style="transition-delay:.35s">
+      <div class="pf-img" style="background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:48px;min-height:180px">💬</div>
+      <div class="pf-body">
+        <div class="pf-tag">AI Commerce</div>
+        <h3 class="pf-title">WhatsApp AI Ordering</h3>
+        <p class="pf-desc">Customers order via WhatsApp in natural language. AI parses the message, validates stock, creates the order, and routes it to the kitchen automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  7. SYSTEM ARCHITECTURE
+══════════════════════════════════════ -->
+<section class="sec" id="architecture">
+  <span class="eyebrow rv">System Architecture</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">How the system<br><em>is wired together</em></h2>
+  <p class="sec-lead rv" style="transition-delay:.08s">Click any node to see how it fits into the system. Every layer is intentional — built to handle real restaurant load, not just demo traffic.</p>
+
+  <div id="arch-diagram" class="rv" style="transition-delay:.12s">
+    <div class="arch-nodes">
+
+      <!-- Entry Points -->
+      <div class="arch-row" style="gap:12px">
+        <div class="arch-node" data-key="walkin">
+          Walk-in
+          <div class="arch-node-sub">Dine-in / Takeaway</div>
+        </div>
+        <div class="arch-node" data-key="whatsapp">
+          WhatsApp AI
+          <div class="arch-node-sub">Natural language orders</div>
+        </div>
+        <div class="arch-node" data-key="delivery">
+          Delivery Platforms
+          <div class="arch-node-sub">Swiggy · Zomato · Direct</div>
+        </div>
+      </div>
+
+      <div class="arch-connector"><div class="arch-connector-line"></div></div>
+
+      <!-- Core -->
+      <div class="arch-row">
+        <div class="arch-node core" data-key="server">
+          MENZO Server
+          <div class="arch-node-sub">Node.js · Express · REST API</div>
+        </div>
+      </div>
+
+      <div class="arch-connector"><div class="arch-connector-line"></div></div>
+
+      <!-- Auth + Logic -->
+      <div class="arch-row" style="gap:20px">
+        <div class="arch-node" data-key="auth">
+          Authentication
+          <div class="arch-node-sub">JWT · Role-based access</div>
+        </div>
+        <div class="arch-node core" data-key="logic">
+          Business Logic
+          <div class="arch-node-sub">Orders · Inventory · Billing</div>
+        </div>
+        <div class="arch-node" data-key="ai">
+          AI Engine
+          <div class="arch-node-sub">Order parsing · Stock validation</div>
+        </div>
+      </div>
+
+      <div class="arch-connector"><div class="arch-connector-line"></div></div>
+
+      <!-- Database -->
+      <div class="arch-row">
+        <div class="arch-node core" data-key="db">
+          Database Layer
+          <div class="arch-node-sub">PostgreSQL · Drizzle ORM</div>
+        </div>
+      </div>
+
+      <div class="arch-connector"><div class="arch-connector-line"></div></div>
+
+      <!-- Output modules -->
+      <div class="arch-row" style="gap:10px;flex-wrap:wrap">
+        <div class="arch-node" data-key="pos">
+          POS &amp; Billing
+          <div class="arch-node-sub">Table sessions</div>
+        </div>
+        <div class="arch-node" data-key="kitchen">
+          Kitchen KOT
+          <div class="arch-node-sub">Real-time tickets</div>
+        </div>
+        <div class="arch-node" data-key="inv">
+          Inventory
+          <div class="arch-node-sub">Auto-deduction</div>
+        </div>
+        <div class="arch-node" data-key="gst">
+          GST Reports
+          <div class="arch-node-sub">Auto-generated</div>
+        </div>
+        <div class="arch-node" data-key="dash">
+          Owner Dashboard
+          <div class="arch-node-sub">Live analytics</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="arch-detail-panel" id="arch-detail">
+      <div class="arch-detail-title" id="arch-detail-title"></div>
+      <div class="arch-detail-body" id="arch-detail-body"></div>
+      <div class="arch-detail-tags" id="arch-detail-tags"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  8. USER JOURNEY
+══════════════════════════════════════ -->
+<section class="sec" id="journey">
+  <span class="eyebrow rv">User Journey</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">One order.<br><em>Seven systems, zero friction.</em></h2>
+  <p class="sec-lead rv" style="transition-delay:.08s">This is what happens in MENZO the moment a customer decides to eat.</p>
+  <div class="journey-steps rv" style="transition-delay:.12s">
+    <div class="journey-step">
+      <div class="journey-num">01</div>
+      <div class="journey-body">
+        <h3 class="journey-title">Guest is seated — Table opens</h3>
+        <p class="journey-desc">The waiter taps the table on any device. A billing session starts instantly. The timer begins. The owner can already see the table as "Occupied" on the live floor plan.</p>
+        <div class="journey-tech"><span>Tables Module</span><span>Real-time floor plan</span><span>WebSocket sync</span></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">02</div>
+      <div class="journey-body">
+        <h3 class="journey-title">Order is placed — KOT fires</h3>
+        <p class="journey-desc">The waiter adds items from the digital menu. The moment they confirm, a Kitchen Order Ticket is generated and appears on the kitchen display within milliseconds. No paper. No shouting. No delay.</p>
+        <div class="journey-tech"><span>Orders Module</span><span>KOT Engine</span><span>Kitchen Display</span></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">03</div>
+      <div class="journey-body">
+        <h3 class="journey-title">Kitchen prepares — Inventory deducts</h3>
+        <p class="journey-desc">As each dish is prepared, MENZO automatically deducts the recipe-linked ingredients from stock. If Buttermilk is running low, an alert fires before the kitchen runs out mid-service.</p>
+        <div class="journey-tech"><span>Inventory Module</span><span>Recipe Engine</span><span>Low-stock alerts</span></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">04</div>
+      <div class="journey-body">
+        <h3 class="journey-title">Bill requested — GST calculated instantly</h3>
+        <p class="journey-desc">The waiter taps "Generate Bill." MENZO calculates GST automatically, creates a formatted invoice, and marks the session as Billed. No calculator. No manual tax math. No rounding errors.</p>
+        <div class="journey-tech"><span>Billing Module</span><span>GST Engine</span><span>Invoice generation</span></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">05</div>
+      <div class="journey-body">
+        <h3 class="journey-title">Payment received — Invoice sent on WhatsApp</h3>
+        <p class="journey-desc">Cash, UPI, or card — the waiter marks the payment method. MENZO closes the session, archives the order, and sends the invoice directly to the customer's WhatsApp. No printer needed.</p>
+        <div class="journey-tech"><span>Payments</span><span>WhatsApp API</span><span>Order archive</span></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">06</div>
+      <div class="journey-body">
+        <h3 class="journey-title">Analytics update — Owner sees it live</h3>
+        <p class="journey-desc">The sale appears on the owner dashboard in real time. Revenue for the day, average bill, top-selling items, and hourly peaks update automatically. The owner can see their business from anywhere.</p>
+        <div class="journey-tech"><span>Analytics</span><span>Dashboard</span><span>Real-time sync</span></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">07</div>
+      <div class="journey-body">
+        <h3 class="journey-title">End of day — Reports are already done</h3>
+        <p class="journey-desc">Daily revenue report, GST report, item performance, and payment split are auto-generated and ready for the accountant. The manager closes the restaurant without touching a spreadsheet.</p>
+        <div class="journey-tech"><span>Reports Module</span><span>GST export</span><span>CA-ready formats</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  9. CORE MODULES
+══════════════════════════════════════ -->
+<section class="sec" id="modules">
+  <span class="eyebrow rv">Core Modules</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">19 modules.<br><em>Every workflow covered.</em></h2>
+  <p class="sec-lead rv" style="transition-delay:.08s">Click any module to see what it handles.</p>
+  <div class="modules-grid rv" style="transition-delay:.12s" id="modules-grid">
+    <!-- JS renders detail panels inline -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  10. AI & AUTOMATION
+══════════════════════════════════════ -->
+<section class="sec" id="ai">
+  <span class="eyebrow rv">AI &amp; Automation</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">The restaurant<br><em>that runs itself</em></h2>
+  <p class="sec-lead rv" style="transition-delay:.08s">MENZO's AI layer doesn't just process orders — it handles the decisions that used to require a human.</p>
+  <div class="ai-layout rv" style="transition-delay:.12s">
+    <div>
+      <div class="ai-feature">
+        <div class="ai-feature-icon">💬</div>
+        <div class="ai-feature-body">
+          <h4>WhatsApp AI Ordering</h4>
+          <p>Customers send natural language messages like "2 Butter Chicken, 1 Naan, no spicy" and MENZO parses the order, maps it to menu items, validates stock, and creates the order — without any human intervention.</p>
+        </div>
+      </div>
+      <div class="ai-feature">
+        <div class="ai-feature-icon">🧠</div>
+        <div class="ai-feature-body">
+          <h4>Intelligent Order Parsing</h4>
+          <p>The AI understands abbreviations, common misspellings, local dish names, and quantity variations. "2 BChicken with rice, half spice" resolves to the correct SKUs automatically.</p>
+        </div>
+      </div>
+      <div class="ai-feature">
+        <div class="ai-feature-icon">📦</div>
+        <div class="ai-feature-body">
+          <h4>Real-time Stock Validation</h4>
+          <p>Before confirming any order — dine-in, delivery, or WhatsApp — MENZO validates current stock levels. If a dish can't be prepared, the system flags it before the order is accepted.</p>
+        </div>
+      </div>
+      <div class="ai-feature">
+        <div class="ai-feature-icon">🧾</div>
+        <div class="ai-feature-body">
+          <h4>Automated Checkout &amp; Invoice</h4>
+          <p>GST calculation, invoice generation, and WhatsApp delivery of the bill all happen automatically on payment confirmation. Zero manual steps from order to customer's phone.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ai-automation-list">
+      <div class="auto-item">
+        <span class="auto-badge">AUTO</span>
+        <div class="auto-text">
+          <strong>KOT Generation</strong>
+          Every item added to an order fires a kitchen ticket to the right station within 200ms.
+        </div>
+      </div>
+      <div class="auto-item">
+        <span class="auto-badge">AUTO</span>
+        <div class="auto-text">
+          <strong>Inventory Deduction</strong>
+          Recipe-linked stock deducts on every confirmed order. No manual count needed.
+        </div>
+      </div>
+      <div class="auto-item">
+        <span class="auto-badge">AUTO</span>
+        <div class="auto-text">
+          <strong>Low-Stock Alerts</strong>
+          When any ingredient drops below the reorder threshold, a notification fires to the manager.
+        </div>
+      </div>
+      <div class="auto-item">
+        <span class="auto-badge">AUTO</span>
+        <div class="auto-text">
+          <strong>Daily Reports</strong>
+          Revenue, GST, item performance, and payment split are generated at midnight. Ready for the CA in the morning.
+        </div>
+      </div>
+      <div class="auto-item">
+        <span class="auto-badge">AUTO</span>
+        <div class="auto-text">
+          <strong>WhatsApp Notifications</strong>
+          Order confirmations, billing receipts, and delivery status updates are dispatched via WhatsApp automatically.
+        </div>
+      </div>
+      <div class="auto-item">
+        <span class="auto-badge">AUTO</span>
+        <div class="auto-text">
+          <strong>Retry Queues</strong>
+          Failed API calls (payment, WhatsApp, delivery sync) enter a retry queue and are resolved without operator intervention.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  11. TECHNICAL ARCHITECTURE
+══════════════════════════════════════ -->
+<section class="sec" id="tech-arch">
+  <span class="eyebrow rv">Technical Architecture</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">What's under<br><em>the hood</em></h2>
+  <div class="tech-arch-grid">
+    <div class="ta-card rv">
+      <div class="ta-header">
+        <div class="ta-icon">⚛️</div>
+        <div>
+          <div class="ta-layer">Layer 01</div>
+          <div class="ta-name">Frontend</div>
+        </div>
+      </div>
+      <div class="ta-items">
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Next.js 14</strong> — App Router, SSR, RSC</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>React 18</strong> — Component architecture</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>TailwindCSS</strong> — Utility-first styling</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>ShadCN UI</strong> — Component library</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>TanStack Query</strong> — Server state management</div></div>
+      </div>
+    </div>
+    <div class="ta-card rv" style="transition-delay:.05s">
+      <div class="ta-header">
+        <div class="ta-icon">⚙️</div>
+        <div>
+          <div class="ta-layer">Layer 02</div>
+          <div class="ta-name">Backend</div>
+        </div>
+      </div>
+      <div class="ta-items">
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Node.js + Express</strong> — REST API server</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Drizzle ORM</strong> — Type-safe database queries</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Zod</strong> — Runtime validation</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>JWT</strong> — Stateless authentication</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>BullMQ</strong> — Background job queues</div></div>
+      </div>
+    </div>
+    <div class="ta-card rv" style="transition-delay:.1s">
+      <div class="ta-header">
+        <div class="ta-icon">🗄️</div>
+        <div>
+          <div class="ta-layer">Layer 03</div>
+          <div class="ta-name">Database</div>
+        </div>
+      </div>
+      <div class="ta-items">
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>PostgreSQL</strong> — Primary data store</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Redis</strong> — Session cache &amp; queues</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Multi-tenant</strong> — Business isolation by schema</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Audit logs</strong> — All mutations tracked</div></div>
+      </div>
+    </div>
+    <div class="ta-card rv" style="transition-delay:.15s">
+      <div class="ta-header">
+        <div class="ta-icon">🤖</div>
+        <div>
+          <div class="ta-layer">Layer 04</div>
+          <div class="ta-name">AI &amp; Messaging</div>
+        </div>
+      </div>
+      <div class="ta-items">
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>OpenAI GPT-4o</strong> — WhatsApp order parsing</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>WhatsApp Business API</strong> — Customer messaging</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Twilio</strong> — SMS fallback</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Custom NLP pipeline</strong> — Menu item resolution</div></div>
+      </div>
+    </div>
+    <div class="ta-card rv" style="transition-delay:.2s">
+      <div class="ta-header">
+        <div class="ta-icon">💳</div>
+        <div>
+          <div class="ta-layer">Layer 05</div>
+          <div class="ta-name">Payments &amp; GST</div>
+        </div>
+      </div>
+      <div class="ta-items">
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Razorpay</strong> — UPI, card, wallet</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>GST Engine</strong> — CGST/SGST auto-calculation</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Invoice generator</strong> — PDF + WhatsApp delivery</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Payment audit trail</strong> — Immutable records</div></div>
+      </div>
+    </div>
+    <div class="ta-card rv" style="transition-delay:.25s">
+      <div class="ta-header">
+        <div class="ta-icon">☁️</div>
+        <div>
+          <div class="ta-layer">Layer 06</div>
+          <div class="ta-name">Infrastructure</div>
+        </div>
+      </div>
+      <div class="ta-items">
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Vercel</strong> — Frontend deployment</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Railway</strong> — Backend + DB hosting</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Cloudflare</strong> — CDN, DDoS protection</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>GitHub Actions</strong> — CI/CD pipeline</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  12. SCREENSHOTS
+══════════════════════════════════════ -->
+<section class="sec" id="screenshots">
+  <span class="eyebrow rv">Screenshots</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">The real product.<br><em>Every screen.</em></h2>
+
+  <div class="ss-hero rv" style="transition-delay:.08s">
+    <img src="assets/ai/mockup-billing-checkout.png" alt="MENZO Billing Checkout — full screen">
+    <p class="ss-label">Billing &amp; Checkout — Full Session View</p>
+  </div>
+
+  <div class="ss-grid rv" style="transition-delay:.12s">
+    <div>
+      <div class="ss-cell"><img src="assets/MENZO ASSET/MENZO - DASHBOARD.png" alt="Dashboard" loading="lazy"></div>
+      <p class="ss-label">Live Dashboard</p>
+    </div>
+    <div>
+      <div class="ss-cell"><img src="assets/MENZO ASSET/MENZO — Orders.png" alt="Orders" loading="lazy"></div>
+      <p class="ss-label">Order Management</p>
+    </div>
+    <div>
+      <div class="ss-cell"><img src="assets/MENZO ASSET/MENZO — TABLES.png" alt="Tables" loading="lazy"></div>
+      <p class="ss-label">Floor Plan &amp; Tables</p>
+    </div>
+    <div>
+      <div class="ss-cell"><img src="assets/MENZO ASSET/MENZO — Inventory.png" alt="Inventory" loading="lazy"></div>
+      <p class="ss-label">Inventory Management</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  13. ENGINEERING CHALLENGES
+══════════════════════════════════════ -->
+<section class="sec" id="challenges">
+  <span class="eyebrow rv">Engineering Challenges</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">The hard parts.<br><em>How I solved them.</em></h2>
+  <div class="challenges-list rv" style="transition-delay:.08s">
+
+    <div class="challenge-card">
+      <div class="challenge-problem">
+        <span class="ch-label ch-label-problem">Challenge</span>
+        <h3 class="ch-title">Real-time Inventory Sync</h3>
+        <p class="ch-desc">Each dish sold deducts multiple ingredients. A busy restaurant processes 50–100 orders per service. If deductions are queued instead of immediate, stock counts drift — leading to orders being accepted for dishes the kitchen can't make.</p>
+      </div>
+      <div class="challenge-solution">
+        <span class="ch-label ch-label-solution">Solution</span>
+        <h3 class="ch-title">Transactional Deduction with Optimistic Locking</h3>
+        <p class="ch-desc">Every order confirmation runs inventory deduction inside a database transaction with row-level locks. If two orders for the last portion fire simultaneously, one succeeds and one is queued for re-evaluation — preventing overselling without blocking throughput.</p>
+      </div>
+    </div>
+
+    <div class="challenge-card">
+      <div class="challenge-problem">
+        <span class="ch-label ch-label-problem">Challenge</span>
+        <h3 class="ch-title">Kitchen Workflow Without Dedicated Hardware</h3>
+        <p class="ch-desc">Restaurant kitchens are hot, wet, and chaotic. Staff can't manage a full dashboard. The KOT display needed to work on any cheap Android tablet or monitor without installation, configuration, or training.</p>
+      </div>
+      <div class="challenge-solution">
+        <span class="ch-label ch-label-solution">Solution</span>
+        <h3 class="ch-title">Progressive Web App Kitchen Display</h3>
+        <p class="ch-desc">The kitchen view is a PWA that auto-refreshes via polling and works offline-first. It fits any screen from 7" tablets to 32" monitors. No app installation, no account needed for kitchen staff — just a URL pinned to the browser in full-screen mode.</p>
+      </div>
+    </div>
+
+    <div class="challenge-card">
+      <div class="challenge-problem">
+        <span class="ch-label ch-label-problem">Challenge</span>
+        <h3 class="ch-title">WhatsApp Order Parsing at Scale</h3>
+        <p class="ch-desc">Customers write orders inconsistently — "2 butter chicken n 1 nan" vs "Butter Chicken x2, Garlic Naan please". Mapping freeform text to exact menu SKUs with quantity and modifiers is not a simple string match problem.</p>
+      </div>
+      <div class="challenge-solution">
+        <span class="ch-label ch-label-solution">Solution</span>
+        <h3 class="ch-title">LLM Parsing + Fuzzy Menu Matching</h3>
+        <p class="ch-desc">GPT-4o parses the message into structured JSON (items, quantities, modifiers). A secondary fuzzy matching layer maps parsed item names against the live menu with similarity scoring. Items below the confidence threshold are flagged for human review rather than silently misrouted.</p>
+      </div>
+    </div>
+
+    <div class="challenge-card">
+      <div class="challenge-problem">
+        <span class="ch-label ch-label-problem">Challenge</span>
+        <h3 class="ch-title">Multi-channel Delivery Unification</h3>
+        <p class="ch-desc">Swiggy and Zomato operate separate tablet apps with incompatible data formats and no shared API. Restaurants were managing 3 separate devices for orders that all needed to reach the same kitchen.</p>
+      </div>
+      <div class="challenge-solution">
+        <span class="ch-label ch-label-solution">Solution</span>
+        <h3 class="ch-title">Unified Delivery Board with Manual Sync Bridge</h3>
+        <p class="ch-desc">A Kanban board normalizes orders from all channels into a common status model (Pending → Assigned → Out → Delivered). Staff manually close orders from external platforms into MENZO, which then handles rider assignment, status tracking, and analytics — replacing 3 devices with 1 screen.</p>
+      </div>
+    </div>
+
+    <div class="challenge-card">
+      <div class="challenge-problem">
+        <span class="ch-label ch-label-problem">Challenge</span>
+        <h3 class="ch-title">GST Compliance Across Item Categories</h3>
+        <p class="ch-desc">Indian restaurant GST isn't uniform. Air-conditioned restaurants charge 5% GST, non-AC restaurants charge different rates, and specific item categories have their own rules. Manual calculation is error-prone and exposes the business to compliance risk.</p>
+      </div>
+      <div class="challenge-solution">
+        <span class="ch-label ch-label-solution">Solution</span>
+        <h3 class="ch-title">Configurable GST Engine per Business Profile</h3>
+        <p class="ch-desc">Each business profile stores its GST configuration (rate, type, component breakdown). All billing calculations pull from this config, so the tax is always correct without the operator needing to know the rules. Reports export in CA-ready format with CGST/SGST breakdown built in.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  14. WHAT I LEARNED
+══════════════════════════════════════ -->
+<section class="sec" id="learnings">
+  <span class="eyebrow rv">Lessons Learned</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">What building MENZO<br><em>actually taught me</em></h2>
+  <div class="learnings-grid">
+    <div class="learn-card rv">
+      <div class="learn-num">01</div>
+      <h3 class="learn-title">Domain knowledge is the moat</h3>
+      <p class="learn-body">I spent weeks talking to restaurant owners before writing code. The real workflows are nothing like what you'd assume. Paper KOTs aren't just "inefficient" — they're the most reliable fallback kitchens have. Any replacement has to be faster AND more reliable, not just digital.</p>
+    </div>
+    <div class="learn-card rv" style="transition-delay:.05s">
+      <div class="learn-num">02</div>
+      <h3 class="learn-title">Transactions are non-negotiable</h3>
+      <p class="learn-body">I learned early that "eventual consistency" doesn't work in a restaurant POS. If inventory deducts but the order fails, you have stock drift that compounds over time. Every mutation that touches money or stock now runs inside a proper database transaction.</p>
+    </div>
+    <div class="learn-card rv" style="transition-delay:.1s">
+      <div class="learn-num">03</div>
+      <h3 class="learn-title">Real-time is a UX problem, not a tech problem</h3>
+      <p class="learn-body">WebSockets felt like the obvious solution. But kitchen staff found it confusing when the screen updated mid-read. Polling every 10 seconds on the kitchen display — predictable, simple, reliable — turned out to be better UX than "truly" real-time for this use case.</p>
+    </div>
+    <div class="learn-card rv" style="transition-delay:.15s">
+      <div class="learn-num">04</div>
+      <h3 class="learn-title">AI needs confidence thresholds</h3>
+      <p class="learn-body">The first WhatsApp ordering prototype was overconfident. It would guess at ambiguous orders and create wrong items. Adding explicit confidence scoring and routing low-confidence parses to a human review queue reduced errors to near-zero without slowing the happy path.</p>
+    </div>
+    <div class="learn-card rv" style="transition-delay:.2s">
+      <div class="learn-num">05</div>
+      <h3 class="learn-title">Multi-tenancy from day one</h3>
+      <p class="learn-body">Building MENZO on STEMLYN's multi-tenant architecture meant every restaurant gets complete data isolation without running separate databases. Adding a second restaurant is a config change, not a deployment. I wish I had internalized this constraint earlier in my career.</p>
+    </div>
+    <div class="learn-card rv" style="transition-delay:.25s">
+      <div class="learn-num">06</div>
+      <h3 class="learn-title">Deployment is product</h3>
+      <p class="learn-body">A restaurant can't go down at 1pm on a Saturday. Zero-downtime deploys, database migrations that don't lock tables, and graceful feature flags all became requirements once I understood the stakes of production in a food service environment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  15. FUTURE ROADMAP
+══════════════════════════════════════ -->
+<section class="sec" id="roadmap">
+  <span class="eyebrow rv">Future Roadmap</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Where MENZO<br><em>is going next</em></h2>
+  <div class="roadmap-grid">
+    <div class="road-card rv">
+      <div class="road-icon">📱</div>
+      <h4 class="road-title">QR Table Ordering</h4>
+      <p class="road-desc">Customers scan, order, and pay from their own phone. No app install required.</p>
+      <span class="road-phase">Phase 2</span>
+    </div>
+    <div class="road-card rv" style="transition-delay:.04s">
+      <div class="road-icon">🔮</div>
+      <h4 class="road-title">AI Demand Forecasting</h4>
+      <p class="road-desc">Predict what dishes will sell tomorrow based on day, weather, and historical patterns. Auto-adjust prep quantities.</p>
+      <span class="road-phase">Phase 3</span>
+    </div>
+    <div class="road-card rv" style="transition-delay:.08s">
+      <div class="road-icon">💛</div>
+      <h4 class="road-title">Customer Loyalty Engine</h4>
+      <p class="road-desc">Points, rewards, and personalized offers delivered via WhatsApp. No app required for customers.</p>
+      <span class="road-phase">Phase 2</span>
+    </div>
+    <div class="road-card rv" style="transition-delay:.12s">
+      <div class="road-icon">📊</div>
+      <h4 class="road-title">Kitchen Analytics</h4>
+      <p class="road-desc">Ticket completion time per station, prep time trends, and peak load analysis for kitchen optimization.</p>
+      <span class="road-phase">Phase 2</span>
+    </div>
+    <div class="road-card rv" style="transition-delay:.16s">
+      <div class="road-icon">🏪</div>
+      <h4 class="road-title">Multi-location Inventory</h4>
+      <p class="road-desc">Central warehouse management with branch-level stock transfers and consolidated purchasing for restaurant groups.</p>
+      <span class="road-phase">Phase 3</span>
+    </div>
+    <div class="road-card rv" style="transition-delay:.2s">
+      <div class="road-icon">👥</div>
+      <h4 class="road-title">Employee Scheduling</h4>
+      <p class="road-desc">Shift planning, attendance tracking, and payroll export integrated with revenue data to optimize labor cost.</p>
+      <span class="road-phase">Phase 3</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  16. TECH STACK
+══════════════════════════════════════ -->
+<section class="sec" id="stack">
+  <span class="eyebrow rv">Tech Stack</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Built with<br><em>production tools</em></h2>
+  <div class="stack-groups">
+    <div class="stack-group rv">
+      <div class="stack-group-title">Frontend</div>
+      <div class="stack-items">
+        <span class="stack-chip">Next.js 14</span>
+        <span class="stack-chip">React 18</span>
+        <span class="stack-chip">TypeScript</span>
+        <span class="stack-chip">TailwindCSS</span>
+        <span class="stack-chip">ShadCN UI</span>
+        <span class="stack-chip">TanStack Query</span>
+        <span class="stack-chip">Recharts</span>
+      </div>
+    </div>
+    <div class="stack-group rv" style="transition-delay:.05s">
+      <div class="stack-group-title">Backend</div>
+      <div class="stack-items">
+        <span class="stack-chip">Node.js</span>
+        <span class="stack-chip">Express</span>
+        <span class="stack-chip">Drizzle ORM</span>
+        <span class="stack-chip">Zod</span>
+        <span class="stack-chip">BullMQ</span>
+        <span class="stack-chip">JWT</span>
+      </div>
+    </div>
+    <div class="stack-group rv" style="transition-delay:.1s">
+      <div class="stack-group-title">Database</div>
+      <div class="stack-items">
+        <span class="stack-chip">PostgreSQL</span>
+        <span class="stack-chip">Redis</span>
+        <span class="stack-chip">Multi-tenant schemas</span>
+      </div>
+    </div>
+    <div class="stack-group rv" style="transition-delay:.15s">
+      <div class="stack-group-title">AI &amp; Messaging</div>
+      <div class="stack-items">
+        <span class="stack-chip">OpenAI GPT-4o</span>
+        <span class="stack-chip">WhatsApp Business API</span>
+        <span class="stack-chip">Twilio</span>
+      </div>
+    </div>
+    <div class="stack-group rv" style="transition-delay:.2s">
+      <div class="stack-group-title">Payments</div>
+      <div class="stack-items">
+        <span class="stack-chip">Razorpay</span>
+        <span class="stack-chip">UPI</span>
+        <span class="stack-chip">GST Engine</span>
+      </div>
+    </div>
+    <div class="stack-group rv" style="transition-delay:.25s">
+      <div class="stack-group-title">Infrastructure</div>
+      <div class="stack-items">
+        <span class="stack-chip">Vercel</span>
+        <span class="stack-chip">Railway</span>
+        <span class="stack-chip">Cloudflare</span>
+        <span class="stack-chip">GitHub Actions</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  17. GALLERY
+══════════════════════════════════════ -->
+<section class="sec" id="gallery">
+  <span class="eyebrow rv">Gallery</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Every screen.<br><em>Click to expand.</em></h2>
+  <div class="gallery-grid rv" style="transition-delay:.08s" id="gallery-grid"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+  18. PROJECT OUTCOME
+══════════════════════════════════════ -->
+<section class="sec" id="outcome">
+  <span class="eyebrow rv">Project Outcome</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Where MENZO<br><em>stands today</em></h2>
+  <div class="outcome-grid">
+    <div>
+      <p style="font-size:16px;color:var(--fg-m);line-height:1.8;margin-bottom:20px">MENZO is adapted from the reusable STEMLYN platform — a full-stack business operating system built specifically for restaurant operations. Every core workflow is production-ready.</p>
+      <div class="outcome-list rv" style="transition-delay:.08s">
+        <div class="outcome-item"><span class="outcome-check">✓</span> POS &amp; billing with live table sessions and GST auto-calculation</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> Real-time KOT pipeline from order to kitchen display</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> Recipe-linked inventory with automatic stock deduction</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> WhatsApp AI ordering — freeform message to confirmed order</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> Unified delivery board for Swiggy, Zomato &amp; direct orders</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> CA-ready GST reports auto-generated daily</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> 19 modules covering every restaurant workflow</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> Multi-tenant architecture — ready for restaurant group scale</div>
+      </div>
+    </div>
+    <div class="outcome-stats rv" style="transition-delay:.12s">
+      <div class="outcome-stat">
+        <div class="outcome-stat-num">19</div>
+        <div class="outcome-stat-label">Production Modules</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="outcome-stat-num">1</div>
+        <div class="outcome-stat-label">Solo Developer</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="outcome-stat-num">0</div>
+        <div class="outcome-stat-label">Dependencies on 3rd-party POS</div>
+      </div>
+      <div class="outcome-stat">
+        <div class="outcome-stat-num">∞</div>
+        <div class="outcome-stat-label">Tenants on one deployment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  19. RELATED PROJECTS
+══════════════════════════════════════ -->
+<section class="sec" id="related">
+  <span class="eyebrow rv">Explore More Work</span>
+  <h2 class="sec-title rv" style="transition-delay:.04s">Other systems<br><em>I've built</em></h2>
+  <div class="related-grid">
+    <a href="index.html#s-systems" class="related-card rv">
+      <div class="related-arrow">←</div>
+      <div class="related-tag">Business Operating System</div>
+      <h3 class="related-title">STEMLYN</h3>
+      <p class="related-desc">The multi-tenant platform MENZO is built on. Retail, hospitality, and franchise management at scale.</p>
+    </a>
+    <a href="index.html#s-systems" class="related-card rv" style="transition-delay:.06s">
+      <div class="related-arrow">→</div>
+      <div class="related-tag">WhatsApp AI Commerce</div>
+      <h3 class="related-title">AARNA</h3>
+      <p class="related-desc">AI-powered flower shop commerce via WhatsApp. Natural language ordering, payment, and delivery tracking.</p>
+    </a>
+    <a href="index.html#s-systems" class="related-card rv" style="transition-delay:.12s">
+      <div class="related-arrow">→</div>
+      <div class="related-tag">Transportation Management</div>
+      <h3 class="related-title">CharterWheels</h3>
+      <p class="related-desc">Bus operations platform — fleet management, route planning, booking, and driver coordination.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+  20. CONTACT
+══════════════════════════════════════ -->
+<section id="contact">
+  <p class="eyebrow" style="margin-bottom:16px">Let's Build Together</p>
+  <h2 class="contact-title">
+    Interested in restaurant<br>
+    <em>operations technology?</em>
+  </h2>
+  <p class="contact-desc">I build systems that solve real operational problems — from architecture to production. If you're working on something in hospitality, commerce, or operations, let's talk.</p>
+  <div class="contact-actions">
+    <a href="mailto:rohanrj4519@gmail.com" class="btn-primary">⚡ Get In Touch</a>
+    <a href="https://linkedin.com/in/rohanrj" class="btn-ghost" target="_blank" rel="noopener">↗ LinkedIn</a>
+    <a href="index.html" class="btn-ghost">← Full Portfolio</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="foot">
+  <span>© 2026 Rohan RJ · MENZO Case Study</span>
+  <a href="index.html">← Back to Portfolio</a>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span id="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+// ── SCROLL PROGRESS ──
+(function(){
+  var p=document.getElementById('prog');
+  function upd(){
+    var s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-window.innerHeight;
+    p.style.transform='scaleX('+(h>0?s/h:0)+')';
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+})();
+
+// ── SCROLL REVEAL ──
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!window.IntersectionObserver){els.forEach(function(e){e.classList.add('in')});return;}
+  var ob=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');ob.unobserve(en.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ob.observe(e);});
+})();
+
+// ── ARCHITECTURE DIAGRAM ──
+(function(){
+  var data={
+    walkin:{title:'Walk-in Orders',body:'Dine-in and takeaway orders are created directly at the POS terminal. The waiter selects the table, opens a billing session, and starts adding items from the digital menu. Every action is time-stamped and tied to a staff member.',tags:['POS Module','Table Sessions','Role-based Access']},
+    whatsapp:{title:'WhatsApp AI Ordering',body:'Customers send orders in natural language via WhatsApp. GPT-4o parses the message into structured order data — items, quantities, modifiers. Fuzzy matching resolves menu items. Low-confidence parses are flagged for human review. Confirmed orders route through the same pipeline as dine-in.',tags:['GPT-4o','WhatsApp Business API','NLP Pipeline','Confidence Scoring']},
+    delivery:{title:'Delivery Platform Integration',body:'Orders from Swiggy and Zomato are entered into the unified delivery board. Staff receive and confirm orders from a single Kanban view instead of managing multiple tablets. All delivery orders feed the same analytics as dine-in.',tags:['Swiggy','Zomato','Unified Kanban','Rider Management']},
+    server:{title:'MENZO Application Server',body:'Node.js + Express REST API server handling all business logic. Stateless architecture enables horizontal scaling. Every request is authenticated, validated with Zod schemas, and logged. Rate limiting and input sanitization at the API boundary.',tags:['Node.js','Express','REST API','Zod Validation','Rate Limiting']},
+    auth:{title:'Authentication & Authorization',body:'JWT-based stateless authentication. Role-based access control with 5 distinct roles — Owner, Manager, Waiter, Kitchen Staff, and Delivery. Each role sees only what they need. Tokens expire and rotate. Session invalidation propagates immediately.',tags:['JWT','RBAC','5 Role Types','Session Management']},
+    logic:{title:'Business Logic Layer',body:'Core domain services — order management, billing engine, inventory deduction, GST calculation, KOT generation, and delivery coordination. Every service is stateless and can be tested independently. Side effects (notifications, queue jobs) are decoupled through event emission.',tags:['Order Service','Billing Engine','Inventory Service','GST Calculator','KOT Engine']},
+    ai:{title:'AI Processing Engine',body:'GPT-4o integration for natural language order parsing. A secondary fuzzy-matching layer maps LLM output to live menu SKUs with similarity scoring. All AI calls are wrapped in retry logic with exponential backoff. Parsing results are cached per business per session window.',tags:['OpenAI GPT-4o','Fuzzy Matching','Retry Logic','Result Caching']},
+    db:{title:'Database Layer',body:'PostgreSQL as primary data store with Drizzle ORM for type-safe queries. Multi-tenant isolation via schema-per-tenant. Redis for session cache, rate limiting state, and BullMQ job queues. All financial mutations run inside transactions. Full audit log on every write.',tags:['PostgreSQL','Drizzle ORM','Redis','Multi-tenant','BullMQ','Audit Logs']},
+    pos:{title:'POS & Billing Module',body:'Live table sessions accumulate order items in real time. Billing closes the session with one tap — GST auto-calculated from business config, invoice generated as PDF, and optionally dispatched via WhatsApp. Closed sessions archive to the order history.',tags:['Live Sessions','GST Engine','PDF Invoice','WhatsApp Dispatch']},
+    kitchen:{title:'Kitchen Order Tickets',body:'Every order item creates a KOT routed to the correct kitchen station. Kitchen display is a PWA that works on any screen. Polling every 10 seconds for reliability. Tickets are acknowledged by kitchen staff, closing the loop back to the POS.',tags:['Real-time KOT','PWA Display','Station Routing','Ticket Acknowledgment']},
+    inv:{title:'Inventory Module',body:'Recipe-linked inventory deducts exact ingredient quantities on every confirmed order. Low-stock alerts fire when any item drops below its reorder threshold. Purchase orders track incoming stock. Full audit trail of every deduction and addition.',tags:['Recipe Linking','Auto-deduction','Low-stock Alerts','Purchase Orders','Audit Trail']},
+    gst:{title:'GST Reports',body:'Daily, weekly, and monthly reports auto-generated from closed order data. CGST/SGST breakdown per GST rate. Payment split analysis (Cash / UPI / Card). CA-ready export formats. Reports are available immediately — no end-of-month reconciliation required.',tags:['Auto-generation','CGST/SGST','CA-ready Export','Payment Split']},
+    dash:{title:'Owner Dashboard',body:'Real-time overview of revenue, table status, recent orders, and top-selling items. Hourly revenue chart refreshes every 60 seconds. All data is tenant-scoped — the owner sees only their restaurant. Mobile-optimized for management away from the floor.',tags:['Real-time Analytics','Live Floor Plan','Revenue Charts','Mobile-optimized']}
+  };
+
+  var nodes=document.querySelectorAll('.arch-node');
+  var panel=document.getElementById('arch-detail');
+  var titleEl=document.getElementById('arch-detail-title');
+  var bodyEl=document.getElementById('arch-detail-body');
+  var tagsEl=document.getElementById('arch-detail-tags');
+  var active=null;
+
+  nodes.forEach(function(node){
+    node.addEventListener('click',function(){
+      var key=node.getAttribute('data-key');
+      if(!key||!data[key])return;
+      if(active===node){
+        node.classList.remove('active');
+        panel.classList.remove('visible');
+        active=null;
+        return;
+      }
+      if(active)active.classList.remove('active');
+      node.classList.add('active');
+      active=node;
+      var d=data[key];
+      titleEl.textContent=d.title;
+      bodyEl.textContent=d.body;
+      while(tagsEl.firstChild)tagsEl.removeChild(tagsEl.firstChild);
+      d.tags.forEach(function(t){
+        var span=document.createElement('span');
+        span.className='arch-detail-tag';
+        span.textContent=t;
+        tagsEl.appendChild(span);
+      });
+      panel.classList.add('visible');
+      panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  });
+})();
+
+// ── CORE MODULES GRID ──
+(function(){
+  var modules=[
+    {icon:'🏠',name:'Dashboard',tag:'Analytics',desc:'Real-time overview of revenue, table status, recent orders, and hourly performance. The owner can see the entire business at a glance from any device.',features:['Live revenue','Table status','Top items','Hourly chart']},
+    {icon:'📋',name:'Orders',tag:'KOT Engine',desc:'Order management with real-time status tracking. Every order from every channel — dine-in, takeaway, delivery — in one unified view.',features:['All channels','Status tracking','Order history','KOT generation']},
+    {icon:'🪑',name:'Tables',tag:'Floor Plan',desc:'Visual floor plan with live table status. Open sessions, check occupancy, and manage reservations from the same screen.',features:['Visual floor plan','Live status','Session management','Multi-floor']},
+    {icon:'💳',name:'Billing',tag:'POS',desc:'Live table sessions with running totals. One-tap bill generation with GST auto-calculation, invoice creation, and WhatsApp delivery.',features:['Live sessions','GST calculation','PDF invoice','WhatsApp dispatch']},
+    {icon:'🍳',name:'Kitchen',tag:'KOT Display',desc:'PWA kitchen display showing live order tickets. Reliable polling keeps the kitchen in sync without requiring complex real-time infrastructure.',features:['Live KOT feed','Station routing','Ticket ACK','Any screen']},
+    {icon:'📦',name:'Inventory',tag:'Stock Control',desc:'Recipe-linked stock management that deducts automatically on every sale. Low-stock alerts fire before the kitchen runs out.',features:['Auto-deduction','Recipe linking','Low-stock alerts','Audit trail']},
+    {icon:'📊',name:'Reports',tag:'GST & Analytics',desc:'Daily, weekly, and monthly revenue reports with GST breakdown. CA-ready export formats auto-generated — no manual reconciliation.',features:['GST reports','Revenue analytics','Item performance','CA-ready export']},
+    {icon:'🛵',name:'Delivery',tag:'Unified Board',desc:'Kanban board for all delivery channels. Swiggy, Zomato, and direct orders in one view with rider assignment and status tracking.',features:['Multi-channel','Kanban board','Rider assignment','Status tracking']},
+    {icon:'📅',name:'Reservations',tag:'Table Booking',desc:'Reservation management with table assignment, guest details, and time-slot blocking. Reduces walk-in wait time and floor conflicts.',features:['Guest details','Table assignment','Time blocking','Conflict detection']},
+    {icon:'🍽️',name:'Menu',tag:'Catalogue',desc:'Digital menu management with categories, pricing, modifiers, and availability toggles. Changes reflect instantly across all ordering channels.',features:['Categories','Modifiers','Availability','Instant sync']},
+    {icon:'📖',name:'Recipes',tag:'Ingredient Linking',desc:'Recipe builder that links dishes to exact ingredient quantities. The foundation for automatic inventory deduction on every sale.',features:['Ingredient mapping','Quantity linking','Cost calculation','Menu sync']},
+    {icon:'🏭',name:'Vendors',tag:'Supply Chain',desc:'Supplier ledger with purchase records, contact management, and incoming stock tracking integrated with inventory.',features:['Supplier contacts','Purchase orders','Stock receipts','Ledger history']}
+  ];
+
+  var grid=document.getElementById('modules-grid');
+  if(!grid)return;
+  var activeDetail=null;
+
+  modules.forEach(function(m,i){
+    var card=document.createElement('div');
+    card.className='mod-card rv';
+    card.style.transitionDelay=(i*0.04)+'s';
+
+    var icon=document.createElement('div');icon.className='mod-icon';icon.textContent=m.icon;
+    var name=document.createElement('div');name.className='mod-name';name.textContent=m.name;
+    var tag=document.createElement('div');tag.className='mod-tag';tag.textContent=m.tag;
+    card.appendChild(icon);card.appendChild(name);card.appendChild(tag);
+
+    card.addEventListener('click',function(){
+      // remove old detail
+      var old=document.querySelector('.mod-detail');
+      if(old){old.parentNode.removeChild(old);}
+      if(activeDetail===card){activeDetail=null;card.classList.remove('active');return;}
+      if(activeDetail)activeDetail.classList.remove('active');
+      card.classList.add('active');
+      activeDetail=card;
+
+      var detail=document.createElement('div');
+      detail.className='mod-detail visible rv in';
+      detail.style.gridColumn='1/-1';
+
+      var dt=document.createElement('div');dt.className='mod-detail-title';dt.textContent=m.name;
+      var dd=document.createElement('div');dd.className='mod-detail-desc';dd.textContent=m.desc;
+      var df=document.createElement('div');df.className='mod-detail-features';
+      m.features.forEach(function(f){
+        var sp=document.createElement('span');sp.textContent=f;df.appendChild(sp);
+      });
+      detail.appendChild(dt);detail.appendChild(dd);detail.appendChild(df);
+
+      // insert after card
+      card.parentNode.insertBefore(detail,card.nextSibling);
+      detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+
+    grid.appendChild(card);
+  });
+
+  // trigger observer for dynamically added cards
+  var newCards=grid.querySelectorAll('.rv');
+  if(window._rvObserver)newCards.forEach(function(c){window._rvObserver.observe(c);});
+  else newCards.forEach(function(c){c.classList.add('in');});
+})();
+
+// ── GALLERY ──
+(function(){
+  var imgs=[
+    {src:'assets/MENZO ASSET/MENZO - DASHBOARD.png',label:'Dashboard'},
+    {src:'assets/MENZO ASSET/MENZO — Orders.png',label:'Orders'},
+    {src:'assets/MENZO ASSET/MENZO — Billing.png',label:'Billing'},
+    {src:'assets/MENZO ASSET/MENZO — TABLES.png',label:'Tables'},
+    {src:'assets/MENZO ASSET/MENZO — Inventory.png',label:'Inventory'},
+    {src:'assets/MENZO ASSET/MENZO — Reports.png',label:'Reports'},
+    {src:'assets/MENZO ASSET/MENZO — Delivery.png',label:'Delivery'},
+    {src:'assets/MENZO ASSET/MENZO — Menu.png',label:'Menu'},
+    {src:'assets/MENZO ASSET/MENZO — Recipe.png',label:'Recipes'},
+    {src:'assets/MENZO ASSET/MENZO — Vendors.png',label:'Vendors'},
+    {src:'assets/MENZO ASSET/MENZO — RESERVATIONS.png',label:'Reservations'},
+    {src:'assets/MENZO ASSET/MENZO — Billing: checkout.png',label:'Billing Checkout'}
+  ];
+
+  var grid=document.getElementById('gallery-grid');
+  if(!grid)return;
+
+  imgs.forEach(function(img){
+    var cell=document.createElement('div');
+    cell.className='gallery-cell';
+
+    var im=document.createElement('img');
+    im.src=img.src;
+    im.alt=img.label;
+    im.loading='lazy';
+
+    var overlay=document.createElement('div');
+    overlay.className='gallery-cell-overlay';
+    var sp=document.createElement('span');sp.textContent=img.label;
+    overlay.appendChild(sp);
+
+    cell.appendChild(im);cell.appendChild(overlay);
+    grid.appendChild(cell);
+
+    cell.addEventListener('click',function(){
+      var lb=document.getElementById('lightbox');
+      var li=document.getElementById('lightbox-img');
+      li.src=img.src;
+      li.alt=img.label;
+      lb.classList.add('open');
+    });
+  });
+
+  var lb=document.getElementById('lightbox');
+  var lbc=document.getElementById('lightbox-close');
+  function closeLB(){lb.classList.remove('open');document.getElementById('lightbox-img').src='';}
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLB();});
+  lbc.addEventListener('click',closeLB);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();});
+})();
+
+// store observer ref for dynamic cards
+(function(){
+  if(!window.IntersectionObserver)return;
+  window._rvObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');window._rvObserver.unobserve(en.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+})();
+</script>
+</body>
+</html>

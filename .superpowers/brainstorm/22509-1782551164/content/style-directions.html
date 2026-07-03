@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0e0e14; color: #fff; font-family: -apple-system, 'Segoe UI', sans-serif; padding: 40px 32px 80px; }
+
+h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.sub { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 36px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
+.card.selected { border-color: #2563EB !important; }
+
+.preview {
+  width: 100%;
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 18px 20px 20px;
+}
+.card-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.card-body p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  margin-bottom: 8px;
+}
+
+/* ── STYLE A: Apple Clean Dark ── */
+.style-a .preview {
+  background: #000;
+}
+.style-a .card-body { background: #0d0d0d; }
+.style-a .badge { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+
+.a-nav {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.a-logo { font-size: 13px; font-weight: 600; color: #fff; }
+.a-links { display: flex; gap: 16px; }
+.a-links span { font-size: 11px; color: rgba(255,255,255,0.35); }
+
+.a-hero {
+  padding: 28px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.a-eyebrow { font-size: 10px; letter-spacing: .15em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+.a-name { font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: -2px; color: #fff; }
+.a-tag { font-size: 11px; color: rgba(255,255,255,0.4); }
+.a-btn {
+  margin-top: 6px;
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 100px;
+  width: fit-content;
+}
+
+
+/* ── STYLE B: Warm Cream Editorial ── */
+.style-b .preview { background: #f5f1ea; }
+.style-b .card-body { background: #f5f1ea; }
+.style-b .card-body h3 { color: #111; }
+.style-b .card-body p { color: rgba(0,0,0,0.45); }
+.style-b .badge { background: rgba(0,0,0,0.07); color: rgba(0,0,0,0.5); }
+
+.b-top {
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #111;
+}
+.b-logo { font-size: 12px; font-weight: 800; color: #111; letter-spacing: .08em; text-transform: uppercase; }
+.b-links { display: flex; gap: 14px; }
+.b-links span { font-size: 10px; color: rgba(0,0,0,0.4); }
+
+.b-hero { padding: 20px 20px 16px; }
+.b-big {
+  font-size: 58px;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  color: #111;
+  line-height: .9;
+  letter-spacing: -2px;
+}
+.b-big .accent { color: #2563EB; }
+.b-rule { width: 100%; height: 2px; background: #111; margin: 14px 0 10px; }
+.b-sub { font-size: 10px; color: rgba(0,0,0,0.4); letter-spacing: .05em; display: flex; justify-content: space-between; }
+
+
+/* ── STYLE C: Glass / Frosted ── */
+.style-c .preview {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+.style-c .card-body { background: #13112a; }
+.style-c .badge { background: rgba(139,92,246,0.15); color: #8b5cf6; }
+
+.c-noise {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+.c-nav {
+  position: relative; z-index: 2;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+}
+.c-logo { font-size: 13px; font-weight: 700; color: #fff; }
+.c-links { display: flex; gap: 14px; }
+.c-links span { font-size: 10px; color: rgba(255,255,255,0.4); }
+
+.c-hero { position: relative; z-index: 2; padding: 22px 20px 16px; }
+.c-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 100px;
+  padding: 4px 12px 4px 6px;
+  font-size: 10px; color: rgba(255,255,255,0.6);
+  margin-bottom: 14px;
+}
+.c-dot { width: 5px; height: 5px; border-radius: 50%; background: #8b5cf6; }
+.c-name { font-size: 38px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; color: #fff; }
+.c-name .grad { background: linear-gradient(90deg, #8b5cf6, #06B6D4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.c-glass {
+  margin: 14px 20px 0;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex; gap: 16px;
+  position: relative; z-index: 2;
+}
+.c-stat { font-size: 10px; color: rgba(255,255,255,0.45); }
+.c-stat strong { display: block; font-size: 18px; color: #fff; font-weight: 800; }
+
+
+/* ── STYLE D: Bold Monochrome ── */
+.style-d .preview { background: #fff; }
+.style-d .card-body { background: #fff; }
+.style-d .card-body h3 { color: #000; }
+.style-d .card-body p { color: rgba(0,0,0,0.45); }
+.style-d .badge { background: #000; color: #fff; }
+
+.d-nav {
+  background: #000;
+  padding: 12px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.d-logo { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: -.3px; }
+.d-links { display: flex; gap: 14px; }
+.d-links span { font-size: 10px; color: rgba(255,255,255,0.5); }
+
+.d-hero { padding: 16px 20px; background: #fff; position: relative; overflow: hidden; flex: 1; }
+.d-huge {
+  font-size: 76px;
+  font-weight: 900;
+  line-height: .85;
+  letter-spacing: -4px;
+  color: #000;
+  position: relative;
+  z-index: 2;
+}
+.d-huge .stroke {
+  -webkit-text-stroke: 2px #000;
+  color: transparent;
+}
+.d-stripe {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #2563EB 0%, #06B6D4 50%, #2563EB 100%);
+}
+.d-line { width: 100%; height: 2px; background: #000; margin: 10px 0; }
+.d-meta { font-size: 10px; color: #888; letter-spacing: .1em; text-transform: uppercase; }
+
+
+/* SELECTED INDICATOR */
+.selected-indicator {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2563EB;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 8px 32px rgba(37,99,235,0.4);
+  z-index: 100;
+}
+.selected-indicator.show { display: block; }
+</style>
+</head>
+<body>
+
+<h1>Pick your style direction</h1>
+<p class="sub">Click a style — then tell me which one feels right and we'll refine further</p>
+
+<div class="grid">
+
+  <!-- A: Apple Clean Dark -->
+  <div class="card style-a" onclick="select(this,'a')">
+    <div class="preview">
+      <div class="a-nav">
+        <div class="a-logo">Rohan RJ</div>
+        <div class="a-links"><span>Work</span><span>About</span><span>Contact</span></div>
+      </div>
+      <div class="a-hero">
+        <div class="a-eyebrow">GTM Engineer · AI Builder</div>
+        <div class="a-name">Rohan<br>RJ.</div>
+        <div class="a-tag">Revenue · AI · Operations</div>
+        <div class="a-btn">View Work ↗</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">DARK</div>
+      <h3>A — Apple Clean Dark</h3>
+      <p>Pure black background. White space is the design. Rounded pill buttons. Ultra-refined spacing. This is what Apple would make if they built your portfolio.</p>
+    </div>
+  </div>
+
+  <!-- B: Warm Cream Editorial -->
+  <div class="card style-b" onclick="select(this,'b')">
+    <div class="preview">
+      <div class="b-top">
+        <div class="b-logo">Rohan RJ</div>
+        <div class="b-links"><span>Work</span><span>About</span><span>Contact</span></div>
+      </div>
+      <div class="b-hero">
+        <div class="b-big">Rohan<br><span class="accent">RJ</span>.</div>
+        <div class="b-rule"></div>
+        <div class="b-sub"><span>GTM Engineer</span><span>Mangaluru, India</span><span>Open to Remote</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">WARM · LIGHT</div>
+      <h3>B — Warm Cream Editorial</h3>
+      <p>Off-white/cream background. Georgia serif headlines at massive scale. Newspaper editorial feeling. Completely unexpected for a tech portfolio — that's exactly why it stands out.</p>
+    </div>
+  </div>
+
+  <!-- C: Glass / Frosted -->
+  <div class="card style-c" onclick="select(this,'c')">
+    <div class="preview">
+      <div class="c-noise"></div>
+      <div class="c-nav">
+        <div class="c-logo">Rohan RJ</div>
+        <div class="c-links"><span>Work</span><span>About</span><span>Contact</span></div>
+      </div>
+      <div class="c-hero">
+        <div class="c-pill"><div class="c-dot"></div>Open to remote roles</div>
+        <div class="c-name">Rohan<br><span class="grad">RJ</span>.</div>
+      </div>
+      <div class="c-glass">
+        <div class="c-stat"><strong>6</strong>Systems</div>
+        <div class="c-stat"><strong>3</strong>Live URLs</div>
+        <div class="c-stat"><strong>1</strong>Backend</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">GLASS · PURPLE</div>
+      <h3>C — Frosted Glass & Gradient</h3>
+      <p>Deep purple-midnight gradient with frosted glass cards. Purple-to-cyan gradient accents. Feels premium, modern, almost luxury SaaS. Very different from current blue.</p>
+    </div>
+  </div>
+
+  <!-- D: Bold Monochrome -->
+  <div class="card style-d" onclick="select(this,'d')">
+    <div class="preview" style="display:flex;flex-direction:column;">
+      <div class="d-nav">
+        <div class="d-logo">ROHAN RJ</div>
+        <div class="d-links"><span>Work</span><span>About</span><span>Contact</span></div>
+      </div>
+      <div class="d-hero" style="flex:1;">
+        <div class="d-huge">RO<br><span class="stroke">HAN</span><br>RJ.</div>
+        <div class="d-line"></div>
+        <div class="d-meta">GTM Engineer · AI Systems Builder</div>
+        <div class="d-stripe"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">BOLD · WHITE</div>
+      <h3>D — Bold Monochrome Brutalist</h3>
+      <p>White background, pure black type at extreme scale. Outlined/stroke letters mixed with solid. A thin blue-cyan stripe for accent. Zero decoration — pure typographic power.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="selected-indicator" id="indicator">✓ Selected — tell me what you think in the chat</div>
+
+<script>
+function select(el, choice) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('indicator').classList.add('show');
+  document.getElementById('indicator').textContent = '✓ ' + el.querySelector('h3').textContent + ' selected';
+  try {
+    window.parent.postMessage({type:'choice', choice, text: el.querySelector('h3').textContent}, '*');
+  } catch(e){}
+}
+</script>
+
+</body>
+</html>
