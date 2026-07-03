@@ -7,7 +7,7 @@
 <meta name="description" content="A unified operating system for restaurants combining POS, kitchen operations, inventory, delivery, WhatsApp commerce and analytics. Built solo from architecture to production.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Bebas+Neue&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -51,32 +51,37 @@ img{display:block;max-width:100%}
 .eyebrow-dim{color:var(--fg-d)}
 
 /* ── HERO ── */
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:120px var(--gutter) 80px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(232,96,44,0.06) 0%,transparent 70%);pointer-events:none}
-.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 100%)}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:6px 14px;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--fg-m);margin-bottom:28px}
+#hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:0 var(--gutter) clamp(60px,9vh,100px)}
+#hero-bg{position:absolute;inset:0;background-image:url('assets/ai/menzo-hero-bg.png');background-size:cover;background-position:center 35%;z-index:0}
+#hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(3,5,8,1) 0%,rgba(3,5,8,.9) 25%,rgba(3,5,8,.55) 58%,rgba(3,5,8,.18) 100%)}
+.hero-left{position:relative;z-index:1;max-width:1000px;padding-top:160px;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(5,7,11,.6);border:1px solid var(--border);border-radius:100px;padding:6px 14px;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--fg-m);margin-bottom:28px;backdrop-filter:blur(12px)}
 .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero-title{font-family:'General Sans',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.03em;margin-bottom:24px}
-.hero-title em{font-style:normal;color:var(--accent)}
-.hero-desc{font-size:17px;color:var(--fg-m);line-height:1.75;max-width:520px;margin-bottom:36px}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:block}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(72px,11vw,160px);line-height:.9;letter-spacing:.01em;margin-bottom:8px;color:var(--fg)}
+.hero-title-serif{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(32px,5vw,72px);line-height:1.05;color:rgba(245,247,250,.7);margin-bottom:28px;display:block}
+.hero-desc{font-size:17px;color:var(--fg-m);line-height:1.75;max-width:600px;margin-bottom:40px}
+.hero-impact-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:rgba(13,17,23,.7);backdrop-filter:blur(20px);margin-bottom:40px}
+.hip-item{padding:20px 24px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:4px}
+.hip-item:last-child{border-right:none}
+.hip-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,52px);line-height:1;color:var(--fg)}
+.hip-num em{color:var(--accent);font-style:normal}
+.hip-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-d)}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
 .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;transition:opacity .2s,transform .2s}
 .btn-primary:hover{opacity:.88;transform:translateY(-1px)}
 .btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--fg-m);border:1px solid var(--border);padding:12px 24px;border-radius:8px;font-size:14px;transition:border-color .2s,color .2s}
 .btn-ghost:hover{border-color:var(--border-h);color:var(--fg)}
-.hero-screens{position:relative;height:520px}
-.hero-screen{position:absolute;border-radius:var(--r);overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.6);border:1px solid var(--border)}
-.hero-screen img{width:100%;height:100%;object-fit:cover}
-.hs-main{width:90%;top:0;right:0;height:340px}
-.hs-sec{width:55%;bottom:0;left:0;height:220px}
-.hs-tri{width:42%;bottom:60px;right:5%;height:160px;border:1px solid rgba(232,96,44,.3)}
-@media(max-width:900px){#hero{grid-template-columns:1fr;min-height:auto;padding-bottom:60px}.hero-screens{height:300px;margin-top:40px}.hs-main{width:100%;height:220px}.hs-sec{display:none}.hs-tri{display:none}}
+@media(max-width:768px){.hero-impact-strip{grid-template-columns:1fr 1fr}.hip-item:nth-child(2){border-right:none}.hip-item:nth-child(3){border-top:1px solid var(--border)}.hip-item:nth-child(4){border-top:1px solid var(--border);border-right:none}}
+@media(max-width:500px){.hero-impact-strip{grid-template-columns:1fr}}
 
 /* ── SECTION WRAPPER ── */
 .sec{padding:clamp(60px,10vh,120px) var(--gutter);border-top:1px solid var(--border)}
 .sec-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:clamp(28px,3.5vw,48px);letter-spacing:-.025em;line-height:1.1;margin-bottom:16px}
 .sec-title em{font-style:normal;color:var(--accent)}
+.sec-title-xl{font-family:'DM Serif Display',serif;font-size:clamp(40px,6vw,88px);line-height:.95;letter-spacing:-.01em;margin-bottom:20px}
+.sec-title-xl em{font-style:italic;color:var(--accent)}
 .sec-lead{font-size:17px;color:var(--fg-m);max-width:600px;line-height:1.75;margin-bottom:48px}
 
 /* ── EXECUTIVE SUMMARY ── */
@@ -274,7 +279,7 @@ img{display:block;max-width:100%}
 @media(max-width:768px){.outcome-grid{grid-template-columns:1fr}}
 .outcome-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .outcome-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px}
-.outcome-stat-num{font-family:'General Sans',sans-serif;font-weight:800;font-size:40px;color:var(--accent);line-height:1;margin-bottom:6px}
+.outcome-stat-num{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--accent);line-height:1;margin-bottom:6px}
 .outcome-stat-label{font-size:13px;color:var(--fg-m)}
 .outcome-list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
 .outcome-item{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--fg-m);line-height:1.6}
@@ -330,37 +335,37 @@ img{display:block;max-width:100%}
   1. HERO
 ══════════════════════════════════════ -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid-bg"></div>
+  <div id="hero-bg"></div>
 
   <div class="hero-left">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
       Production Ready · Solo Build · Full Stack
     </div>
-    <h1 class="hero-title">
-      MENZO —<br>
-      <em>Restaurant OS</em><br>
-      That Thinks for You
-    </h1>
-    <p class="hero-desc">
-      A unified operating system for restaurants that combines POS, kitchen operations, inventory, delivery management, WhatsApp commerce, and business analytics into a single production-ready platform.
-    </p>
+    <span class="hero-eyebrow">Case Study — Restaurant Operations Platform</span>
+    <h1 class="hero-title">MENZO</h1>
+    <span class="hero-title-serif">The OS that runs the kitchen, the floor,<br>and the business — simultaneously.</span>
+    <div class="hero-impact-strip">
+      <div class="hip-item">
+        <div class="hip-num"><em>19</em></div>
+        <div class="hip-label">Production Modules</div>
+      </div>
+      <div class="hip-item">
+        <div class="hip-num"><em>0</em></div>
+        <div class="hip-label">3rd-party POS Dependencies</div>
+      </div>
+      <div class="hip-item">
+        <div class="hip-num"><em>1</em></div>
+        <div class="hip-label">Solo Developer</div>
+      </div>
+      <div class="hip-item">
+        <div class="hip-num"><em>∞</em></div>
+        <div class="hip-label">Tenants on One Deploy</div>
+      </div>
+    </div>
     <div class="hero-ctas">
       <a href="#problem" class="btn-primary">Read the Case Study →</a>
       <a href="#contact" class="btn-ghost">Work Together</a>
-    </div>
-  </div>
-
-  <div class="hero-screens">
-    <div class="hero-screen hs-main">
-      <img src="assets/ai/hero-dashboard-v3.png" alt="MENZO Dashboard">
-    </div>
-    <div class="hero-screen hs-sec">
-      <img src="assets/ai/hero-billing-v3.png" alt="MENZO Billing">
-    </div>
-    <div class="hero-screen hs-tri">
-      <img src="assets/ai/hero-orders-v3.png" alt="MENZO Orders">
     </div>
   </div>
 </section>
@@ -414,7 +419,7 @@ img{display:block;max-width:100%}
 ══════════════════════════════════════ -->
 <section class="sec" id="problem">
   <span class="eyebrow rv">The Problem</span>
-  <h2 class="sec-title rv" style="transition-delay:.04s">Why restaurants<br><em>break at scale</em></h2>
+  <h2 class="sec-title-xl rv" style="transition-delay:.04s">Why restaurants<br><em>break at scale</em></h2>
   <div class="problem-layout">
     <div class="problem-text rv" style="transition-delay:.08s">
       <p>Most restaurants don't fail because of the food. They fail because <strong>their operations are stitched together with disconnected tools.</strong></p>
@@ -477,7 +482,7 @@ img{display:block;max-width:100%}
 ══════════════════════════════════════ -->
 <section class="sec" id="solution">
   <span class="eyebrow rv">The Solution</span>
-  <h2 class="sec-title rv" style="transition-delay:.04s">One platform.<br><em>Every operation.</em></h2>
+  <h2 class="sec-title-xl rv" style="transition-delay:.04s">One platform.<br><em>Every operation.</em></h2>
   <div class="solution-layout">
     <div class="solution-text rv" style="transition-delay:.08s">
       <p>MENZO replaces every disconnected tool with a single operating system built for how restaurants actually work. The moment a guest is seated, MENZO orchestrates everything downstream — automatically.</p>
@@ -1301,7 +1306,7 @@ img{display:block;max-width:100%}
 ══════════════════════════════════════ -->
 <section class="sec" id="outcome">
   <span class="eyebrow rv">Project Outcome</span>
-  <h2 class="sec-title rv" style="transition-delay:.04s">Where MENZO<br><em>stands today</em></h2>
+  <h2 class="sec-title-xl rv" style="transition-delay:.04s">Where MENZO<br><em>stands today</em></h2>
   <div class="outcome-grid">
     <div>
       <p style="font-size:16px;color:var(--fg-m);line-height:1.8;margin-bottom:20px">MENZO is adapted from the reusable STEMLYN platform — a full-stack business operating system built specifically for restaurant operations. Every core workflow is production-ready.</p>
@@ -1377,7 +1382,7 @@ img{display:block;max-width:100%}
   <p class="contact-desc">I build systems that solve real operational problems — from architecture to production. If you're working on something in hospitality, commerce, or operations, let's talk.</p>
   <div class="contact-actions">
     <a href="mailto:rohanrj4519@gmail.com" class="btn-primary">⚡ Get In Touch</a>
-    <a href="https://linkedin.com/in/rohanrj" class="btn-ghost" target="_blank" rel="noopener">↗ LinkedIn</a>
+    <a href="https://www.linkedin.com/in/rohanrjco" class="btn-ghost" target="_blank" rel="noopener">↗ LinkedIn</a>
     <a href="index.html" class="btn-ghost">← Full Portfolio</a>
   </div>
 </section>
