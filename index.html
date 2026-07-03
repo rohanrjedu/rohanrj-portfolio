@@ -986,7 +986,7 @@ window.addEventListener('load', function(){
   container.appendChild(branch1);
 
   addConn();
-  addRow(['Layer 3 — LLM (OpenAI / Groq)'], 'layer');
+  addRow(['Layer 3 — LLM (Groq · Llama 3.3 70B)'], 'layer');
   addConn();
   addRow(['Contextual AI Reply'], 'execute');
 })();
@@ -999,10 +999,10 @@ window.addEventListener('load', function(){
   if(!stage) return;
   var projects = [
     {tag:'Restaurant Management OS',title:'MENZO',desc:'Tickets lost between table and kitchen. Stock ran out mid-service. Billing errors every night.',impact:'Live KDS sync eliminated lost tickets. Real-time inventory stopped stockouts. Billing errors: zero.',tech:['React','Node.js','Socket.io','PostgreSQL','Razorpay'],link:'menzo.html',img:'assets/ai/hero-dashboard-v3.png'},
-    {tag:'WhatsApp Revenue Agent',title:'AARNA — Flower Shop AI',desc:'100+ WhatsApp orders per night with no one watching. Customers asking for custom arrangements and never getting a reply.',impact:'3-layer AI engine handles orders 24/7, qualifies leads, confirms bookings and fires receipts — zero manual work after 9PM.',tech:['WhatsApp Business API','OpenAI GPT-4','Node.js','MySQL','Razorpay'],link:'#',img:'assets/ai/whatsapp-ai-arch.png'},
-    {tag:'Email Revenue Agent',title:'Outbound Email AI',desc:'Sales team sending generic blasts. No personalisation, no follow-up logic, leads going cold after first touch.',impact:'AI agent personalises each email from CRM context, auto-sequences follow-ups based on open/click signals, books meetings autonomously.',tech:['Node.js','OpenAI','Resend','HubSpot API','Webhook'],link:'#',img:'assets/ai/clean-data-funnel.png'},
-    {tag:'Business Operating System',title:'STEMLYN',desc:'Businesses juggling POS, inventory, CRM, vendors and reporting across 6+ disconnected tools. Data fragmented, decisions slow.',impact:'Single platform replacing all disconnected workflows — 19 modules, 3 AI layers, one operational backbone for retail and hospitality.',tech:['Next.js','Node.js','OpenAI','Groq','Razorpay','Socket.io'],link:'#',img:'assets/ai/ops-problem.png'},
-    {tag:'WhatsApp Lead Qualifier',title:'B2B WhatsApp Agent',desc:'Inbound leads from ads landing in a single WhatsApp inbox. Sales reps manually qualifying every chat, response time hours.',impact:'AI agent instantly qualifies leads against ICP criteria, routes hot leads to human reps and cold leads to nurture — response time under 60 seconds.',tech:['WhatsApp Cloud API','OpenAI','Node.js','CRM Webhook','MySQL'],link:'#',img:'assets/ai/data-arch-ai.png'},
+    {tag:'WhatsApp Revenue Agent',title:'AARNA — Flower Shop AI',desc:'100+ WhatsApp orders per night with no one watching. Customers asking for custom arrangements and never getting a reply.',impact:'3-layer AI engine handles orders 24/7, qualifies leads, confirms bookings and fires receipts — zero manual work after 9PM.',tech:['WhatsApp Business API','Groq · Llama 3.3 70B','Node.js','MySQL','Razorpay'],link:'#',img:'assets/ai/whatsapp-ai-arch.png'},
+    {tag:'Email Revenue Agent',title:'Outbound Email AI',desc:'Sales team sending generic blasts. No personalisation, no follow-up logic, leads going cold after first touch.',impact:'AI agent personalises each email from CRM context, auto-sequences follow-ups based on open/click signals, books meetings autonomously.',tech:['Node.js','Groq · Llama 3.3 70B','Resend','HubSpot API','Webhook'],link:'#',img:'assets/ai/clean-data-funnel.png'},
+    {tag:'Business Operating System',title:'STEMLYN',desc:'Businesses juggling POS, inventory, CRM, vendors and reporting across 6+ disconnected tools. Data fragmented, decisions slow.',impact:'Single platform replacing all disconnected workflows — 19 modules, 3 AI layers, one operational backbone for retail and hospitality.',tech:['Next.js','Node.js','Groq · Llama 3.3 70B','Razorpay','Socket.io'],link:'#',img:'assets/ai/ops-problem.png'},
+    {tag:'WhatsApp Lead Qualifier',title:'B2B WhatsApp Agent',desc:'Inbound leads from ads landing in a single WhatsApp inbox. Sales reps manually qualifying every chat, response time hours.',impact:'AI agent instantly qualifies leads against ICP criteria, routes hot leads to human reps and cold leads to nurture — response time under 60 seconds.',tech:['WhatsApp Cloud API','Groq · Llama 3.3 70B','Node.js','CRM Webhook','MySQL'],link:'#',img:'assets/ai/data-arch-ai.png'},
     {tag:'Transportation Management',title:'CharterWheels',desc:'Charter bus operators managing bookings via phone calls. No fleet visibility, no digital trail, no way to scale.',impact:'Full booking digitisation: fleet visibility dashboard, customer self-service portal, driver coordination, automated confirmations.',tech:['React','Node.js','MySQL','Razorpay'],link:'#',img:'assets/ai/hero-orders-v3.png'},
   ];
 
@@ -1104,14 +1104,14 @@ window.addEventListener('load', function(){
   var container = document.getElementById('tech-cats');
   if(!container) return;
   var cats = [
-    {title:'AI', items:['OpenAI GPT-4','Groq / Llama','LangChain']},
+    {title:'AI', items:['Groq · Llama 3.3 70B','Prompt Engineering']},
     {title:'Frontend', items:['Next.js','React','Tailwind CSS']},
     {title:'Backend', items:['Node.js','Express','PHP']},
-    {title:'Database', items:['PostgreSQL','MySQL','Redis']},
-    {title:'Payments', items:['Razorpay','Stripe']},
-    {title:'Messaging', items:['Meta Business API','Socket.io','Twilio']},
-    {title:'Cloud', items:['Railway','Vercel','DigitalOcean']},
-    {title:'Tools', items:['Git','Docker','Postman']},
+    {title:'Database', items:['PostgreSQL','MySQL']},
+    {title:'Payments', items:['Razorpay']},
+    {title:'Messaging', items:['Meta WhatsApp Business API','Socket.IO']},
+    {title:'Cloud', items:['Railway','Vercel']},
+    {title:'Tools', items:['Git','Postman']},
   ];
   cats.forEach(function(cat){
     var el = document.createElement('div');
