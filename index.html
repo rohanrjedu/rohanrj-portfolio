@@ -340,13 +340,25 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 .cf-up:hover{color:var(--fg);border-color:rgba(255,255,255,.2)}
 
 /* ── SCROLL REVEAL ── */
-.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+
+/* ── PAGE CURTAIN ── */
+#pg-curtain{position:fixed;inset:0;z-index:9998;background:var(--bg);transform-origin:bottom;pointer-events:none;transition:transform .95s cubic-bezier(.7,0,.3,1)}
+#pg-curtain.gone{transform:scaleY(0)}
+
+/* ── WORD REVEAL ── */
+.wreveal{display:block}
+.wreveal .wr-word{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.1}
+.wreveal .wr-word span{display:inline-block;transform:translateY(108%);transition:transform .85s cubic-bezier(.22,.8,.2,1)}
+.wreveal.in .wr-word span{transform:none}
+@media(prefers-reduced-motion:reduce){.wreveal .wr-word span{transform:none}}
 </style>
 </head>
 <body>
 
+<div id="pg-curtain" aria-hidden="true"></div>
 <div id="grain" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
@@ -555,7 +567,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 <!-- ── AI DECISION FLOW ── -->
 <section id="s-ai-flow">
   <div class="section-label rv">Intelligence Layer</div>
-  <h2 class="section-h2 rv" style="transition-delay:.05s">AI Decision Engine</h2>
+  <h2 class="section-h2 wreveal rv" style="transition-delay:.05s">AI Decision Engine</h2>
   <p class="section-p rv" style="transition-delay:.1s">Three-layer AI processing ensures every customer message is handled intelligently — from rule-based flows to LLM fallback.</p>
 
   <div class="flow-diagram rv" style="transition-delay:.15s" id="flow-diagram">
@@ -566,7 +578,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 <!-- ── PROJECTS ── -->
 <section id="s-projects">
   <div class="section-label rv">Case Studies</div>
-  <h2 class="section-h2 rv" style="transition-delay:.05s">Problems Solved.<br>Infrastructure Delivered.</h2>
+  <h2 class="section-h2 wreveal rv" style="transition-delay:.05s">Problems Solved. Infrastructure Delivered.</h2>
   <div class="cs-wrap rv" style="transition-delay:.1s">
     <div class="cs-stage" id="cs-stage" tabindex="0"></div>
     <div class="cs-footer">
@@ -579,7 +591,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 <!-- ── TECH STACK ── -->
 <section id="s-tech">
   <div class="section-label rv">Technology</div>
-  <h2 class="section-h2 rv" style="transition-delay:.05s">The Stack Behind the Systems.</h2>
+  <h2 class="section-h2 wreveal rv" style="transition-delay:.05s">The Stack Behind the Systems.</h2>
   <div class="tech-cats rv" style="transition-delay:.1s" id="tech-cats">
     <!-- populated by JS -->
   </div>
@@ -1153,6 +1165,111 @@ window.addEventListener('load', function(){
     el.addEventListener('mouseleave',function(){
       gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'});
     });
+  });
+})();
+
+/* ── PAGE CURTAIN ── */
+(function(){
+  var curtain = document.getElementById('pg-curtain');
+  if(!curtain) return;
+  window.addEventListener('load', function(){
+    setTimeout(function(){ curtain.classList.add('gone'); }, 80);
+    setTimeout(function(){ curtain.style.display='none'; }, 1100);
+  });
+})();
+
+/* ── WORD REVEAL ── */
+(function(){
+  function splitWords(el) {
+    var original = el.textContent.trim();
+    var words = original.split(/\s+/);
+    while(el.firstChild) el.removeChild(el.firstChild);
+    words.forEach(function(word, i){
+      if(i > 0) el.appendChild(document.createTextNode(' '));
+      var wrap = document.createElement('span');
+      wrap.className = 'wr-word';
+      var inner = document.createElement('span');
+      inner.textContent = word;
+      inner.style.transitionDelay = (i * 0.07) + 's';
+      wrap.appendChild(inner);
+      el.appendChild(wrap);
+    });
+  }
+
+  var els = document.querySelectorAll('.wreveal');
+  els.forEach(function(el){ splitWords(el); });
+
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, {threshold: 0.15});
+  els.forEach(function(el){ obs.observe(el); });
+})();
+
+/* ── GSAP SCROLL ANIMATIONS ── */
+(function(){
+  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Hero bg parallax */
+  var heroBg = document.getElementById('hero-bg-img');
+  if(heroBg){
+    gsap.to(heroBg, {yPercent: 22, ease:'none',
+      scrollTrigger:{trigger:'#s-hero',start:'top top',end:'bottom top',scrub:1}});
+  }
+
+  /* Problem stats — staggered slide up */
+  var psItems = document.querySelectorAll('.ps-item');
+  if(psItems.length){
+    gsap.fromTo(psItems,
+      {opacity:0, y:48},
+      {opacity:1, y:0, duration:.8, stagger:.12, ease:'power3.out',
+       scrollTrigger:{trigger:psItems[0].parentElement, start:'top 82%', toggleActions:'play none none none'}});
+  }
+
+  /* Stemlyn metrics strip */
+  var smItems = document.querySelectorAll('.stemlyn-metric');
+  if(smItems.length){
+    gsap.fromTo(smItems,
+      {opacity:0, y:32, scale:.96},
+      {opacity:1, y:0, scale:1, duration:.7, stagger:.1, ease:'back.out(1.2)',
+       scrollTrigger:{trigger:smItems[0].parentElement, start:'top 84%', toggleActions:'play none none none'}});
+  }
+
+  /* Number cells */
+  var numCells = document.querySelectorAll('.num-cell');
+  if(numCells.length){
+    gsap.fromTo(numCells,
+      {opacity:0, y:36},
+      {opacity:1, y:0, duration:.65, stagger:.09, ease:'power2.out',
+       scrollTrigger:{trigger:numCells[0].parentElement, start:'top 86%', toggleActions:'play none none none'}});
+  }
+
+  /* Tech category cards */
+  var techCards = document.querySelectorAll('.tech-cat');
+  if(techCards.length){
+    gsap.fromTo(techCards,
+      {opacity:0, y:40, scale:.97},
+      {opacity:1, y:0, scale:1, duration:.6, stagger:.07, ease:'power2.out',
+       scrollTrigger:{trigger:techCards[0].parentElement, start:'top 85%', toggleActions:'play none none none'}});
+  }
+
+  /* Timeline items */
+  var tlItems = document.querySelectorAll('.tl-item');
+  if(tlItems.length){
+    gsap.fromTo(tlItems,
+      {opacity:0, x:-28},
+      {opacity:1, x:0, duration:.65, stagger:.1, ease:'power2.out',
+       scrollTrigger:{trigger:tlItems[0].parentElement, start:'top 82%', toggleActions:'play none none none'}});
+  }
+
+  /* Section labels pulse in */
+  document.querySelectorAll('.section-label').forEach(function(el){
+    gsap.fromTo(el,
+      {opacity:0, x:-16},
+      {opacity:1, x:0, duration:.55, ease:'power2.out',
+       scrollTrigger:{trigger:el, start:'top 88%', toggleActions:'play none none none'}});
   });
 })();
 </script>
