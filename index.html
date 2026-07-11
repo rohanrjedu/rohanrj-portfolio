@@ -397,13 +397,18 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 .fh-divider{width:100%;height:1px;background:var(--border);margin-bottom:20px}
 .fh-body{font-size:13px;color:var(--fg-m);line-height:1.8;font-weight:300;margin-bottom:28px}
 .fh-attrs{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
-.fh-attr-label{font-family:var(--mono);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-d);margin-bottom:8px;display:block}
-.fh-swatches{display:flex;gap:8px}
-.fh-swatch{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:transform .2s,box-shadow .2s}
-.fh-swatch:hover{transform:scale(1.2);box-shadow:0 0 0 2px var(--accent)}
-.fh-sizes-row{display:flex;gap:14px;font-family:var(--mono);font-size:10px;color:var(--fg-m);letter-spacing:.08em}
-.fh-cta{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-d);display:flex;align-items:center;gap:10px;cursor:default;transition:color .3s}
-.fh-cta::before{content:'';width:28px;height:1px;background:currentColor;transition:width .4s var(--ease)}
+.fh-attr-label{font-family:var(--mono);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-d);margin-bottom:10px;display:block}
+.fh-stack-list{display:flex;flex-direction:column;gap:7px}
+.fh-stack-item{font-family:var(--mono);font-size:9px;color:var(--fg-m);letter-spacing:.05em;display:flex;align-items:center;gap:8px}
+.fh-stack-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.fh-metrics-list{display:flex;flex-direction:column;gap:8px}
+.fh-metric-item{display:flex;align-items:baseline;gap:6px}
+.fh-metric-val{font-family:var(--mono);font-size:15px;font-weight:500;color:var(--fg)}
+.fh-metric-lbl{font-family:var(--mono);font-size:8px;color:var(--fg-d);letter-spacing:.1em;text-transform:uppercase}
+.fh-status{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:28px}
+.fh-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.6)}
+.fh-cta{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-d);display:flex;align-items:center;gap:10px;cursor:default}
+.fh-cta::before{content:'';width:28px;height:1px;background:currentColor}
 /* reveal steps */
 .reveal-step{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal-step.active{opacity:1;transform:none}
@@ -675,179 +680,187 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
   </div>
 </section>
 
-<!-- ── FASHION SHOWCASE ── -->
+<!-- ── SYSTEMS DEEP DIVE ── -->
 <section id="s-fashion">
-  <div class="section-label rv">Creative Direction</div>
+  <div class="section-label rv">Systems Built</div>
 
-  <!-- Intro split -->
   <div class="fashion-intro">
-    <h2 class="section-h2 rv" style="margin-bottom:0">Closet Studio — A Design Exploration.</h2>
+    <h2 class="section-h2 rv" style="margin-bottom:0">Three Systems.<br><em>One Engineering Thesis.</em></h2>
     <div class="fashion-intro-right rv" style="transition-delay:.08s">
-      <div class="fashion-intro-meta">UI / Fashion E-commerce · 2024</div>
-      <p class="fashion-intro-p">A side project exploring editorial fashion interfaces — scroll-driven grayscale-to-colour reveals, sticky product storytelling, and a design system built for luxury retail.</p>
+      <div class="fashion-intro-meta">Production · Live · Solo Built · 2023–2024</div>
+      <p class="fashion-intro-p">Each system below is a full-stack business infrastructure deployment — not a prototype. Real users, real transactions, real AI routing in production.</p>
     </div>
   </div>
 
-  <!-- Hero 01 — Trench Coat -->
+  <!-- System 01 — MENZO -->
   <div class="fashion-hero">
     <div class="fashion-hero-inner">
       <div class="fashion-hero-img">
-        <img class="fh-gray" src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+        <img class="fh-gray" src="assets/ai/card-menzo.png" alt="MENZO Restaurant OS">
         <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
-          <img src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+          <img src="assets/ai/card-menzo.png" alt="MENZO Restaurant OS">
         </div>
       </div>
       <div class="fashion-hero-content">
-        <div class="fh-idx reveal-step" data-progress="0.05">01 / Outerwear</div>
-        <span class="fh-collection reveal-step" data-progress="0.1">Studio Collection</span>
-        <h3 class="fh-name reveal-step" data-progress="0.18">Minimalist<br>Trench Coat</h3>
-        <div class="fh-price-tag reveal-step" data-progress="0.25">$299.00</div>
-        <div class="fh-divider reveal-step" data-progress="0.3"></div>
-        <p class="fh-body reveal-step" data-progress="0.38">A timeless outer layer designed with absolute minimalism, premium waterproof cotton, and a classic silhouette that transcends seasons.</p>
+        <div class="fh-idx reveal-step" data-progress="0.05">01 / Restaurant OS</div>
+        <span class="fh-collection reveal-step" data-progress="0.1">Food &amp; Beverage · Live Deployment</span>
+        <h3 class="fh-name reveal-step" data-progress="0.18">MENZO</h3>
+        <div class="fh-status reveal-step" data-progress="0.23">Live · Mumbai, India</div>
+        <div class="fh-divider reveal-step" data-progress="0.28"></div>
+        <p class="fh-body reveal-step" data-progress="0.36">A full-stack restaurant operating system replacing 4 disconnected tools. Table-side ordering, live kitchen display, inventory with automatic restock triggers, and a CRM that remembers every guest preference — all in one dashboard.</p>
         <div class="fh-attrs reveal-step" data-progress="0.5">
           <div>
-            <span class="fh-attr-label">Colour</span>
-            <div class="fh-swatches">
-              <div class="fh-swatch" style="background:#E1D8CE"></div>
-              <div class="fh-swatch" style="background:#1E1E1E"></div>
-              <div class="fh-swatch" style="background:#3A4F41"></div>
+            <span class="fh-attr-label">Core Stack</span>
+            <div class="fh-stack-list">
+              <span class="fh-stack-item">Node.js · Express</span>
+              <span class="fh-stack-item">PostgreSQL · MySQL</span>
+              <span class="fh-stack-item">WhatsApp Business API</span>
             </div>
           </div>
           <div>
-            <span class="fh-attr-label">Size</span>
-            <div class="fh-sizes-row"><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+            <span class="fh-attr-label">Scale</span>
+            <div class="fh-metrics-list">
+              <div class="fh-metric-item"><span class="fh-metric-val">6</span><span class="fh-metric-lbl">Modules</span></div>
+              <div class="fh-metric-item"><span class="fh-metric-val">1</span><span class="fh-metric-lbl">Live Venue</span></div>
+            </div>
           </div>
         </div>
-        <div class="fh-cta reveal-step" data-progress="0.65">View Product</div>
+        <div class="fh-cta reveal-step" data-progress="0.65">Case Study</div>
       </div>
     </div>
   </div>
 
-  <!-- Hero 02 — Silk Dress (content left, image right) -->
+  <!-- System 02 — AARNA (flipped) -->
   <div class="fashion-hero">
     <div class="fashion-hero-inner">
       <div class="fashion-hero-content" style="border-left:none;border-right:1px solid var(--border)">
-        <div class="fh-idx reveal-step" data-progress="0.05">02 / Dresses</div>
-        <span class="fh-collection reveal-step" data-progress="0.1">Tailored Studio</span>
-        <h3 class="fh-name reveal-step" data-progress="0.18">Minimalist<br>Silk Dress</h3>
-        <div class="fh-price-tag reveal-step" data-progress="0.25">$279.00</div>
-        <div class="fh-divider reveal-step" data-progress="0.3"></div>
-        <p class="fh-body reveal-step" data-progress="0.38">Crafted from 100% organic mulberry silk with a delicate drape and refined scoop neckline — effortless for day and evening.</p>
+        <div class="fh-idx reveal-step" data-progress="0.05">02 / WhatsApp Commerce</div>
+        <span class="fh-collection reveal-step" data-progress="0.1">D2C Retail · AI-Powered · Live</span>
+        <h3 class="fh-name reveal-step" data-progress="0.18">AARNA</h3>
+        <div class="fh-status reveal-step" data-progress="0.23">Live · D2C Brands</div>
+        <div class="fh-divider reveal-step" data-progress="0.28"></div>
+        <p class="fh-body reveal-step" data-progress="0.36">WhatsApp-first commerce infrastructure with a 3-layer AI routing engine — flow engine, keyword rules, then Llama 3.3 70B via Groq as fallback. Handles orders, payments via Razorpay QR, broadcast campaigns, and a full vendor ledger. 12 modules, zero human agents needed for standard queries.</p>
         <div class="fh-attrs reveal-step" data-progress="0.5">
           <div>
-            <span class="fh-attr-label">Colour</span>
-            <div class="fh-swatches">
-              <div class="fh-swatch" style="background:#E1D8CE"></div>
-              <div class="fh-swatch" style="background:#1E1E1E"></div>
-              <div class="fh-swatch" style="background:#C2B280"></div>
+            <span class="fh-attr-label">Core Stack</span>
+            <div class="fh-stack-list">
+              <span class="fh-stack-item">Groq · Llama 3.3 70B</span>
+              <span class="fh-stack-item">Razorpay · Socket.io</span>
+              <span class="fh-stack-item">Next.js · PostgreSQL</span>
             </div>
           </div>
           <div>
-            <span class="fh-attr-label">Size</span>
-            <div class="fh-sizes-row"><span>XS</span><span>S</span><span>M</span><span>L</span></div>
+            <span class="fh-attr-label">Scale</span>
+            <div class="fh-metrics-list">
+              <div class="fh-metric-item"><span class="fh-metric-val">12</span><span class="fh-metric-lbl">Modules</span></div>
+              <div class="fh-metric-item"><span class="fh-metric-val">3</span><span class="fh-metric-lbl">AI Layers</span></div>
+            </div>
           </div>
         </div>
-        <div class="fh-cta reveal-step" data-progress="0.65">View Product</div>
+        <div class="fh-cta reveal-step" data-progress="0.65">Case Study</div>
       </div>
       <div class="fashion-hero-img">
-        <img class="fh-gray" src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+        <img class="fh-gray" src="assets/ai/card-aarna.png" alt="AARNA WhatsApp Commerce">
         <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
-          <img src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+          <img src="assets/ai/card-aarna.png" alt="AARNA WhatsApp Commerce">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Hero 03 — Cashmere -->
+  <!-- System 03 — Outbound Email AI -->
   <div class="fashion-hero">
     <div class="fashion-hero-inner">
       <div class="fashion-hero-img">
-        <img class="fh-gray" src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+        <img class="fh-gray" src="assets/ai/card-email-ai.png" alt="Outbound Email AI">
         <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
-          <img src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+          <img src="assets/ai/card-email-ai.png" alt="Outbound Email AI">
         </div>
       </div>
       <div class="fashion-hero-content">
-        <div class="fh-idx reveal-step" data-progress="0.05">03 / Knitwear</div>
-        <span class="fh-collection reveal-step" data-progress="0.1">Essentials</span>
-        <h3 class="fh-name reveal-step" data-progress="0.18">Oversized<br>Cashmere Knit</h3>
-        <div class="fh-price-tag reveal-step" data-progress="0.25">$199.00</div>
-        <div class="fh-divider reveal-step" data-progress="0.3"></div>
-        <p class="fh-body reveal-step" data-progress="0.38">Pure Mongolian cashmere in an oversized cut designed for effortless layering — the kind of piece worn every day.</p>
+        <div class="fh-idx reveal-step" data-progress="0.05">03 / AI Outreach Engine</div>
+        <span class="fh-collection reveal-step" data-progress="0.1">B2B Sales Infrastructure · Live</span>
+        <h3 class="fh-name reveal-step" data-progress="0.18">Outbound<br>Email AI</h3>
+        <div class="fh-status reveal-step" data-progress="0.23">Live · B2B Sales Teams</div>
+        <div class="fh-divider reveal-step" data-progress="0.28"></div>
+        <p class="fh-body reveal-step" data-progress="0.36">A 4-stage AI pipeline that researches leads, personalises cold emails at scale, sequences follow-ups, and tracks replies — replacing a full BDR workflow. Built to run autonomously with minimal human review for standard outreach patterns.</p>
         <div class="fh-attrs reveal-step" data-progress="0.5">
           <div>
-            <span class="fh-attr-label">Colour</span>
-            <div class="fh-swatches">
-              <div class="fh-swatch" style="background:#D7C4B7"></div>
-              <div class="fh-swatch" style="background:#1E1E1E"></div>
-              <div class="fh-swatch" style="background:#E6E6E6"></div>
+            <span class="fh-attr-label">Core Stack</span>
+            <div class="fh-stack-list">
+              <span class="fh-stack-item">Claude · OpenAI</span>
+              <span class="fh-stack-item">n8n · PostgreSQL</span>
+              <span class="fh-stack-item">Apollo · Instantly</span>
             </div>
           </div>
           <div>
-            <span class="fh-attr-label">Size</span>
-            <div class="fh-sizes-row"><span>S</span><span>M</span><span>L</span></div>
+            <span class="fh-attr-label">Scale</span>
+            <div class="fh-metrics-list">
+              <div class="fh-metric-item"><span class="fh-metric-val">4</span><span class="fh-metric-lbl">Pipeline Stages</span></div>
+              <div class="fh-metric-item"><span class="fh-metric-val">10×</span><span class="fh-metric-lbl">Output vs Manual</span></div>
+            </div>
           </div>
         </div>
-        <div class="fh-cta reveal-step" data-progress="0.65">View Product</div>
+        <div class="fh-cta reveal-step" data-progress="0.65">Case Study</div>
       </div>
     </div>
   </div>
 
-  <!-- Product Index Table -->
+  <!-- Systems Index Table -->
   <div class="fashion-index rv" id="fashion-overview">
     <div class="fashion-index-hd">
-      <span class="fashion-index-hd-left">Collection Overview</span>
-      <span class="fashion-index-hd-right">3 Pieces</span>
+      <span class="fashion-index-hd-left">Systems Registry</span>
+      <span class="fashion-index-hd-right">3 Live Deployments</span>
     </div>
     <div class="fidx-row rv" style="transition-delay:.05s">
       <div class="fidx-num">01</div>
       <div class="fidx-center">
         <div class="fidx-img">
-          <img class="fi-gray" src="assets/ai/fashion-trench.png" alt="Trench">
-          <img class="fi-col" src="assets/ai/fashion-trench.png" alt="Trench">
+          <img class="fi-gray" src="assets/ai/card-menzo.png" alt="MENZO">
+          <img class="fi-col" src="assets/ai/card-menzo.png" alt="MENZO">
         </div>
         <div class="fidx-info">
-          <div class="fidx-name">Minimalist Trench Coat</div>
-          <div class="fidx-collection">Studio Collection · Outerwear</div>
+          <div class="fidx-name">MENZO</div>
+          <div class="fidx-collection">Restaurant OS · Food &amp; Beverage</div>
         </div>
       </div>
       <div class="fidx-right">
-        <span class="fidx-price">$299.00</span>
-        <span class="fidx-tag">S · M · L · XL</span>
+        <span class="fidx-price">6 Modules</span>
+        <span class="fidx-tag">Live · Mumbai</span>
       </div>
     </div>
     <div class="fidx-row rv" style="transition-delay:.1s">
       <div class="fidx-num">02</div>
       <div class="fidx-center">
         <div class="fidx-img">
-          <img class="fi-gray" src="assets/ai/fashion-silk-dress.png" alt="Dress">
-          <img class="fi-col" src="assets/ai/fashion-silk-dress.png" alt="Dress">
+          <img class="fi-gray" src="assets/ai/card-aarna.png" alt="AARNA">
+          <img class="fi-col" src="assets/ai/card-aarna.png" alt="AARNA">
         </div>
         <div class="fidx-info">
-          <div class="fidx-name">Minimalist Silk Dress</div>
-          <div class="fidx-collection">Tailored Studio · Dresses</div>
+          <div class="fidx-name">AARNA</div>
+          <div class="fidx-collection">WhatsApp AI Commerce · D2C Retail</div>
         </div>
       </div>
       <div class="fidx-right">
-        <span class="fidx-price">$279.00</span>
-        <span class="fidx-tag">XS · S · M · L</span>
+        <span class="fidx-price">12 Modules</span>
+        <span class="fidx-tag">Live · 3 AI Layers</span>
       </div>
     </div>
     <div class="fidx-row rv" style="transition-delay:.15s">
       <div class="fidx-num">03</div>
       <div class="fidx-center">
         <div class="fidx-img">
-          <img class="fi-gray" src="assets/ai/fashion-cashmere.png" alt="Cashmere">
-          <img class="fi-col" src="assets/ai/fashion-cashmere.png" alt="Cashmere">
+          <img class="fi-gray" src="assets/ai/card-email-ai.png" alt="Outbound Email AI">
+          <img class="fi-col" src="assets/ai/card-email-ai.png" alt="Outbound Email AI">
         </div>
         <div class="fidx-info">
-          <div class="fidx-name">Oversized Cashmere Knit</div>
-          <div class="fidx-collection">Essentials · Knitwear</div>
+          <div class="fidx-name">Outbound Email AI</div>
+          <div class="fidx-collection">AI Outreach Engine · B2B Sales</div>
         </div>
       </div>
       <div class="fidx-right">
-        <span class="fidx-price">$199.00</span>
-        <span class="fidx-tag">S · M · L</span>
+        <span class="fidx-price">4-Stage Pipeline</span>
+        <span class="fidx-tag">Live · 10× Output</span>
       </div>
     </div>
   </div>
