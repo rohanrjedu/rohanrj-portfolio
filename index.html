@@ -369,6 +369,81 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 .wreveal .wr-word span{display:inline-block;transform:translateY(108%);transition:transform .85s cubic-bezier(.22,.8,.2,1)}
 .wreveal.in .wr-word span{transform:none}
 @media(prefers-reduced-motion:reduce){.wreveal .wr-word span{transform:none}}
+
+/* ── FASHION SHOWCASE ── */
+#s-fashion{padding:clamp(64px,10vh,120px) 0;overflow:hidden}
+#s-fashion .section-label,.fashion-intro-text{padding:0 var(--gutter)}
+.fashion-intro-text{max-width:600px;margin:0 0 clamp(48px,8vh,96px)}
+.fashion-intro-text h2{font-family:var(--serif);font-size:clamp(32px,4vw,56px);font-weight:400;letter-spacing:-0.01em;line-height:1.05;margin-bottom:16px}
+.fashion-intro-text p{font-size:15px;color:var(--fg-m);font-weight:300;line-height:1.85}
+
+/* Product Hero */
+.fashion-hero{position:relative;height:250vh;width:100%}
+.fashion-hero-inner{position:sticky;top:0;left:0;width:100%;height:100vh;overflow:hidden}
+.fashion-hero-grid{display:grid;grid-template-columns:1fr 1fr;height:100%}
+.fashion-hero-img{position:relative;overflow:hidden}
+.fashion-hero-img img.fh-gray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(1.05);transition:none}
+.fashion-hero-img .fh-color{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;will-change:clip-path}
+.fashion-hero-img .fh-color img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fashion-hero-content{display:flex;align-items:center;justify-content:center;padding:48px var(--gutter)}
+.fh-content-inner{max-width:420px;width:100%}
+.fh-tag{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-d);margin-bottom:20px;display:block}
+.fh-title{font-family:var(--serif);font-size:clamp(26px,3vw,48px);font-weight:400;color:var(--fg);line-height:1.1;margin-bottom:12px;letter-spacing:-0.01em}
+.fh-price{font-size:18px;font-weight:300;color:var(--fg);letter-spacing:.05em;margin-bottom:32px}
+.fh-desc{font-size:14px;color:var(--fg-m);line-height:1.8;font-weight:300;padding-top:24px;border-top:1px solid var(--border);margin-bottom:32px}
+.fh-colors{margin-bottom:24px}
+.fh-colors-label,.fh-sizes-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.25em;color:var(--fg-d);display:block;margin-bottom:10px}
+.fh-swatches{display:flex;gap:10px;flex-wrap:wrap}
+.fh-swatch{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:transform .2s;box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
+.fh-swatch:hover{transform:scale(1.15)}
+.fh-sizes{margin-bottom:32px}
+.fh-size-list{display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--fg);letter-spacing:.1em}
+.fh-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;background:var(--fg);color:var(--bg);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:none;border-radius:100px;cursor:pointer;transition:background .3s,color .3s}
+.fh-btn:hover{background:var(--accent);color:#fff}
+/* reveal steps */
+.reveal-step{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal-step.active{opacity:1;transform:none}
+
+/* Overview cards */
+.fashion-overview{padding:clamp(48px,8vh,96px) var(--gutter) clamp(24px,4vh,48px)}
+.fashion-overview-hd{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:32px}
+.fashion-overview-hd span{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--fg-d);text-transform:uppercase}
+.fashion-overview-hd a{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .3s}
+.fashion-overview-hd a:hover{color:var(--accent)}
+.fashion-card-row{display:flex;overflow-x:auto;gap:20px;padding-bottom:24px;scrollbar-width:none}
+.fashion-card-row::-webkit-scrollbar{display:none}
+.fcard{flex:0 0 calc(50% - 10px);max-width:320px;position:relative;border:1px solid var(--border);overflow:hidden;transition:border-color .5s;cursor:pointer}
+@media(min-width:600px){.fcard{flex:0 0 calc(33.333% - 14px)}}
+@media(min-width:900px){.fcard{flex:0 0 280px}}
+.fcard:hover{border-color:rgba(232,96,44,.4)}
+.fcard-img{position:relative;aspect-ratio:3/4;overflow:hidden}
+.fcard-img img.fc-gray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:none}
+.fcard-img .fc-color{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;transition:clip-path 2.8s cubic-bezier(0.15,0.85,0.35,1)}
+.fcard-img .fc-color img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fcard-body{padding:16px 20px 20px;text-align:center}
+.fcard-collection{font-family:var(--mono);font-size:8px;letter-spacing:.35em;color:var(--fg-d);text-transform:uppercase;display:block;margin-bottom:8px}
+.fcard-title{font-size:12px;font-weight:500;color:var(--fg);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;line-height:1.4}
+.fcard-price{font-size:11px;color:var(--fg-m);letter-spacing:.1em;font-weight:300}
+.fcard-corner{position:absolute;pointer-events:none;opacity:0;transition:opacity .5s .1s}
+.fcard-corner.tl{top:0;left:0}
+.fcard-corner.tr{top:0;right:0}
+.fcard:hover .fcard-corner{opacity:1}
+.fcard-corner::before,.fcard-corner::after{content:'';position:absolute;background:rgba(255,255,255,.25)}
+.fcard-corner.tl::before{width:24px;height:1px;top:0;left:0}
+.fcard-corner.tl::after{width:1px;height:24px;top:0;left:0}
+.fcard-corner.tr::before{width:24px;height:1px;top:0;right:0}
+.fcard-corner.tr::after{width:1px;height:24px;top:0;right:0}
+.fcard-view{position:absolute;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);opacity:0;transition:opacity .5s,transform .5s;background:rgba(3,5,8,.75);backdrop-filter:blur(12px);border:1px solid var(--border);color:var(--fg);font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:8px 24px;border-radius:100px;white-space:nowrap}
+.fcard:hover .fcard-view{opacity:1;transform:translateX(-50%) translateY(0)}
+.fashion-scroll-bar{width:80px;height:2px;background:rgba(255,255,255,.06);margin:0 auto;border-radius:2px;overflow:hidden;position:relative}
+.fashion-scroll-ind{height:100%;width:32px;border-radius:2px;background:var(--fg-d);position:absolute;left:0;transition:left .1s linear}
+@media(max-width:767px){
+  .fashion-hero{height:auto}
+  .fashion-hero-inner{position:relative;height:auto}
+  .fashion-hero-grid{grid-template-columns:1fr}
+  .fashion-hero-img{height:60vw;max-height:340px}
+  .fashion-hero-content{padding:28px var(--gutter)}
+}
 </style>
 </head>
 <body>
@@ -600,6 +675,179 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
       <div class="cs-dots" id="cs-dots"></div>
       <div class="cs-detail" id="cs-detail"></div>
     </div>
+  </div>
+</section>
+
+<!-- ── FASHION SHOWCASE ── -->
+<section id="s-fashion">
+  <div class="section-label rv">Creative Direction</div>
+  <div class="fashion-intro-text rv" style="transition-delay:.06s">
+    <h2>Closet Studio — A Design Concept.</h2>
+    <p>A side exploration in editorial fashion UI. Minimal forms, cinematic scroll reveals, grayscale-to-color transitions driven by scroll progress.</p>
+  </div>
+
+  <!-- Product 1 -->
+  <div class="fashion-hero" data-product="0">
+    <div class="fashion-hero-inner">
+      <div class="fashion-hero-grid">
+        <div class="fashion-hero-img">
+          <img class="fh-gray" src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+          <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
+            <img src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+          </div>
+        </div>
+        <div class="fashion-hero-content">
+          <div class="fh-content-inner">
+            <span class="fh-tag reveal-step" data-progress="0.1">Studio Collection</span>
+            <h3 class="fh-title reveal-step" data-progress="0.2">Minimalist<br>Trench Coat</h3>
+            <div class="fh-price reveal-step" data-progress="0.3">$299.00</div>
+            <p class="fh-desc reveal-step" data-progress="0.4">A timeless outer layer designed with absolute minimalism, premium waterproof cotton, and a classic silhouette.</p>
+            <div class="fh-colors reveal-step" data-progress="0.55">
+              <span class="fh-colors-label">Color</span>
+              <div class="fh-swatches">
+                <div class="fh-swatch" style="background:#E1D8CE"></div>
+                <div class="fh-swatch" style="background:#1E1E1E"></div>
+                <div class="fh-swatch" style="background:#3A4F41"></div>
+              </div>
+            </div>
+            <div class="fh-sizes reveal-step" data-progress="0.65">
+              <span class="fh-sizes-label">Size</span>
+              <div class="fh-size-list"><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+            </div>
+            <button class="fh-btn reveal-step" data-progress="0.78">Quick View ↗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product 2 (reversed) -->
+  <div class="fashion-hero" data-product="1" data-reversed="true">
+    <div class="fashion-hero-inner">
+      <div class="fashion-hero-grid">
+        <div class="fashion-hero-content">
+          <div class="fh-content-inner">
+            <span class="fh-tag reveal-step" data-progress="0.1">Tailored Studio</span>
+            <h3 class="fh-title reveal-step" data-progress="0.2">Minimalist<br>Silk Dress</h3>
+            <div class="fh-price reveal-step" data-progress="0.3">$279.00</div>
+            <p class="fh-desc reveal-step" data-progress="0.4">An elegant midi dress crafted from 100% organic mulberry silk, featuring a delicate drape and a refined scoop neckline.</p>
+            <div class="fh-colors reveal-step" data-progress="0.55">
+              <span class="fh-colors-label">Color</span>
+              <div class="fh-swatches">
+                <div class="fh-swatch" style="background:#E1D8CE"></div>
+                <div class="fh-swatch" style="background:#1E1E1E"></div>
+                <div class="fh-swatch" style="background:#C2B280"></div>
+              </div>
+            </div>
+            <div class="fh-sizes reveal-step" data-progress="0.65">
+              <span class="fh-sizes-label">Size</span>
+              <div class="fh-size-list"><span>XS</span><span>S</span><span>M</span><span>L</span></div>
+            </div>
+            <button class="fh-btn reveal-step" data-progress="0.78">Quick View ↗</button>
+          </div>
+        </div>
+        <div class="fashion-hero-img">
+          <img class="fh-gray" src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+          <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
+            <img src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product 3 -->
+  <div class="fashion-hero" data-product="2">
+    <div class="fashion-hero-inner">
+      <div class="fashion-hero-grid">
+        <div class="fashion-hero-img">
+          <img class="fh-gray" src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+          <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
+            <img src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+          </div>
+        </div>
+        <div class="fashion-hero-content">
+          <div class="fh-content-inner">
+            <span class="fh-tag reveal-step" data-progress="0.1">Essentials</span>
+            <h3 class="fh-title reveal-step" data-progress="0.2">Oversized<br>Cashmere Knit</h3>
+            <div class="fh-price reveal-step" data-progress="0.3">$199.00</div>
+            <p class="fh-desc reveal-step" data-progress="0.4">An incredibly soft, oversized sweater knit from pure Mongolian cashmere, designed for effortless layering.</p>
+            <div class="fh-colors reveal-step" data-progress="0.55">
+              <span class="fh-colors-label">Color</span>
+              <div class="fh-swatches">
+                <div class="fh-swatch" style="background:#D7C4B7"></div>
+                <div class="fh-swatch" style="background:#1E1E1E"></div>
+                <div class="fh-swatch" style="background:#E6E6E6"></div>
+              </div>
+            </div>
+            <div class="fh-sizes reveal-step" data-progress="0.65">
+              <span class="fh-sizes-label">Size</span>
+              <div class="fh-size-list"><span>S</span><span>M</span><span>L</span></div>
+            </div>
+            <button class="fh-btn reveal-step" data-progress="0.78">Quick View ↗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview Cards -->
+  <div class="fashion-overview" id="fashion-overview">
+    <div class="fashion-overview-hd">
+      <span>Overview</span>
+      <a href="#">View Collection →</a>
+    </div>
+    <div class="fashion-card-row" id="fcard-row">
+      <div class="fcard" data-img="assets/ai/fashion-trench.png">
+        <div class="fcard-img">
+          <img class="fc-gray" src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+          <div class="fc-color" style="clip-path:circle(0% at 50% 50%)">
+            <img src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+          </div>
+        </div>
+        <div class="fcard-body">
+          <span class="fcard-collection">Studio Collection</span>
+          <div class="fcard-title">Minimalist Trench Coat</div>
+          <div class="fcard-price">$299.00</div>
+        </div>
+        <div class="fcard-corner tl"></div>
+        <div class="fcard-corner tr"></div>
+        <div class="fcard-view">View Details</div>
+      </div>
+      <div class="fcard" data-img="assets/ai/fashion-silk-dress.png">
+        <div class="fcard-img">
+          <img class="fc-gray" src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+          <div class="fc-color" style="clip-path:circle(0% at 50% 50%)">
+            <img src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+          </div>
+        </div>
+        <div class="fcard-body">
+          <span class="fcard-collection">Tailored Studio</span>
+          <div class="fcard-title">Minimalist Silk Dress</div>
+          <div class="fcard-price">$279.00</div>
+        </div>
+        <div class="fcard-corner tl"></div>
+        <div class="fcard-corner tr"></div>
+        <div class="fcard-view">View Details</div>
+      </div>
+      <div class="fcard" data-img="assets/ai/fashion-cashmere.png">
+        <div class="fcard-img">
+          <img class="fc-gray" src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+          <div class="fc-color" style="clip-path:circle(0% at 50% 50%)">
+            <img src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+          </div>
+        </div>
+        <div class="fcard-body">
+          <span class="fcard-collection">Essentials</span>
+          <div class="fcard-title">Oversized Cashmere Knit</div>
+          <div class="fcard-price">$199.00</div>
+        </div>
+        <div class="fcard-corner tl"></div>
+        <div class="fcard-corner tr"></div>
+        <div class="fcard-view">View Details</div>
+      </div>
+    </div>
+    <div class="fashion-scroll-bar"><div class="fashion-scroll-ind" id="fscroll-ind"></div></div>
   </div>
 </section>
 
@@ -1327,6 +1575,103 @@ window.addEventListener('load', function(){
       {opacity:1, x:0, duration:.55, ease:'power2.out',
        scrollTrigger:{trigger:el, start:'top 88%', toggleActions:'play none none none'}});
   });
+})();
+
+/* ── FASHION SHOWCASE ── */
+(function(){
+  // Scroll-driven grayscale→color reveal for ProductHero sections
+  var heroes = document.querySelectorAll('.fashion-hero');
+  function updateHero(hero){
+    var inner = hero.querySelector('.fashion-hero-inner');
+    var mask = hero.querySelector('.fh-color');
+    var steps = hero.querySelectorAll('.reveal-step');
+    var rect = hero.getBoundingClientRect();
+    var wh = window.innerHeight;
+    var progress = 0;
+    if(window.innerWidth < 768){
+      var startReveal = wh;
+      var endReveal = wh * 0.25;
+      var totalDist = startReveal - endReveal;
+      var curDist = startReveal - rect.top;
+      progress = curDist / totalDist;
+    } else {
+      if(rect.top <= 0){
+        var scrollable = rect.height - wh;
+        if(scrollable > 0) progress = Math.abs(rect.top) / scrollable;
+      }
+    }
+    progress = Math.min(Math.max(progress, 0), 1);
+    if(mask){
+      if(window.innerWidth < 768){
+        mask.style.clipPath = 'inset(0 '+(100 - progress*100)+'% 0 0)';
+      } else {
+        mask.style.clipPath = 'inset(0 0 '+(100 - progress*100)+'% 0)';
+      }
+    }
+    steps.forEach(function(step){
+      var sp = parseFloat(step.getAttribute('data-progress') || '0');
+      if(progress > sp){ step.classList.add('active'); }
+      else { step.classList.remove('active'); }
+    });
+  }
+  function onScroll(){
+    heroes.forEach(updateHero);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  // Card hover: circle clip-path reveal
+  document.querySelectorAll('.fcard').forEach(function(card){
+    var colorLayer = card.querySelector('.fc-color');
+    function setReveal(e, open){
+      if(!colorLayer) return;
+      if(!open){ colorLayer.style.clipPath = 'circle(0% at 50% 50%)'; return; }
+      var rect = card.querySelector('.fcard-img').getBoundingClientRect();
+      var clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width/2);
+      var clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height/2);
+      var x = ((clientX - rect.left) / rect.width * 100).toFixed(1);
+      var y = ((clientY - rect.top) / rect.height * 100).toFixed(1);
+      colorLayer.style.clipPath = 'circle(150% at '+x+'% '+y+'%)';
+    }
+    card.addEventListener('mouseenter', function(e){ setReveal(e, true); });
+    card.addEventListener('touchstart', function(e){ setReveal(e, true); }, {passive:true});
+    card.addEventListener('mouseleave', function(){ setReveal(null, false); });
+  });
+
+  // Horizontal scroll progress bar
+  var row = document.getElementById('fcard-row');
+  var ind = document.getElementById('fscroll-ind');
+  if(row && ind){
+    row.addEventListener('scroll', function(){
+      var max = row.scrollWidth - row.clientWidth;
+      if(max <= 0) return;
+      var pct = (row.scrollLeft / max) * 66.6;
+      ind.style.left = pct+'%';
+    }, {passive:true});
+  }
+
+  // IntersectionObserver for overview cards entrance
+  var overview = document.getElementById('fashion-overview');
+  if(overview){
+    var cards = overview.querySelectorAll('.fcard');
+    var triggered = false;
+    var io = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting && !triggered){
+        triggered = true;
+        cards.forEach(function(card, i){
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(-40px)';
+          setTimeout(function(){
+            card.style.transition = 'opacity .8s var(--ease), transform .8s var(--ease)';
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+          }, i * 150);
+        });
+      }
+    }, {threshold:0.2});
+    io.observe(overview);
+  }
 })();
 </script>
 </body>
