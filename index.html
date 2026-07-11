@@ -205,24 +205,39 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 .stemlyn-visual img{width:100%;display:block;object-fit:cover;max-height:440px}
 .stemlyn-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(13,17,23,.5) 0%,transparent 50%,rgba(13,17,23,.5) 100%)}
 
-/* Architecture diagram */
-.arch-diagram{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:40px;margin-bottom:40px}
-.arch-title{font-size:11px;color:var(--fg-d);letter-spacing:.1em;text-transform:uppercase;margin-bottom:32px}
-.arch-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center}
-.arch-node{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:12px;color:var(--fg-m);font-weight:500;white-space:nowrap;position:relative;transition:all .3s;cursor:default}
-.arch-node:hover,.arch-node.pulsing{border-color:rgba(232,96,44,.4);color:var(--fg);background:var(--surface-2)}
-.arch-node.highlight{border-color:rgba(232,96,44,.5);color:var(--accent)}
-.arch-arrow{color:var(--fg-d);font-size:12px;padding:0 8px;flex-shrink:0}
+/* ── ARCHITECTURE PIPELINE ── */
+.arch-diagram{padding:48px 0 40px;margin-bottom:0}
+.arch-title{font-family:var(--mono);font-size:10px;color:var(--fg-d);letter-spacing:.18em;text-transform:uppercase;margin-bottom:40px;display:flex;align-items:center;gap:12px}
+.arch-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.arch-pipeline{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;gap:0}
+.arch-pipeline::-webkit-scrollbar{display:none}
+.arch-node{display:flex;flex-direction:column;align-items:center;position:relative;min-width:96px;flex-shrink:0}
+.arch-node-idx{font-family:var(--mono);font-size:9px;color:var(--fg-d);letter-spacing:.1em;margin-bottom:8px}
+.arch-node-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 14px;font-size:11px;font-weight:600;color:var(--fg-m);white-space:nowrap;letter-spacing:.04em;transition:all .35s;position:relative;overflow:hidden;text-align:center;width:100%}
+.arch-node-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,96,44,.08) 0%,transparent 60%);opacity:0;transition:opacity .35s}
+.arch-node.highlight .arch-node-box{border-color:rgba(232,96,44,.45);color:var(--accent);background:rgba(232,96,44,.07)}
+.arch-node.highlight .arch-node-box::before{opacity:1}
+.arch-node.pulsing .arch-node-box{border-color:rgba(232,96,44,.7);color:var(--fg);box-shadow:0 0 16px rgba(232,96,44,.25);background:rgba(232,96,44,.12)}
+.arch-connector{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:16px;padding-top:24px;position:relative;min-width:40px;flex-shrink:0}
+.arch-conn-track{flex:1;width:100%;position:relative;overflow:hidden;height:2px;background:var(--border);border-radius:1px;margin-bottom:0;align-self:flex-end;margin-bottom:17px}
+.arch-conn-pulse{position:absolute;left:-100%;top:0;width:60%;height:100%;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:connPulse 2.4s ease-in-out infinite;border-radius:1px}
+.arch-conn-arr{font-size:9px;color:var(--fg-d);position:absolute;right:-4px;bottom:12px}
+@keyframes connPulse{0%{left:-60%}100%{left:120%}}
 
-/* Feature cards */
-.stemlyn-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.sc-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px;transition:all .3s;cursor:default;position:relative;overflow:hidden}
-.sc-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent-dim) 0%,transparent 60%);opacity:0;transition:opacity .3s}
-.sc-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
-.sc-card:hover::after{opacity:1}
-.sc-icon{font-size:20px;margin-bottom:10px}
-.sc-name{font-size:13px;font-weight:500;color:var(--fg)}
-.sc-desc{font-size:11px;color:var(--fg-d);margin-top:4px;line-height:1.4}
+/* ── MODULE TABLE ── */
+.stemlyn-cards{display:block;border-top:1px solid var(--border);margin-top:40px}
+.sc-card{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.04);position:relative;transition:padding-left .25s var(--ease);cursor:default}
+.sc-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
+.sc-card:hover{padding-left:14px}
+.sc-card:hover::before{transform:scaleY(1)}
+.sc-num{font-family:var(--mono);font-size:11px;color:var(--fg-d);letter-spacing:.04em;font-weight:400}
+.sc-main{display:flex;flex-direction:column;gap:2px}
+.sc-name{font-size:13px;font-weight:600;color:var(--fg);letter-spacing:.01em;transition:color .25s}
+.sc-card:hover .sc-name{color:var(--fg)}
+.sc-desc{font-family:var(--mono);font-size:10px;color:var(--fg-d);letter-spacing:.03em;line-height:1.5}
+.sc-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);opacity:0;transition:opacity .25s}
+.sc-card:hover .sc-tag{opacity:1}
+@media(max-width:640px){.sc-card{grid-template-columns:36px 1fr}.sc-tag{display:none}}
 @media(max-width:860px){.stemlyn-header{grid-template-columns:1fr}}
 
 /* ── AI DECISION FLOW ── */
@@ -553,7 +568,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
   <!-- Architecture Diagram -->
   <div class="arch-diagram rv">
     <div class="arch-title">System Architecture — Request Flow</div>
-    <div class="arch-flow" id="arch-flow">
+    <div class="arch-pipeline" id="arch-flow">
       <!-- populated by JS -->
     </div>
   </div>
@@ -828,17 +843,48 @@ window.addEventListener('load', function(){
 (function(){
   var flow = document.getElementById('arch-flow');
   if(!flow) return;
-  var nodes = ['WhatsApp','AI Engine','Decision Layer','Business Logic','Inventory','CRM','Payment','Invoice','Analytics'];
+  var nodes = [
+    {label:'WhatsApp',highlight:false},
+    {label:'AI Engine',highlight:true},
+    {label:'Decision',highlight:true},
+    {label:'Business Logic',highlight:false},
+    {label:'Inventory',highlight:false},
+    {label:'CRM',highlight:false},
+    {label:'Payment',highlight:false},
+    {label:'Invoice',highlight:false},
+    {label:'Analytics',highlight:false}
+  ];
   nodes.forEach(function(n, i){
-    var node = document.createElement('div');
-    node.className = 'arch-node' + (i===1||i===2 ? ' highlight' : '');
-    node.textContent = n;
-    flow.appendChild(node);
+    var nodeWrap = document.createElement('div');
+    nodeWrap.className = 'arch-node' + (n.highlight ? ' highlight' : '');
+
+    var idxEl = document.createElement('div');
+    idxEl.className = 'arch-node-idx';
+    idxEl.textContent = String(i+1).padStart(2,'0');
+
+    var box = document.createElement('div');
+    box.className = 'arch-node-box';
+    box.textContent = n.label;
+
+    nodeWrap.appendChild(idxEl);
+    nodeWrap.appendChild(box);
+    flow.appendChild(nodeWrap);
+
     if(i < nodes.length - 1){
+      var conn = document.createElement('div');
+      conn.className = 'arch-connector';
+      var track = document.createElement('div');
+      track.className = 'arch-conn-track';
+      var pulse = document.createElement('div');
+      pulse.className = 'arch-conn-pulse';
+      pulse.style.animationDelay = (i * 0.27) + 's';
+      track.appendChild(pulse);
       var arr = document.createElement('div');
-      arr.className = 'arch-arrow';
-      arr.textContent = '→';
-      flow.appendChild(arr);
+      arr.className = 'arch-conn-arr';
+      arr.textContent = '›';
+      conn.appendChild(track);
+      conn.appendChild(arr);
+      flow.appendChild(conn);
     }
   });
   var idx = 0;
@@ -847,7 +893,7 @@ window.addEventListener('load', function(){
     var allNodes = flow.querySelectorAll('.arch-node');
     allNodes[idx % allNodes.length].classList.add('pulsing');
     idx++;
-  }, 1200);
+  }, 900);
 })();
 
 /* ── STEMLYN feature cards ── */
@@ -868,27 +914,37 @@ window.addEventListener('load', function(){
     {icon:'🚚',name:'Delivery',desc:'Order tracking, delivery status updates'},
     {icon:'⚡',name:'Real-time',desc:'Socket.io live sync across all modules'},
   ];
-  cards.forEach(function(c){
+  cards.forEach(function(c, i){
     var card = document.createElement('div');
-    card.className = 'sc-card rv';
-    var icon = document.createElement('div');
-    icon.className = 'sc-icon';
-    icon.textContent = c.icon;
+    card.className = 'sc-card';
+
+    var num = document.createElement('div');
+    num.className = 'sc-num';
+    num.textContent = String(i+1).padStart(2,'0');
+
+    var main = document.createElement('div');
+    main.className = 'sc-main';
+
     var name = document.createElement('div');
     name.className = 'sc-name';
     name.textContent = c.name;
+
     var desc = document.createElement('div');
     desc.className = 'sc-desc';
     desc.textContent = c.desc;
-    card.appendChild(icon);
-    card.appendChild(name);
-    card.appendChild(desc);
+
+    main.appendChild(name);
+    main.appendChild(desc);
+
+    var tag = document.createElement('div');
+    tag.className = 'sc-tag';
+    tag.textContent = c.icon;
+
+    card.appendChild(num);
+    card.appendChild(main);
+    card.appendChild(tag);
     container.appendChild(card);
   });
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
-  },{threshold:.08});
-  container.querySelectorAll('.rv').forEach(function(el){ obs.observe(el); });
 })();
 
 /* ── AI Decision Flow ── */
