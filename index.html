@@ -371,78 +371,75 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 @media(prefers-reduced-motion:reduce){.wreveal .wr-word span{transform:none}}
 
 /* ── FASHION SHOWCASE ── */
-#s-fashion{padding:clamp(64px,10vh,120px) 0;overflow:hidden}
-#s-fashion .section-label,.fashion-intro-text{padding:0 var(--gutter)}
-.fashion-intro-text{max-width:600px;margin:0 0 clamp(48px,8vh,96px)}
-.fashion-intro-text h2{font-family:var(--serif);font-size:clamp(32px,4vw,56px);font-weight:400;letter-spacing:-0.01em;line-height:1.05;margin-bottom:16px}
-.fashion-intro-text p{font-size:15px;color:var(--fg-m);font-weight:300;line-height:1.85}
+#s-fashion{padding:clamp(64px,10vh,120px) var(--gutter)}
 
-/* Product Hero */
-.fashion-hero{position:relative;height:250vh;width:100%}
-.fashion-hero-inner{position:sticky;top:0;left:0;width:100%;height:100vh;overflow:hidden}
-.fashion-hero-grid{display:grid;grid-template-columns:1fr 1fr;height:100%}
+/* Intro */
+.fashion-intro{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:end;margin-bottom:clamp(48px,8vh,80px)}
+@media(max-width:680px){.fashion-intro{grid-template-columns:1fr}}
+.fashion-intro-right{display:flex;flex-direction:column;gap:16px}
+.fashion-intro-meta{font-family:var(--mono);font-size:10px;color:var(--fg-d);letter-spacing:.15em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.fashion-intro-meta::before{content:'';width:20px;height:1px;background:var(--fg-d)}
+.fashion-intro-p{font-size:14px;color:var(--fg-m);line-height:1.85;font-weight:300;max-width:380px}
+
+/* Scroll-pinned heroes */
+.fashion-hero{position:relative;height:200vh;width:100%;margin:0 calc(-1 * var(--gutter));width:calc(100% + 2 * var(--gutter))}
+.fashion-hero-inner{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
 .fashion-hero-img{position:relative;overflow:hidden}
-.fashion-hero-img img.fh-gray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(1.05);transition:none}
-.fashion-hero-img .fh-color{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;will-change:clip-path}
-.fashion-hero-img .fh-color img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.fashion-hero-content{display:flex;align-items:center;justify-content:center;padding:48px var(--gutter)}
-.fh-content-inner{max-width:420px;width:100%}
-.fh-tag{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-d);margin-bottom:20px;display:block}
-.fh-title{font-family:var(--serif);font-size:clamp(26px,3vw,48px);font-weight:400;color:var(--fg);line-height:1.1;margin-bottom:12px;letter-spacing:-0.01em}
-.fh-price{font-size:18px;font-weight:300;color:var(--fg);letter-spacing:.05em;margin-bottom:32px}
-.fh-desc{font-size:14px;color:var(--fg-m);line-height:1.8;font-weight:300;padding-top:24px;border-top:1px solid var(--border);margin-bottom:32px}
-.fh-colors{margin-bottom:24px}
-.fh-colors-label,.fh-sizes-label{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.25em;color:var(--fg-d);display:block;margin-bottom:10px}
-.fh-swatches{display:flex;gap:10px;flex-wrap:wrap}
-.fh-swatch{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:transform .2s;box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
-.fh-swatch:hover{transform:scale(1.15)}
-.fh-sizes{margin-bottom:32px}
-.fh-size-list{display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--fg);letter-spacing:.1em}
-.fh-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;background:var(--fg);color:var(--bg);font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:none;border-radius:100px;cursor:pointer;transition:background .3s,color .3s}
-.fh-btn:hover{background:var(--accent);color:#fff}
+.fashion-hero-img img.fh-gray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(1.1)}
+.fh-color{position:absolute;inset:0;overflow:hidden;will-change:clip-path}
+.fh-color img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fashion-hero-content{display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(32px,5vw,64px) clamp(24px,4vw,56px);background:var(--bg);border-left:1px solid var(--border)}
+.fh-idx{font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.fh-idx::after{content:'';flex:1;height:1px;background:var(--border)}
+.fh-collection{font-family:var(--mono);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--fg-d);margin-bottom:14px;display:block}
+.fh-name{font-family:var(--serif);font-size:clamp(28px,3.5vw,52px);font-weight:400;color:var(--fg);line-height:1.05;letter-spacing:-0.01em;margin-bottom:8px}
+.fh-price-tag{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;margin-bottom:28px}
+.fh-divider{width:100%;height:1px;background:var(--border);margin-bottom:20px}
+.fh-body{font-size:13px;color:var(--fg-m);line-height:1.8;font-weight:300;margin-bottom:28px}
+.fh-attrs{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.fh-attr-label{font-family:var(--mono);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-d);margin-bottom:8px;display:block}
+.fh-swatches{display:flex;gap:8px}
+.fh-swatch{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.fh-swatch:hover{transform:scale(1.2);box-shadow:0 0 0 2px var(--accent)}
+.fh-sizes-row{display:flex;gap:14px;font-family:var(--mono);font-size:10px;color:var(--fg-m);letter-spacing:.08em}
+.fh-cta{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-d);display:flex;align-items:center;gap:10px;cursor:default;transition:color .3s}
+.fh-cta::before{content:'';width:28px;height:1px;background:currentColor;transition:width .4s var(--ease)}
 /* reveal steps */
-.reveal-step{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal-step{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal-step.active{opacity:1;transform:none}
 
-/* Overview cards */
-.fashion-overview{padding:clamp(48px,8vh,96px) var(--gutter) clamp(24px,4vh,48px)}
-.fashion-overview-hd{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:32px}
-.fashion-overview-hd span{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--fg-d);text-transform:uppercase}
-.fashion-overview-hd a{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .3s}
-.fashion-overview-hd a:hover{color:var(--accent)}
-.fashion-card-row{display:flex;overflow-x:auto;gap:20px;padding-bottom:24px;scrollbar-width:none}
-.fashion-card-row::-webkit-scrollbar{display:none}
-.fcard{flex:0 0 calc(50% - 10px);max-width:320px;position:relative;border:1px solid var(--border);overflow:hidden;transition:border-color .5s;cursor:pointer}
-@media(min-width:600px){.fcard{flex:0 0 calc(33.333% - 14px)}}
-@media(min-width:900px){.fcard{flex:0 0 280px}}
-.fcard:hover{border-color:rgba(232,96,44,.4)}
-.fcard-img{position:relative;aspect-ratio:3/4;overflow:hidden}
-.fcard-img img.fc-gray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:none}
-.fcard-img .fc-color{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;transition:clip-path 2.8s cubic-bezier(0.15,0.85,0.35,1)}
-.fcard-img .fc-color img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.fcard-body{padding:16px 20px 20px;text-align:center}
-.fcard-collection{font-family:var(--mono);font-size:8px;letter-spacing:.35em;color:var(--fg-d);text-transform:uppercase;display:block;margin-bottom:8px}
-.fcard-title{font-size:12px;font-weight:500;color:var(--fg);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;line-height:1.4}
-.fcard-price{font-size:11px;color:var(--fg-m);letter-spacing:.1em;font-weight:300}
-.fcard-corner{position:absolute;pointer-events:none;opacity:0;transition:opacity .5s .1s}
-.fcard-corner.tl{top:0;left:0}
-.fcard-corner.tr{top:0;right:0}
-.fcard:hover .fcard-corner{opacity:1}
-.fcard-corner::before,.fcard-corner::after{content:'';position:absolute;background:rgba(255,255,255,.25)}
-.fcard-corner.tl::before{width:24px;height:1px;top:0;left:0}
-.fcard-corner.tl::after{width:1px;height:24px;top:0;left:0}
-.fcard-corner.tr::before{width:24px;height:1px;top:0;right:0}
-.fcard-corner.tr::after{width:1px;height:24px;top:0;right:0}
-.fcard-view{position:absolute;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);opacity:0;transition:opacity .5s,transform .5s;background:rgba(3,5,8,.75);backdrop-filter:blur(12px);border:1px solid var(--border);color:var(--fg);font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:8px 24px;border-radius:100px;white-space:nowrap}
-.fcard:hover .fcard-view{opacity:1;transform:translateX(-50%) translateY(0)}
-.fashion-scroll-bar{width:80px;height:2px;background:rgba(255,255,255,.06);margin:0 auto;border-radius:2px;overflow:hidden;position:relative}
-.fashion-scroll-ind{height:100%;width:32px;border-radius:2px;background:var(--fg-d);position:absolute;left:0;transition:left .1s linear}
+/* Product index table (overview) */
+.fashion-index{margin-top:clamp(48px,8vh,80px);border-top:1px solid var(--border)}
+.fashion-index-hd{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px;border-bottom:1px solid rgba(255,255,255,.03)}
+.fashion-index-hd-left{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-d)}
+.fashion-index-hd-right{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-d)}
+
+.fidx-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:24px;padding:0;border-bottom:1px solid rgba(255,255,255,.035);cursor:default;position:relative;overflow:hidden}
+.fidx-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
+.fidx-row:hover::before{transform:scaleY(1)}
+.fidx-row:hover{background:rgba(232,96,44,.025)}
+.fidx-num{font-family:var(--mono);font-size:10px;color:var(--fg-d);padding:22px 0}
+.fidx-center{display:flex;align-items:center;gap:28px}
+.fidx-img{width:52px;height:64px;overflow:hidden;flex-shrink:0;position:relative}
+.fidx-img img.fi-gray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .6s var(--ease)}
+.fidx-img img.fi-col{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s var(--ease)}
+.fidx-row:hover .fidx-img img.fi-gray{filter:grayscale(0)}
+.fidx-row:hover .fidx-img img.fi-col{opacity:1}
+.fidx-info{}
+.fidx-name{font-size:13px;font-weight:500;color:var(--fg);letter-spacing:.04em;margin-bottom:4px}
+.fidx-collection{font-family:var(--mono);font-size:9px;color:var(--fg-d);letter-spacing:.15em;text-transform:uppercase}
+.fidx-right{display:flex;align-items:center;gap:24px}
+.fidx-price{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.05em}
+.fidx-tag{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-d);opacity:0;transition:opacity .3s;padding:5px 12px;border:1px solid var(--border)}
+.fidx-row:hover .fidx-tag{opacity:1;color:var(--fg-m)}
+
 @media(max-width:767px){
-  .fashion-hero{height:auto}
-  .fashion-hero-inner{position:relative;height:auto}
-  .fashion-hero-grid{grid-template-columns:1fr}
-  .fashion-hero-img{height:60vw;max-height:340px}
-  .fashion-hero-content{padding:28px var(--gutter)}
+  .fashion-hero{height:auto;margin:0 calc(-1 * var(--gutter));width:calc(100% + 2 * var(--gutter))}
+  .fashion-hero-inner{position:relative;height:auto;grid-template-columns:1fr;grid-template-rows:56vw auto}
+  .fashion-hero-img{height:56vw}
+  .fashion-hero-content{border-left:none;border-top:1px solid var(--border);padding:28px var(--gutter)}
+  .fidx-right{display:none}
+  .fidx-img{display:none}
 }
 </style>
 </head>
@@ -681,173 +678,178 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 <!-- ── FASHION SHOWCASE ── -->
 <section id="s-fashion">
   <div class="section-label rv">Creative Direction</div>
-  <div class="fashion-intro-text rv" style="transition-delay:.06s">
-    <h2>Closet Studio — A Design Concept.</h2>
-    <p>A side exploration in editorial fashion UI. Minimal forms, cinematic scroll reveals, grayscale-to-color transitions driven by scroll progress.</p>
+
+  <!-- Intro split -->
+  <div class="fashion-intro">
+    <h2 class="section-h2 rv" style="margin-bottom:0">Closet Studio — A Design Exploration.</h2>
+    <div class="fashion-intro-right rv" style="transition-delay:.08s">
+      <div class="fashion-intro-meta">UI / Fashion E-commerce · 2024</div>
+      <p class="fashion-intro-p">A side project exploring editorial fashion interfaces — scroll-driven grayscale-to-colour reveals, sticky product storytelling, and a design system built for luxury retail.</p>
+    </div>
   </div>
 
-  <!-- Product 1 -->
-  <div class="fashion-hero" data-product="0">
+  <!-- Hero 01 — Trench Coat -->
+  <div class="fashion-hero">
     <div class="fashion-hero-inner">
-      <div class="fashion-hero-grid">
-        <div class="fashion-hero-img">
-          <img class="fh-gray" src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
-          <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
-            <img src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+      <div class="fashion-hero-img">
+        <img class="fh-gray" src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+        <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
+          <img src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
+        </div>
+      </div>
+      <div class="fashion-hero-content">
+        <div class="fh-idx reveal-step" data-progress="0.05">01 / Outerwear</div>
+        <span class="fh-collection reveal-step" data-progress="0.1">Studio Collection</span>
+        <h3 class="fh-name reveal-step" data-progress="0.18">Minimalist<br>Trench Coat</h3>
+        <div class="fh-price-tag reveal-step" data-progress="0.25">$299.00</div>
+        <div class="fh-divider reveal-step" data-progress="0.3"></div>
+        <p class="fh-body reveal-step" data-progress="0.38">A timeless outer layer designed with absolute minimalism, premium waterproof cotton, and a classic silhouette that transcends seasons.</p>
+        <div class="fh-attrs reveal-step" data-progress="0.5">
+          <div>
+            <span class="fh-attr-label">Colour</span>
+            <div class="fh-swatches">
+              <div class="fh-swatch" style="background:#E1D8CE"></div>
+              <div class="fh-swatch" style="background:#1E1E1E"></div>
+              <div class="fh-swatch" style="background:#3A4F41"></div>
+            </div>
+          </div>
+          <div>
+            <span class="fh-attr-label">Size</span>
+            <div class="fh-sizes-row"><span>S</span><span>M</span><span>L</span><span>XL</span></div>
           </div>
         </div>
-        <div class="fashion-hero-content">
-          <div class="fh-content-inner">
-            <span class="fh-tag reveal-step" data-progress="0.1">Studio Collection</span>
-            <h3 class="fh-title reveal-step" data-progress="0.2">Minimalist<br>Trench Coat</h3>
-            <div class="fh-price reveal-step" data-progress="0.3">$299.00</div>
-            <p class="fh-desc reveal-step" data-progress="0.4">A timeless outer layer designed with absolute minimalism, premium waterproof cotton, and a classic silhouette.</p>
-            <div class="fh-colors reveal-step" data-progress="0.55">
-              <span class="fh-colors-label">Color</span>
-              <div class="fh-swatches">
-                <div class="fh-swatch" style="background:#E1D8CE"></div>
-                <div class="fh-swatch" style="background:#1E1E1E"></div>
-                <div class="fh-swatch" style="background:#3A4F41"></div>
-              </div>
-            </div>
-            <div class="fh-sizes reveal-step" data-progress="0.65">
-              <span class="fh-sizes-label">Size</span>
-              <div class="fh-size-list"><span>S</span><span>M</span><span>L</span><span>XL</span></div>
-            </div>
-            <button class="fh-btn reveal-step" data-progress="0.78">Quick View ↗</button>
-          </div>
-        </div>
+        <div class="fh-cta reveal-step" data-progress="0.65">View Product</div>
       </div>
     </div>
   </div>
 
-  <!-- Product 2 (reversed) -->
-  <div class="fashion-hero" data-product="1" data-reversed="true">
+  <!-- Hero 02 — Silk Dress (content left, image right) -->
+  <div class="fashion-hero">
     <div class="fashion-hero-inner">
-      <div class="fashion-hero-grid">
-        <div class="fashion-hero-content">
-          <div class="fh-content-inner">
-            <span class="fh-tag reveal-step" data-progress="0.1">Tailored Studio</span>
-            <h3 class="fh-title reveal-step" data-progress="0.2">Minimalist<br>Silk Dress</h3>
-            <div class="fh-price reveal-step" data-progress="0.3">$279.00</div>
-            <p class="fh-desc reveal-step" data-progress="0.4">An elegant midi dress crafted from 100% organic mulberry silk, featuring a delicate drape and a refined scoop neckline.</p>
-            <div class="fh-colors reveal-step" data-progress="0.55">
-              <span class="fh-colors-label">Color</span>
-              <div class="fh-swatches">
-                <div class="fh-swatch" style="background:#E1D8CE"></div>
-                <div class="fh-swatch" style="background:#1E1E1E"></div>
-                <div class="fh-swatch" style="background:#C2B280"></div>
-              </div>
+      <div class="fashion-hero-content" style="border-left:none;border-right:1px solid var(--border)">
+        <div class="fh-idx reveal-step" data-progress="0.05">02 / Dresses</div>
+        <span class="fh-collection reveal-step" data-progress="0.1">Tailored Studio</span>
+        <h3 class="fh-name reveal-step" data-progress="0.18">Minimalist<br>Silk Dress</h3>
+        <div class="fh-price-tag reveal-step" data-progress="0.25">$279.00</div>
+        <div class="fh-divider reveal-step" data-progress="0.3"></div>
+        <p class="fh-body reveal-step" data-progress="0.38">Crafted from 100% organic mulberry silk with a delicate drape and refined scoop neckline — effortless for day and evening.</p>
+        <div class="fh-attrs reveal-step" data-progress="0.5">
+          <div>
+            <span class="fh-attr-label">Colour</span>
+            <div class="fh-swatches">
+              <div class="fh-swatch" style="background:#E1D8CE"></div>
+              <div class="fh-swatch" style="background:#1E1E1E"></div>
+              <div class="fh-swatch" style="background:#C2B280"></div>
             </div>
-            <div class="fh-sizes reveal-step" data-progress="0.65">
-              <span class="fh-sizes-label">Size</span>
-              <div class="fh-size-list"><span>XS</span><span>S</span><span>M</span><span>L</span></div>
-            </div>
-            <button class="fh-btn reveal-step" data-progress="0.78">Quick View ↗</button>
+          </div>
+          <div>
+            <span class="fh-attr-label">Size</span>
+            <div class="fh-sizes-row"><span>XS</span><span>S</span><span>M</span><span>L</span></div>
           </div>
         </div>
-        <div class="fashion-hero-img">
-          <img class="fh-gray" src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
-          <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
-            <img src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
-          </div>
+        <div class="fh-cta reveal-step" data-progress="0.65">View Product</div>
+      </div>
+      <div class="fashion-hero-img">
+        <img class="fh-gray" src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
+        <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
+          <img src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Product 3 -->
-  <div class="fashion-hero" data-product="2">
+  <!-- Hero 03 — Cashmere -->
+  <div class="fashion-hero">
     <div class="fashion-hero-inner">
-      <div class="fashion-hero-grid">
-        <div class="fashion-hero-img">
-          <img class="fh-gray" src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
-          <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
-            <img src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+      <div class="fashion-hero-img">
+        <img class="fh-gray" src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+        <div class="fh-color" style="clip-path:inset(0 0 100% 0)">
+          <img src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
+        </div>
+      </div>
+      <div class="fashion-hero-content">
+        <div class="fh-idx reveal-step" data-progress="0.05">03 / Knitwear</div>
+        <span class="fh-collection reveal-step" data-progress="0.1">Essentials</span>
+        <h3 class="fh-name reveal-step" data-progress="0.18">Oversized<br>Cashmere Knit</h3>
+        <div class="fh-price-tag reveal-step" data-progress="0.25">$199.00</div>
+        <div class="fh-divider reveal-step" data-progress="0.3"></div>
+        <p class="fh-body reveal-step" data-progress="0.38">Pure Mongolian cashmere in an oversized cut designed for effortless layering — the kind of piece worn every day.</p>
+        <div class="fh-attrs reveal-step" data-progress="0.5">
+          <div>
+            <span class="fh-attr-label">Colour</span>
+            <div class="fh-swatches">
+              <div class="fh-swatch" style="background:#D7C4B7"></div>
+              <div class="fh-swatch" style="background:#1E1E1E"></div>
+              <div class="fh-swatch" style="background:#E6E6E6"></div>
+            </div>
+          </div>
+          <div>
+            <span class="fh-attr-label">Size</span>
+            <div class="fh-sizes-row"><span>S</span><span>M</span><span>L</span></div>
           </div>
         </div>
-        <div class="fashion-hero-content">
-          <div class="fh-content-inner">
-            <span class="fh-tag reveal-step" data-progress="0.1">Essentials</span>
-            <h3 class="fh-title reveal-step" data-progress="0.2">Oversized<br>Cashmere Knit</h3>
-            <div class="fh-price reveal-step" data-progress="0.3">$199.00</div>
-            <p class="fh-desc reveal-step" data-progress="0.4">An incredibly soft, oversized sweater knit from pure Mongolian cashmere, designed for effortless layering.</p>
-            <div class="fh-colors reveal-step" data-progress="0.55">
-              <span class="fh-colors-label">Color</span>
-              <div class="fh-swatches">
-                <div class="fh-swatch" style="background:#D7C4B7"></div>
-                <div class="fh-swatch" style="background:#1E1E1E"></div>
-                <div class="fh-swatch" style="background:#E6E6E6"></div>
-              </div>
-            </div>
-            <div class="fh-sizes reveal-step" data-progress="0.65">
-              <span class="fh-sizes-label">Size</span>
-              <div class="fh-size-list"><span>S</span><span>M</span><span>L</span></div>
-            </div>
-            <button class="fh-btn reveal-step" data-progress="0.78">Quick View ↗</button>
-          </div>
-        </div>
+        <div class="fh-cta reveal-step" data-progress="0.65">View Product</div>
       </div>
     </div>
   </div>
 
-  <!-- Overview Cards -->
-  <div class="fashion-overview" id="fashion-overview">
-    <div class="fashion-overview-hd">
-      <span>Overview</span>
-      <a href="#">View Collection →</a>
+  <!-- Product Index Table -->
+  <div class="fashion-index rv" id="fashion-overview">
+    <div class="fashion-index-hd">
+      <span class="fashion-index-hd-left">Collection Overview</span>
+      <span class="fashion-index-hd-right">3 Pieces</span>
     </div>
-    <div class="fashion-card-row" id="fcard-row">
-      <div class="fcard" data-img="assets/ai/fashion-trench.png">
-        <div class="fcard-img">
-          <img class="fc-gray" src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
-          <div class="fc-color" style="clip-path:circle(0% at 50% 50%)">
-            <img src="assets/ai/fashion-trench.png" alt="Minimalist Trench Coat">
-          </div>
+    <div class="fidx-row rv" style="transition-delay:.05s">
+      <div class="fidx-num">01</div>
+      <div class="fidx-center">
+        <div class="fidx-img">
+          <img class="fi-gray" src="assets/ai/fashion-trench.png" alt="Trench">
+          <img class="fi-col" src="assets/ai/fashion-trench.png" alt="Trench">
         </div>
-        <div class="fcard-body">
-          <span class="fcard-collection">Studio Collection</span>
-          <div class="fcard-title">Minimalist Trench Coat</div>
-          <div class="fcard-price">$299.00</div>
+        <div class="fidx-info">
+          <div class="fidx-name">Minimalist Trench Coat</div>
+          <div class="fidx-collection">Studio Collection · Outerwear</div>
         </div>
-        <div class="fcard-corner tl"></div>
-        <div class="fcard-corner tr"></div>
-        <div class="fcard-view">View Details</div>
       </div>
-      <div class="fcard" data-img="assets/ai/fashion-silk-dress.png">
-        <div class="fcard-img">
-          <img class="fc-gray" src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
-          <div class="fc-color" style="clip-path:circle(0% at 50% 50%)">
-            <img src="assets/ai/fashion-silk-dress.png" alt="Minimalist Silk Dress">
-          </div>
-        </div>
-        <div class="fcard-body">
-          <span class="fcard-collection">Tailored Studio</span>
-          <div class="fcard-title">Minimalist Silk Dress</div>
-          <div class="fcard-price">$279.00</div>
-        </div>
-        <div class="fcard-corner tl"></div>
-        <div class="fcard-corner tr"></div>
-        <div class="fcard-view">View Details</div>
-      </div>
-      <div class="fcard" data-img="assets/ai/fashion-cashmere.png">
-        <div class="fcard-img">
-          <img class="fc-gray" src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
-          <div class="fc-color" style="clip-path:circle(0% at 50% 50%)">
-            <img src="assets/ai/fashion-cashmere.png" alt="Oversized Cashmere Knit">
-          </div>
-        </div>
-        <div class="fcard-body">
-          <span class="fcard-collection">Essentials</span>
-          <div class="fcard-title">Oversized Cashmere Knit</div>
-          <div class="fcard-price">$199.00</div>
-        </div>
-        <div class="fcard-corner tl"></div>
-        <div class="fcard-corner tr"></div>
-        <div class="fcard-view">View Details</div>
+      <div class="fidx-right">
+        <span class="fidx-price">$299.00</span>
+        <span class="fidx-tag">S · M · L · XL</span>
       </div>
     </div>
-    <div class="fashion-scroll-bar"><div class="fashion-scroll-ind" id="fscroll-ind"></div></div>
+    <div class="fidx-row rv" style="transition-delay:.1s">
+      <div class="fidx-num">02</div>
+      <div class="fidx-center">
+        <div class="fidx-img">
+          <img class="fi-gray" src="assets/ai/fashion-silk-dress.png" alt="Dress">
+          <img class="fi-col" src="assets/ai/fashion-silk-dress.png" alt="Dress">
+        </div>
+        <div class="fidx-info">
+          <div class="fidx-name">Minimalist Silk Dress</div>
+          <div class="fidx-collection">Tailored Studio · Dresses</div>
+        </div>
+      </div>
+      <div class="fidx-right">
+        <span class="fidx-price">$279.00</span>
+        <span class="fidx-tag">XS · S · M · L</span>
+      </div>
+    </div>
+    <div class="fidx-row rv" style="transition-delay:.15s">
+      <div class="fidx-num">03</div>
+      <div class="fidx-center">
+        <div class="fidx-img">
+          <img class="fi-gray" src="assets/ai/fashion-cashmere.png" alt="Cashmere">
+          <img class="fi-col" src="assets/ai/fashion-cashmere.png" alt="Cashmere">
+        </div>
+        <div class="fidx-info">
+          <div class="fidx-name">Oversized Cashmere Knit</div>
+          <div class="fidx-collection">Essentials · Knitwear</div>
+        </div>
+      </div>
+      <div class="fidx-right">
+        <span class="fidx-price">$199.00</span>
+        <span class="fidx-tag">S · M · L</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1579,21 +1581,16 @@ window.addEventListener('load', function(){
 
 /* ── FASHION SHOWCASE ── */
 (function(){
-  // Scroll-driven grayscale→color reveal for ProductHero sections
   var heroes = document.querySelectorAll('.fashion-hero');
   function updateHero(hero){
-    var inner = hero.querySelector('.fashion-hero-inner');
     var mask = hero.querySelector('.fh-color');
     var steps = hero.querySelectorAll('.reveal-step');
     var rect = hero.getBoundingClientRect();
     var wh = window.innerHeight;
     var progress = 0;
     if(window.innerWidth < 768){
-      var startReveal = wh;
-      var endReveal = wh * 0.25;
-      var totalDist = startReveal - endReveal;
-      var curDist = startReveal - rect.top;
-      progress = curDist / totalDist;
+      var totalDist = wh * 0.75;
+      progress = (wh - rect.top) / totalDist;
     } else {
       if(rect.top <= 0){
         var scrollable = rect.height - wh;
@@ -1602,76 +1599,19 @@ window.addEventListener('load', function(){
     }
     progress = Math.min(Math.max(progress, 0), 1);
     if(mask){
-      if(window.innerWidth < 768){
-        mask.style.clipPath = 'inset(0 '+(100 - progress*100)+'% 0 0)';
-      } else {
-        mask.style.clipPath = 'inset(0 0 '+(100 - progress*100)+'% 0)';
-      }
+      mask.style.clipPath = window.innerWidth < 768
+        ? 'inset(0 '+(100 - progress*100)+'% 0 0)'
+        : 'inset(0 0 '+(100 - progress*100)+'% 0)';
     }
     steps.forEach(function(step){
       var sp = parseFloat(step.getAttribute('data-progress') || '0');
-      if(progress > sp){ step.classList.add('active'); }
-      else { step.classList.remove('active'); }
+      step.classList.toggle('active', progress > sp);
     });
   }
-  function onScroll(){
-    heroes.forEach(updateHero);
-  }
+  function onScroll(){ heroes.forEach(updateHero); }
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onScroll);
   onScroll();
-
-  // Card hover: circle clip-path reveal
-  document.querySelectorAll('.fcard').forEach(function(card){
-    var colorLayer = card.querySelector('.fc-color');
-    function setReveal(e, open){
-      if(!colorLayer) return;
-      if(!open){ colorLayer.style.clipPath = 'circle(0% at 50% 50%)'; return; }
-      var rect = card.querySelector('.fcard-img').getBoundingClientRect();
-      var clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width/2);
-      var clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height/2);
-      var x = ((clientX - rect.left) / rect.width * 100).toFixed(1);
-      var y = ((clientY - rect.top) / rect.height * 100).toFixed(1);
-      colorLayer.style.clipPath = 'circle(150% at '+x+'% '+y+'%)';
-    }
-    card.addEventListener('mouseenter', function(e){ setReveal(e, true); });
-    card.addEventListener('touchstart', function(e){ setReveal(e, true); }, {passive:true});
-    card.addEventListener('mouseleave', function(){ setReveal(null, false); });
-  });
-
-  // Horizontal scroll progress bar
-  var row = document.getElementById('fcard-row');
-  var ind = document.getElementById('fscroll-ind');
-  if(row && ind){
-    row.addEventListener('scroll', function(){
-      var max = row.scrollWidth - row.clientWidth;
-      if(max <= 0) return;
-      var pct = (row.scrollLeft / max) * 66.6;
-      ind.style.left = pct+'%';
-    }, {passive:true});
-  }
-
-  // IntersectionObserver for overview cards entrance
-  var overview = document.getElementById('fashion-overview');
-  if(overview){
-    var cards = overview.querySelectorAll('.fcard');
-    var triggered = false;
-    var io = new IntersectionObserver(function(entries){
-      if(entries[0].isIntersecting && !triggered){
-        triggered = true;
-        cards.forEach(function(card, i){
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(-40px)';
-          setTimeout(function(){
-            card.style.transition = 'opacity .8s var(--ease), transform .8s var(--ease)';
-            card.style.opacity = '1';
-            card.style.transform = 'none';
-          }, i * 150);
-        });
-      }
-    }, {threshold:0.2});
-    io.observe(overview);
-  }
 })();
 </script>
 </body>
