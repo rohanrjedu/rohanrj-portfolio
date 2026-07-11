@@ -901,18 +901,18 @@ window.addEventListener('load', function(){
   var container = document.getElementById('stemlyn-cards');
   if(!container) return;
   var cards = [
-    {icon:'🛒',name:'POS System',desc:'Multi-item checkout, discounts, receipts'},
-    {icon:'📦',name:'Inventory',desc:'Real-time stock, low-stock alerts, suppliers'},
-    {icon:'👥',name:'CRM',desc:'Customer profiles, order history, segments'},
-    {icon:'📒',name:'Vendor Ledger',desc:'Purchase orders, payments, dues tracking'},
-    {icon:'📊',name:'Analytics',desc:'Revenue trends, category performance'},
-    {icon:'💬',name:'WhatsApp AI',desc:'3-layer AI commerce via Meta Business API'},
-    {icon:'🏪',name:'Storefront',desc:'Customer-facing menu, QR-code ordering'},
-    {icon:'📣',name:'Broadcast',desc:'Targeted campaigns via WhatsApp'},
-    {icon:'💳',name:'Payments',desc:'Razorpay integration, auto-reconciliation'},
-    {icon:'🧾',name:'GST & Reports',desc:'Tax-ready statements, automated reports'},
-    {icon:'🚚',name:'Delivery',desc:'Order tracking, delivery status updates'},
-    {icon:'⚡',name:'Real-time',desc:'Socket.io live sync across all modules'},
+    {icon:'🛒',name:'POS System',desc:'Multi-item cart, UPI + cash checkout, GST per slab, thermal receipt, credit wallet redemption'},
+    {icon:'📦',name:'Inventory',desc:'FIFO batch tracking with expiry dates, cost price, per-product stock flag below reorder threshold'},
+    {icon:'👥',name:'CRM',desc:'Customer profiles, credit wallet with full transaction history, birthday/anniversary WhatsApp triggers'},
+    {icon:'📒',name:'Vendor Ledger',desc:'Full purchase orders, batch-linked receiving, outstanding balance, credit limit, payment history'},
+    {icon:'📊',name:'Analytics',desc:'30-day revenue charts, P&L, top products by revenue, AI-powered campaign targeting recommendations'},
+    {icon:'💬',name:'WhatsApp AI',desc:'3-layer routing: flow engine → keyword rules → Llama 3.3 70B via Groq, Razorpay QR on checkout'},
+    {icon:'🏪',name:'Storefront API',desc:'Public REST API with OTP customer auth, product catalogue, orders, subscriptions — frontend in progress'},
+    {icon:'📣',name:'Broadcast',desc:'Template campaigns (any contact) + session messages (active 24hr window), campaign history tracked'},
+    {icon:'💳',name:'Payments',desc:'Razorpay payment links sent as QR via WhatsApp, polling-based confirmation, manual PAID fallback'},
+    {icon:'🧾',name:'GST & Reports',desc:'CA-ready P&L, GST slab breakdown with CGST/SGST split, GSTR-1 reminder, CSV export'},
+    {icon:'🚚',name:'Delivery',desc:'Partner dispatch, pending → assigned → out for delivery → delivered, salary disbursement tracking'},
+    {icon:'⚡',name:'Real-time',desc:'Socket.io live WhatsApp inbox (wa:message), connection status, and escalation alert events'},
   ];
   cards.forEach(function(c, i){
     var card = document.createElement('div');
