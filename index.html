@@ -423,7 +423,11 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 .cs-card.is-active{cursor:grab}
 .cs-card.is-active:active{cursor:grabbing}
 .cs-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
-.cs-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,7,11,.85) 0%,rgba(5,7,11,.2) 55%,transparent 100%)}
+.cs-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,7,11,.92) 0%,rgba(5,7,11,.3) 50%,rgba(5,7,11,.08) 100%)}
+.cs-mockup-bg{position:absolute;inset:0}
+.cs-mockup-bg img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block;pointer-events:none;-webkit-user-drag:none}
+.cs-mockup-panel{position:absolute;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12);pointer-events:none;will-change:transform}
+.cs-mockup-panel img{width:100%;display:block;pointer-events:none;-webkit-user-drag:none}
 .cs-card-body{position:absolute;bottom:0;left:0;right:0;padding:24px;z-index:2}
 .cs-card-tag{font-size:10px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
 .cs-card-title{font-family:'General Sans','Inter',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.02em;color:#fff;margin-bottom:6px}
@@ -2069,7 +2073,7 @@ window.addEventListener('load', function(){
   var detailEl = document.getElementById('cs-detail');
   if(!stage) return;
   var projects = [
-    {tag:'Restaurant Management OS',title:'MENZO',desc:'Tickets lost between table and kitchen. Stock ran out mid-service. Billing errors every night.',impact:'Live KDS sync eliminated lost tickets. Real-time inventory stopped stockouts. Billing errors: zero. Production-ready — 19 modules built solo. Demo available on request.',tech:['Next.js','Node.js','Socket.io','PostgreSQL','Razorpay'],link:'menzo.html',linkText:'View Case Study →',img:'assets/ai/card-menzo.png'},
+    {tag:'Restaurant Management OS',title:'MENZO',desc:'Tickets lost between table and kitchen. Stock ran out mid-service. Billing errors every night.',impact:'Live KDS sync eliminated lost tickets. Real-time inventory stopped stockouts. Billing errors: zero. Production-ready — 19 modules built solo. Demo available on request.',tech:['Next.js','Node.js','Socket.io','PostgreSQL','Razorpay'],link:'menzo.html',linkText:'View Case Study →',mockups:{bg:'assets/ai/mockup-dashboard-v2.png',panels:[{src:'assets/ai/mockup-billing-v2.png',style:'width:220px;top:14px;right:8px;transform:rotate(2deg)'},{src:'assets/ai/mockup-tables-v2.png',style:'width:196px;top:90px;right:28px;transform:rotate(-1.5deg)'}]}},
     {tag:'WhatsApp Commerce Agent',title:'AARNA — Flower Shop AI',desc:'Retail flower business taking orders manually on WhatsApp — staff reading messages, writing orders by hand, collecting payments separately.',impact:'Built a 3-layer AI commerce agent (state machine → keyword triggers → Llama 3.3 70B) that runs the complete purchase journey autonomously: product discovery → cart → Razorpay payment → order record. Zero staff involvement after 9PM.',tech:['WhatsApp Business API','Groq · Llama 3.3 70B','Node.js','MySQL','Razorpay'],link:'https://aarna.rjglobalgroup.in',linkText:'View Live →',img:'assets/ai/card-aarna.png'},
     {tag:'Email Revenue Agent',title:'Outbound Email AI',desc:'Sales team sending generic blasts. No personalisation, no follow-up logic, leads going cold after first touch.',impact:'AI agent personalises each email from CRM context, auto-sequences follow-ups based on open/click signals, books meetings autonomously.',tech:['Node.js','Groq · Llama 3.3 70B','Resend','HubSpot API','Webhook'],link:'#',img:'assets/ai/card-email-ai.png'},
     {tag:'Business Operating System',title:'STEMLYN',desc:'Businesses juggling POS, inventory, CRM, vendors and reporting across 6+ disconnected tools. Data fragmented, decisions slow.',impact:'Single platform replacing all disconnected workflows — 19 modules, 3 AI layers, one operational backbone for retail and hospitality.',tech:['Next.js','Node.js','Groq · Llama 3.3 70B','Razorpay','Socket.io'],link:'#',img:'assets/ai/card-stemlyn.png'},
@@ -2090,9 +2094,21 @@ window.addEventListener('load', function(){
     el.style.height=CARD_H+'px';
     el.style.left='50%';
     el.style.marginLeft=-(CARD_W/2)+'px';
-    var img=document.createElement('img');
-    img.src=p.img; img.alt=p.title;
-    el.appendChild(img);
+    if(p.mockups){
+      var bgWrap=document.createElement('div'); bgWrap.className='cs-mockup-bg';
+      var bgImg=document.createElement('img'); bgImg.src=p.mockups.bg; bgImg.alt=p.title;
+      bgWrap.appendChild(bgImg); el.appendChild(bgWrap);
+      p.mockups.panels.forEach(function(panel){
+        var pEl=document.createElement('div'); pEl.className='cs-mockup-panel';
+        pEl.style.cssText=panel.style;
+        var pImg=document.createElement('img'); pImg.src=panel.src; pImg.alt='';
+        pEl.appendChild(pImg); el.appendChild(pEl);
+      });
+    } else {
+      var img=document.createElement('img');
+      img.src=p.img; img.alt=p.title;
+      el.appendChild(img);
+    }
     var ov=document.createElement('div'); ov.className='cs-card-overlay';
     el.appendChild(ov);
     var bd=document.createElement('div'); bd.className='cs-card-body';
