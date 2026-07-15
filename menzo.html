@@ -156,16 +156,17 @@ img{display:block;max-width:100%}
 
 /* ── SYSTEM ARCHITECTURE ── */
 #arch-diagram{position:relative;margin:0 auto;max-width:900px;padding:40px 20px}
-.arch-nodes{display:flex;flex-direction:column;align-items:center;gap:0}
+#arch-pulse-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.arch-nodes{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0}
 .arch-row{display:flex;justify-content:center;gap:16px;width:100%}
 .arch-node{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 22px;font-family:'General Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:center;min-width:140px;user-select:none}
 .arch-node:hover,.arch-node.active{border-color:var(--accent);background:var(--surface-2);transform:scale(1.04)}
 .arch-node.core{border-color:rgba(232,96,44,.4);background:rgba(232,96,44,.06)}
 .arch-node-sub{font-size:10px;color:var(--fg-d);font-weight:400;font-family:'JetBrains Mono',monospace;margin-top:3px}
-.arch-connector{display:flex;justify-content:center;height:28px}
-.arch-connector-line{width:2px;background:linear-gradient(to bottom,rgba(232,96,44,.5),rgba(232,96,44,.1));border-radius:2px}
-.arch-connector-split{display:flex;justify-content:center;gap:60px;height:28px;position:relative}
-.arch-connector-split::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:rgba(232,96,44,.3)}
+/* Connectors — keep height as spacer, hide the visual line (SVG handles it) */
+.arch-connector{display:flex;justify-content:center;height:32px}
+.arch-connector-line{width:0}
+.arch-connector-split{display:flex;justify-content:center;gap:60px;height:32px;position:relative}
 .arch-connector-split .arch-connector-line{height:100%}
 .arch-detail-panel{background:var(--surface);border:1px solid var(--border-h);border-radius:var(--r);padding:24px;margin-top:32px;display:none}
 .arch-detail-panel.visible{display:block}
@@ -189,7 +190,8 @@ img{display:block;max-width:100%}
 .modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
 .mod-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;display:flex;flex-direction:column;gap:10px}
 .mod-card:hover,.mod-card.active{border-color:var(--accent);background:var(--surface-2);transform:translateY(-2px)}
-.mod-icon{font-size:22px}
+.mod-icon{font-size:22px;display:flex;align-items:center}
+.mod-icon svg.ui-icon{width:24px;height:24px;display:block;color:var(--accent)}
 .mod-name{font-family:'General Sans',sans-serif;font-weight:700;font-size:14px}
 .mod-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--fg-d)}
 .mod-detail{background:var(--surface);border:1px solid var(--border-h);border-radius:var(--r);padding:24px;margin-top:16px;display:none;grid-column:1/-1}
@@ -217,7 +219,8 @@ img{display:block;max-width:100%}
 .tech-arch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
 .ta-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px}
 .ta-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.ta-icon{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:16px}
+.ta-icon{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--accent)}
+.ta-icon svg.ui-icon{width:18px;height:18px;display:block}
 .ta-layer{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-d)}
 .ta-name{font-family:'General Sans',sans-serif;font-weight:700;font-size:16px}
 .ta-items{display:flex;flex-direction:column;gap:10px}
@@ -270,7 +273,9 @@ img{display:block;max-width:100%}
 .roadmap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .road-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s}
 .road-card:hover{border-color:var(--border-h)}
-.road-icon{font-size:24px}
+.road-icon{font-size:24px;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.road-icon svg.ui-icon{width:24px;height:24px;display:block}
+.ui-icon{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
 .road-title{font-family:'General Sans',sans-serif;font-weight:700;font-size:14px}
 .road-desc{font-size:12px;color:var(--fg-d);line-height:1.5}
 .road-phase{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-top:4px}
@@ -740,7 +745,7 @@ img{display:block;max-width:100%}
       <div class="arch-row">
         <div class="arch-node core" data-key="server">
           MENZO Server
-          <div class="arch-node-sub">Node.js · Express · REST API</div>
+          <div class="arch-node-sub">Next.js · App Router · API Routes</div>
         </div>
       </div>
 
@@ -757,8 +762,8 @@ img{display:block;max-width:100%}
           <div class="arch-node-sub">Orders · Inventory · Billing</div>
         </div>
         <div class="arch-node" data-key="ai">
-          AI Engine
-          <div class="arch-node-sub">Order parsing · Stock validation</div>
+          GST &amp; Billing
+          <div class="arch-node-sub">Paise arithmetic · Invoice gen</div>
         </div>
       </div>
 
@@ -768,7 +773,7 @@ img{display:block;max-width:100%}
       <div class="arch-row">
         <div class="arch-node core" data-key="db">
           Database Layer
-          <div class="arch-node-sub">PostgreSQL · Drizzle ORM</div>
+          <div class="arch-node-sub">PostgreSQL · Prisma 7 · pg adapter</div>
         </div>
       </div>
 
@@ -821,7 +826,7 @@ img{display:block;max-width:100%}
       <div class="journey-body">
         <h3 class="journey-title">Guest is seated — Table opens</h3>
         <p class="journey-desc">The waiter taps the table on any device. A billing session starts instantly. The timer begins. The owner can already see the table as "Occupied" on the live floor plan.</p>
-        <div class="journey-tech"><span>Tables Module</span><span>Real-time floor plan</span><span>WebSocket sync</span></div>
+        <div class="journey-tech"><span>Tables Module</span><span>Live floor plan</span><span>Polling refresh</span></div>
       </div>
     </div>
     <div class="journey-step">
@@ -880,7 +885,7 @@ img{display:block;max-width:100%}
 ══════════════════════════════════════ -->
 <section class="sec" id="modules">
   <span class="eyebrow rv">Core Modules</span>
-  <h2 class="sec-title rv" style="transition-delay:.04s">19 modules.<br><em>Every workflow covered.</em></h2>
+  <h2 class="sec-title rv" style="transition-delay:.04s">13 modules.<br><em>Every workflow covered.</em></h2>
   <p class="sec-lead rv" style="transition-delay:.08s">Click any module to see what it handles.</p>
   <div class="modules-grid rv" style="transition-delay:.12s" id="modules-grid">
     <!-- JS renders detail panels inline -->
@@ -981,7 +986,7 @@ img{display:block;max-width:100%}
   <div class="tech-arch-grid">
     <div class="ta-card rv">
       <div class="ta-header">
-        <div class="ta-icon">⚛️</div>
+        <div class="ta-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-layers"/></svg></div>
         <div>
           <div class="ta-layer">Layer 01</div>
           <div class="ta-name">Frontend</div>
@@ -990,85 +995,82 @@ img{display:block;max-width:100%}
       <div class="ta-items">
         <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Next.js 14</strong> — App Router, SSR, RSC</div></div>
         <div class="ta-item"><span class="ta-item-dot"></span><div><strong>React 18</strong> — Component architecture</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>TailwindCSS</strong> — Utility-first styling</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>ShadCN UI</strong> — Component library</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>TanStack Query</strong> — Server state management</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Custom CSS design system</strong> — Component variables, no framework</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Plain fetch()</strong> — No query library; direct API calls</div></div>
       </div>
     </div>
     <div class="ta-card rv" style="transition-delay:.05s">
       <div class="ta-header">
-        <div class="ta-icon">⚙️</div>
+        <div class="ta-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-settings"/></svg></div>
         <div>
           <div class="ta-layer">Layer 02</div>
           <div class="ta-name">Backend</div>
         </div>
       </div>
       <div class="ta-items">
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Node.js + Express</strong> — REST API server</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Drizzle ORM</strong> — Type-safe database queries</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Next.js monolith</strong> — API routes in app/api/, no separate server</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Prisma 7 + @prisma/adapter-pg</strong> — Driver-adapter setup, direct pg connection</div></div>
         <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Zod</strong> — Runtime validation</div></div>
         <div class="ta-item"><span class="ta-item-dot"></span><div><strong>JWT</strong> — Stateless authentication</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>BullMQ</strong> — Background job queues</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>setImmediate</strong> — Non-blocking post-payment tasks (WhatsApp invoice)</div></div>
       </div>
     </div>
     <div class="ta-card rv" style="transition-delay:.1s">
       <div class="ta-header">
-        <div class="ta-icon">🗄️</div>
+        <div class="ta-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-database"/></svg></div>
         <div>
           <div class="ta-layer">Layer 03</div>
           <div class="ta-name">Database</div>
         </div>
       </div>
       <div class="ta-items">
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>PostgreSQL</strong> — Primary data store</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Redis</strong> — Session cache &amp; queues</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Multi-tenant</strong> — Business isolation by schema</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Audit logs</strong> — All mutations tracked</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>PostgreSQL</strong> — One dedicated DB per restaurant client</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Per-client isolation</strong> — Separate Railway project + separate DB per deploy</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Paise integer arithmetic</strong> — All money stored as integers; no float rounding errors</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Single-restaurant schema</strong> — No tenant ID filtering; prisma.restaurant.findFirst()</div></div>
       </div>
     </div>
     <div class="ta-card rv" style="transition-delay:.15s">
       <div class="ta-header">
-        <div class="ta-icon">🤖</div>
+        <div class="ta-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cpu"/></svg></div>
         <div>
           <div class="ta-layer">Layer 04</div>
-          <div class="ta-name">AI &amp; Messaging</div>
+          <div class="ta-name">Messaging</div>
         </div>
       </div>
       <div class="ta-items">
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>OpenAI GPT-4o</strong> — WhatsApp order parsing</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>WhatsApp Business API</strong> — Customer messaging</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Twilio</strong> — SMS fallback</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Custom NLP pipeline</strong> — Menu item resolution</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>WhatsApp Business API</strong> — Outbound only: invoice sent post-payment via setImmediate</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>No AI/NLP</strong> — WhatsApp is invoice delivery, not conversational ordering</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Invoice format</strong> — MNZ-YYYYMMDD-XXXX, daily-reset sequential counter</div></div>
       </div>
     </div>
     <div class="ta-card rv" style="transition-delay:.2s">
       <div class="ta-header">
-        <div class="ta-icon">💳</div>
+        <div class="ta-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-credit-card"/></svg></div>
         <div>
           <div class="ta-layer">Layer 05</div>
           <div class="ta-name">Payments &amp; GST</div>
         </div>
       </div>
       <div class="ta-items">
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Razorpay</strong> — UPI, card, wallet</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>GST Engine</strong> — CGST/SGST auto-calculation</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Invoice generator</strong> — PDF + WhatsApp delivery</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Payment audit trail</strong> — Immutable records</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Cash/card payment recording</strong> — Manual payment modes, no payment gateway</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>GST Engine</strong> — GST-inclusive pricing: gstPaise = totalPaise × 5 / 105</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Invoice generator</strong> — MNZ-YYYYMMDD-XXXX format, sent via WhatsApp</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>MENZO_PLAN tier gating</strong> — Starter / Pro / Business / Custom via env var</div></div>
       </div>
     </div>
     <div class="ta-card rv" style="transition-delay:.25s">
       <div class="ta-header">
-        <div class="ta-icon">☁️</div>
+        <div class="ta-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cloud"/></svg></div>
         <div>
           <div class="ta-layer">Layer 06</div>
           <div class="ta-name">Infrastructure</div>
         </div>
       </div>
       <div class="ta-items">
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Vercel</strong> — Frontend deployment</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Railway</strong> — Backend + DB hosting</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Cloudflare</strong> — CDN, DDoS protection</div></div>
-        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>GitHub Actions</strong> — CI/CD pipeline</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Railway</strong> — Full-stack deploy; one Railway project per restaurant client</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>Per-client provisioning</strong> — STEMLYN spins a new Railway project per onboard</div></div>
+        <div class="ta-item"><span class="ta-item-dot"></span><div><strong>PostgreSQL on Railway</strong> — Dedicated DB per client, zero shared state</div></div>
       </div>
     </div>
   </div>
@@ -1135,21 +1137,21 @@ img{display:block;max-width:100%}
       </div>
       <div class="challenge-solution">
         <span class="ch-label ch-label-solution">Solution</span>
-        <h3 class="ch-title">Progressive Web App Kitchen Display</h3>
-        <p class="ch-desc">The kitchen view is a PWA that auto-refreshes via polling and works offline-first. It fits any screen from 7" tablets to 32" monitors. No app installation, no account needed for kitchen staff — just a URL pinned to the browser in full-screen mode.</p>
+        <h3 class="ch-title">Browser-based Kitchen Display with Polling</h3>
+        <p class="ch-desc">The kitchen view is a plain browser tab — no service worker, no app manifest, no installation. It polls every 10 seconds for new KOTs, which turned out to be better UX than WebSockets: predictable refresh rhythm means staff aren't confused by mid-read screen jumps. Fits any screen from 7" Android tablets to 32" monitors.</p>
       </div>
     </div>
 
     <div class="challenge-card">
       <div class="challenge-problem">
         <span class="ch-label ch-label-problem">Challenge</span>
-        <h3 class="ch-title">WhatsApp Order Parsing at Scale</h3>
-        <p class="ch-desc">Customers write orders inconsistently — "2 butter chicken n 1 nan" vs "Butter Chicken x2, Garlic Naan please". Mapping freeform text to exact menu SKUs with quantity and modifiers is not a simple string match problem.</p>
+        <h3 class="ch-title">GST-inclusive Pricing Without Float Errors</h3>
+        <p class="ch-desc">Indian restaurant GST is baked into the menu price — customers see a single number, not base + tax. Calculating the tax component from an inclusive total (totalPaise × 5 / 105) must be done in integer arithmetic to avoid ₹0.01 rounding discrepancies that compound across hundreds of daily orders.</p>
       </div>
       <div class="challenge-solution">
         <span class="ch-label ch-label-solution">Solution</span>
-        <h3 class="ch-title">LLM Parsing + Fuzzy Menu Matching</h3>
-        <p class="ch-desc">GPT-4o parses the message into structured JSON (items, quantities, modifiers). A secondary fuzzy matching layer maps parsed item names against the live menu with similarity scoring. Items below the confidence threshold are flagged for human review rather than silently misrouted.</p>
+        <h3 class="ch-title">Paise-first Arithmetic Throughout</h3>
+        <p class="ch-desc">Every price, tax component, and total is stored and computed as integer paise (₹1 = 100 paise). The GST formula is: gstPaise = totalPaise × 5 / 105, integer division. No floats enter the billing pipeline at any point. CA-ready reports export the final values divided by 100 only for display.</p>
       </div>
     </div>
 
@@ -1206,13 +1208,13 @@ img{display:block;max-width:100%}
     </div>
     <div class="learn-card rv" style="transition-delay:.15s">
       <div class="learn-num">04</div>
-      <h3 class="learn-title">AI needs confidence thresholds</h3>
-      <p class="learn-body">The first WhatsApp ordering prototype was overconfident. It would guess at ambiguous orders and create wrong items. Adding explicit confidence scoring and routing low-confidence parses to a human review queue reduced errors to near-zero without slowing the happy path.</p>
+      <h3 class="learn-title">Money must never be a float</h3>
+      <p class="learn-body">Early prototypes used decimal arithmetic for GST. Floating-point rounding caused ₹0.01 discrepancies that compounded into real reconciliation errors. Switching to integer paise throughout — every price, every tax, every total — eliminated the problem entirely. The formula is now: gstPaise = totalPaise × 5 / 105, integer division, no decimals anywhere.</p>
     </div>
     <div class="learn-card rv" style="transition-delay:.2s">
       <div class="learn-num">05</div>
-      <h3 class="learn-title">Multi-tenancy from day one</h3>
-      <p class="learn-body">Building MENZO on STEMLYN's multi-tenant architecture meant every restaurant gets complete data isolation without running separate databases. Adding a second restaurant is a config change, not a deployment. I wish I had internalized this constraint earlier in my career.</p>
+      <h3 class="learn-title">Full DB isolation is worth the ops overhead</h3>
+      <p class="learn-body">Each restaurant client gets its own Railway project and its own PostgreSQL database. There is no shared schema, no tenant ID column, no risk of cross-client data leaks. Adding a new restaurant means provisioning a new Railway project — a 5-minute operation. The simplicity this buys in queries (no WHERE restaurantId = ?) is worth every minute of ops work.</p>
     </div>
     <div class="learn-card rv" style="transition-delay:.25s">
       <div class="learn-num">06</div>
@@ -1230,37 +1232,37 @@ img{display:block;max-width:100%}
   <h2 class="sec-title rv" style="transition-delay:.04s">Where MENZO<br><em>is going next</em></h2>
   <div class="roadmap-grid">
     <div class="road-card rv">
-      <div class="road-icon">📱</div>
+      <div class="road-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-smartphone"/></svg></div>
       <h4 class="road-title">QR Table Ordering</h4>
       <p class="road-desc">Customers scan, order, and pay from their own phone. No app install required.</p>
       <span class="road-phase">Phase 2</span>
     </div>
     <div class="road-card rv" style="transition-delay:.04s">
-      <div class="road-icon">🔮</div>
+      <div class="road-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sparkles"/></svg></div>
       <h4 class="road-title">AI Demand Forecasting</h4>
       <p class="road-desc">Predict what dishes will sell tomorrow based on day, weather, and historical patterns. Auto-adjust prep quantities.</p>
       <span class="road-phase">Phase 3</span>
     </div>
     <div class="road-card rv" style="transition-delay:.08s">
-      <div class="road-icon">💛</div>
+      <div class="road-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-star"/></svg></div>
       <h4 class="road-title">Customer Loyalty Engine</h4>
       <p class="road-desc">Points, rewards, and personalized offers delivered via WhatsApp. No app required for customers.</p>
       <span class="road-phase">Phase 2</span>
     </div>
     <div class="road-card rv" style="transition-delay:.12s">
-      <div class="road-icon">📊</div>
+      <div class="road-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bar-chart"/></svg></div>
       <h4 class="road-title">Kitchen Analytics</h4>
       <p class="road-desc">Ticket completion time per station, prep time trends, and peak load analysis for kitchen optimization.</p>
       <span class="road-phase">Phase 2</span>
     </div>
     <div class="road-card rv" style="transition-delay:.16s">
-      <div class="road-icon">🏪</div>
+      <div class="road-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-store"/></svg></div>
       <h4 class="road-title">Multi-location Inventory</h4>
       <p class="road-desc">Central warehouse management with branch-level stock transfers and consolidated purchasing for restaurant groups.</p>
       <span class="road-phase">Phase 3</span>
     </div>
     <div class="road-card rv" style="transition-delay:.2s">
-      <div class="road-icon">👥</div>
+      <div class="road-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-users"/></svg></div>
       <h4 class="road-title">Employee Scheduling</h4>
       <p class="road-desc">Shift planning, attendance tracking, and payroll export integrated with revenue data to optimize labor cost.</p>
       <span class="road-phase">Phase 3</span>
@@ -1280,21 +1282,17 @@ img{display:block;max-width:100%}
       <div class="stack-items">
         <span class="stack-chip">Next.js 14</span>
         <span class="stack-chip">React 18</span>
-        <span class="stack-chip">TypeScript</span>
-        <span class="stack-chip">TailwindCSS</span>
-        <span class="stack-chip">ShadCN UI</span>
-        <span class="stack-chip">TanStack Query</span>
-        <span class="stack-chip">Recharts</span>
+        <span class="stack-chip">JavaScript (JSX)</span>
+        <span class="stack-chip">Custom CSS</span>
       </div>
     </div>
     <div class="stack-group rv" style="transition-delay:.05s">
       <div class="stack-group-title">Backend</div>
       <div class="stack-items">
-        <span class="stack-chip">Node.js</span>
-        <span class="stack-chip">Express</span>
-        <span class="stack-chip">Drizzle ORM</span>
+        <span class="stack-chip">Next.js API Routes</span>
+        <span class="stack-chip">Prisma 7</span>
+        <span class="stack-chip">@prisma/adapter-pg</span>
         <span class="stack-chip">Zod</span>
-        <span class="stack-chip">BullMQ</span>
         <span class="stack-chip">JWT</span>
       </div>
     </div>
@@ -1302,33 +1300,31 @@ img{display:block;max-width:100%}
       <div class="stack-group-title">Database</div>
       <div class="stack-items">
         <span class="stack-chip">PostgreSQL</span>
-        <span class="stack-chip">Redis</span>
-        <span class="stack-chip">Multi-tenant schemas</span>
+        <span class="stack-chip">Per-client DB isolation</span>
+        <span class="stack-chip">Paise integer arithmetic</span>
       </div>
     </div>
     <div class="stack-group rv" style="transition-delay:.15s">
-      <div class="stack-group-title">AI &amp; Messaging</div>
+      <div class="stack-group-title">Messaging</div>
       <div class="stack-items">
-        <span class="stack-chip">OpenAI GPT-4o</span>
         <span class="stack-chip">WhatsApp Business API</span>
-        <span class="stack-chip">Twilio</span>
+        <span class="stack-chip">Outbound invoice delivery</span>
       </div>
     </div>
     <div class="stack-group rv" style="transition-delay:.2s">
-      <div class="stack-group-title">Payments</div>
+      <div class="stack-group-title">Billing &amp; GST</div>
       <div class="stack-items">
-        <span class="stack-chip">Razorpay</span>
-        <span class="stack-chip">UPI</span>
         <span class="stack-chip">GST Engine</span>
+        <span class="stack-chip">GST-inclusive pricing</span>
+        <span class="stack-chip">MENZO_PLAN tier gating</span>
       </div>
     </div>
     <div class="stack-group rv" style="transition-delay:.25s">
       <div class="stack-group-title">Infrastructure</div>
       <div class="stack-items">
-        <span class="stack-chip">Vercel</span>
         <span class="stack-chip">Railway</span>
-        <span class="stack-chip">Cloudflare</span>
-        <span class="stack-chip">GitHub Actions</span>
+        <span class="stack-chip">Per-client project</span>
+        <span class="stack-chip">Dedicated PostgreSQL</span>
       </div>
     </div>
   </div>
@@ -1356,16 +1352,16 @@ img{display:block;max-width:100%}
         <div class="outcome-item"><span class="outcome-check">✓</span> POS &amp; billing with live table sessions and GST auto-calculation</div>
         <div class="outcome-item"><span class="outcome-check">✓</span> Real-time KOT pipeline from order to kitchen display</div>
         <div class="outcome-item"><span class="outcome-check">✓</span> Recipe-linked inventory with automatic stock deduction</div>
-        <div class="outcome-item"><span class="outcome-check">✓</span> WhatsApp AI ordering — freeform message to confirmed order</div>
-        <div class="outcome-item"><span class="outcome-check">✓</span> Unified delivery board for Swiggy, Zomato &amp; direct orders</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> WhatsApp invoice delivery — bill sent automatically post-payment</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> Unified delivery board — Swiggy, Zomato, Dunzo &amp; direct; full status flow</div>
         <div class="outcome-item"><span class="outcome-check">✓</span> CA-ready GST reports auto-generated daily</div>
-        <div class="outcome-item"><span class="outcome-check">✓</span> 19 modules covering every restaurant workflow</div>
-        <div class="outcome-item"><span class="outcome-check">✓</span> Multi-tenant architecture — ready for restaurant group scale</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> 13 modules covering every restaurant workflow</div>
+        <div class="outcome-item"><span class="outcome-check">✓</span> Per-client DB isolation — separate Railway project per restaurant</div>
       </div>
     </div>
     <div class="outcome-stats rv" style="transition-delay:.12s">
       <div class="outcome-stat">
-        <div class="outcome-stat-num">19</div>
+        <div class="outcome-stat-num">13</div>
         <div class="outcome-stat-label">Production Modules</div>
       </div>
       <div class="outcome-stat">
@@ -1466,15 +1462,15 @@ img{display:block;max-width:100%}
 (function(){
   var data={
     walkin:{title:'Walk-in Orders',body:'Dine-in and takeaway orders are created directly at the POS terminal. The waiter selects the table, opens a billing session, and starts adding items from the digital menu. Every action is time-stamped and tied to a staff member.',tags:['POS Module','Table Sessions','Role-based Access']},
-    whatsapp:{title:'WhatsApp AI Ordering',body:'Customers send orders in natural language via WhatsApp. GPT-4o parses the message into structured order data — items, quantities, modifiers. Fuzzy matching resolves menu items. Low-confidence parses are flagged for human review. Confirmed orders route through the same pipeline as dine-in.',tags:['GPT-4o','WhatsApp Business API','NLP Pipeline','Confidence Scoring']},
+    whatsapp:{title:'WhatsApp Invoice Delivery',body:'After payment is recorded, the bill is sent to the customer via WhatsApp Business API — non-blocking, via setImmediate. Outbound only. No inbound ordering, no AI, no NLP. The invoice uses format MNZ-YYYYMMDD-XXXX with a daily-reset sequential counter.',tags:['WhatsApp Business API','Outbound invoice','setImmediate','MNZ-YYYYMMDD-XXXX']},
     delivery:{title:'Delivery Platform Integration',body:'Orders from Swiggy and Zomato are entered into the unified delivery board. Staff receive and confirm orders from a single Kanban view instead of managing multiple tablets. All delivery orders feed the same analytics as dine-in.',tags:['Swiggy','Zomato','Unified Kanban','Rider Management']},
-    server:{title:'MENZO Application Server',body:'Node.js + Express REST API server handling all business logic. Stateless architecture enables horizontal scaling. Every request is authenticated, validated with Zod schemas, and logged. Rate limiting and input sanitization at the API boundary.',tags:['Node.js','Express','REST API','Zod Validation','Rate Limiting']},
+    server:{title:'MENZO Application Server',body:'Next.js 14 monolith — API routes live in app/api/. No separate Express server. Prisma 7 with @prisma/adapter-pg handles database access via direct pg connection. Every request is authenticated, validated with Zod schemas. All money stored as paise (integers) — no float arithmetic anywhere.',tags:['Next.js API Routes','Prisma 7','@prisma/adapter-pg','Zod Validation','Paise arithmetic']},
     auth:{title:'Authentication & Authorization',body:'JWT-based stateless authentication. Role-based access control with 5 distinct roles — Owner, Manager, Waiter, Kitchen Staff, and Delivery. Each role sees only what they need. Tokens expire and rotate. Session invalidation propagates immediately.',tags:['JWT','RBAC','5 Role Types','Session Management']},
     logic:{title:'Business Logic Layer',body:'Core domain services — order management, billing engine, inventory deduction, GST calculation, KOT generation, and delivery coordination. Every service is stateless and can be tested independently. Side effects (notifications, queue jobs) are decoupled through event emission.',tags:['Order Service','Billing Engine','Inventory Service','GST Calculator','KOT Engine']},
-    ai:{title:'AI Processing Engine',body:'GPT-4o integration for natural language order parsing. A secondary fuzzy-matching layer maps LLM output to live menu SKUs with similarity scoring. All AI calls are wrapped in retry logic with exponential backoff. Parsing results are cached per business per session window.',tags:['OpenAI GPT-4o','Fuzzy Matching','Retry Logic','Result Caching']},
-    db:{title:'Database Layer',body:'PostgreSQL as primary data store with Drizzle ORM for type-safe queries. Multi-tenant isolation via schema-per-tenant. Redis for session cache, rate limiting state, and BullMQ job queues. All financial mutations run inside transactions. Full audit log on every write.',tags:['PostgreSQL','Drizzle ORM','Redis','Multi-tenant','BullMQ','Audit Logs']},
+    ai:{title:'GST & Billing Engine',body:'GST-inclusive pricing: tax is baked into menu prices, not added on top. Calculation: gstPaise = totalPaise × 5 / 105 (integer division). CGST/SGST split. Invoice generated with format MNZ-YYYYMMDD-XXXX — daily-reset sequential counter. Tier gating via MENZO_PLAN env var: Starter / Pro / Business / Custom.',tags:['GST-inclusive','Paise arithmetic','CGST/SGST','Invoice MNZ-YYYYMMDD-XXXX','MENZO_PLAN tier gating']},
+    db:{title:'Database Layer',body:'PostgreSQL as primary data store with Prisma 7 + @prisma/adapter-pg (driver-adapter pattern, direct pg connection). One dedicated database per restaurant client — no shared schema, no tenant ID filtering. prisma.restaurant.findFirst() is all that\'s needed. All financial mutations run inside transactions.',tags:['PostgreSQL','Prisma 7','@prisma/adapter-pg','Per-client DB','DB transactions']},
     pos:{title:'POS & Billing Module',body:'Live table sessions accumulate order items in real time. Billing closes the session with one tap — GST auto-calculated from business config, invoice generated as PDF, and optionally dispatched via WhatsApp. Closed sessions archive to the order history.',tags:['Live Sessions','GST Engine','PDF Invoice','WhatsApp Dispatch']},
-    kitchen:{title:'Kitchen Order Tickets',body:'Every order item creates a KOT routed to the correct kitchen station. Kitchen display is a PWA that works on any screen. Polling every 10 seconds for reliability. Tickets are acknowledged by kitchen staff, closing the loop back to the POS.',tags:['Real-time KOT','PWA Display','Station Routing','Ticket Acknowledgment']},
+    kitchen:{title:'Kitchen Order Tickets',body:'Every order item creates a KOT (Kitchen Order Ticket) with a daily sequential number. Routed to the correct kitchen station. The kitchen display is a browser tab — no service worker, no PWA manifest. Polling every 10 seconds was chosen over WebSockets: predictable, no mid-read screen jumps, works on cheap Android tablets.',tags:['KOT Engine','Daily sequential KOT','10s polling','KotLog table','Any Android tablet']},
     inv:{title:'Inventory Module',body:'Recipe-linked inventory deducts exact ingredient quantities on every confirmed order. Low-stock alerts fire when any item drops below its reorder threshold. Purchase orders track incoming stock. Full audit trail of every deduction and addition.',tags:['Recipe Linking','Auto-deduction','Low-stock Alerts','Purchase Orders','Audit Trail']},
     gst:{title:'GST Reports',body:'Daily, weekly, and monthly reports auto-generated from closed order data. CGST/SGST breakdown per GST rate. Payment split analysis (Cash / UPI / Card). CA-ready export formats. Reports are available immediately — no end-of-month reconciliation required.',tags:['Auto-generation','CGST/SGST','CA-ready Export','Payment Split']},
     dash:{title:'Owner Dashboard',body:'Real-time overview of revenue, table status, recent orders, and top-selling items. Hourly revenue chart refreshes every 60 seconds. All data is tenant-scoped — the owner sees only their restaurant. Mobile-optimized for management away from the floor.',tags:['Real-time Analytics','Live Floor Plan','Revenue Charts','Mobile-optimized']}
@@ -1519,18 +1515,18 @@ img{display:block;max-width:100%}
 // ── CORE MODULES GRID ──
 (function(){
   var modules=[
-    {icon:'🏠',name:'Dashboard',tag:'Analytics',desc:'Real-time overview of revenue, table status, recent orders, and hourly performance. The owner can see the entire business at a glance from any device.',features:['Live revenue','Table status','Top items','Hourly chart']},
-    {icon:'📋',name:'Orders',tag:'KOT Engine',desc:'Order management with real-time status tracking. Every order from every channel — dine-in, takeaway, delivery — in one unified view.',features:['All channels','Status tracking','Order history','KOT generation']},
-    {icon:'🪑',name:'Tables',tag:'Floor Plan',desc:'Visual floor plan with live table status. Open sessions, check occupancy, and manage reservations from the same screen.',features:['Visual floor plan','Live status','Session management','Multi-floor']},
-    {icon:'💳',name:'Billing',tag:'POS',desc:'Live table sessions with running totals. One-tap bill generation with GST auto-calculation, invoice creation, and WhatsApp delivery.',features:['Live sessions','GST calculation','PDF invoice','WhatsApp dispatch']},
-    {icon:'🍳',name:'Kitchen',tag:'KOT Display',desc:'PWA kitchen display showing live order tickets. Reliable polling keeps the kitchen in sync without requiring complex real-time infrastructure.',features:['Live KOT feed','Station routing','Ticket ACK','Any screen']},
-    {icon:'📦',name:'Inventory',tag:'Stock Control',desc:'Recipe-linked stock management that deducts automatically on every sale. Low-stock alerts fire before the kitchen runs out.',features:['Auto-deduction','Recipe linking','Low-stock alerts','Audit trail']},
-    {icon:'📊',name:'Reports',tag:'GST & Analytics',desc:'Daily, weekly, and monthly revenue reports with GST breakdown. CA-ready export formats auto-generated — no manual reconciliation.',features:['GST reports','Revenue analytics','Item performance','CA-ready export']},
-    {icon:'🛵',name:'Delivery',tag:'Unified Board',desc:'Kanban board for all delivery channels. Swiggy, Zomato, and direct orders in one view with rider assignment and status tracking.',features:['Multi-channel','Kanban board','Rider assignment','Status tracking']},
-    {icon:'📅',name:'Reservations',tag:'Table Booking',desc:'Reservation management with table assignment, guest details, and time-slot blocking. Reduces walk-in wait time and floor conflicts.',features:['Guest details','Table assignment','Time blocking','Conflict detection']},
-    {icon:'🍽️',name:'Menu',tag:'Catalogue',desc:'Digital menu management with categories, pricing, modifiers, and availability toggles. Changes reflect instantly across all ordering channels.',features:['Categories','Modifiers','Availability','Instant sync']},
-    {icon:'📖',name:'Recipes',tag:'Ingredient Linking',desc:'Recipe builder that links dishes to exact ingredient quantities. The foundation for automatic inventory deduction on every sale.',features:['Ingredient mapping','Quantity linking','Cost calculation','Menu sync']},
-    {icon:'🏭',name:'Vendors',tag:'Supply Chain',desc:'Supplier ledger with purchase records, contact management, and incoming stock tracking integrated with inventory.',features:['Supplier contacts','Purchase orders','Stock receipts','Ledger history']}
+    {icon:'home',       name:'Dashboard',    tag:'Analytics',         desc:'Real-time overview of revenue, table status, recent orders, and hourly performance. The owner can see the entire business at a glance from any device.',features:['Live revenue','Table status','Top items','Hourly chart']},
+    {icon:'clipboard',  name:'Orders',       tag:'KOT Engine',        desc:'Order management with real-time status tracking. Every order from every channel — dine-in, takeaway, delivery — in one unified view.',features:['All channels','Status tracking','Order history','KOT generation']},
+    {icon:'layout',     name:'Tables',       tag:'Floor Plan',        desc:'Visual floor plan with live table status. Open sessions, check occupancy, and manage reservations from the same screen.',features:['Visual floor plan','Live status','Session management','Multi-floor']},
+    {icon:'credit-card',name:'Billing',      tag:'POS',               desc:'Live table sessions with running totals. One-tap bill generation with GST auto-calculation, invoice creation, and WhatsApp delivery.',features:['Live sessions','GST calculation','PDF invoice','WhatsApp dispatch']},
+    {icon:'flame',      name:'Kitchen',      tag:'KOT Display',       desc:'Browser-based kitchen display showing live KOTs. Polls every 10 seconds — no PWA, no service worker. Works on any Android tablet or monitor without installation.',features:['Live KOT feed','Station routing','Ticket ACK','Any screen']},
+    {icon:'package',    name:'Inventory',    tag:'Stock Control',     desc:'Recipe-linked stock management that deducts automatically on every sale. Low-stock alerts fire before the kitchen runs out.',features:['Auto-deduction','Recipe linking','Low-stock alerts','Audit trail']},
+    {icon:'bar-chart',  name:'Reports',      tag:'GST & Analytics',   desc:'Daily, weekly, and monthly revenue reports with GST breakdown. CA-ready export formats auto-generated — no manual reconciliation.',features:['GST reports','Revenue analytics','Item performance','CA-ready export']},
+    {icon:'truck',      name:'Delivery',     tag:'Unified Board',     desc:'Kanban board for all delivery channels. Swiggy, Zomato, and direct orders in one view with rider assignment and status tracking.',features:['Multi-channel','Kanban board','Rider assignment','Status tracking']},
+    {icon:'calendar',   name:'Reservations', tag:'Table Booking',     desc:'Reservation management with table assignment, guest details, and time-slot blocking. Reduces walk-in wait time and floor conflicts.',features:['Guest details','Table assignment','Time blocking','Conflict detection']},
+    {icon:'utensils',   name:'Menu',         tag:'Catalogue',         desc:'Digital menu management with categories, pricing, modifiers, and availability toggles. Changes reflect instantly across all ordering channels.',features:['Categories','Modifiers','Availability','Instant sync']},
+    {icon:'book-open',  name:'Recipes',      tag:'Ingredient Linking',desc:'Recipe builder that links dishes to exact ingredient quantities. The foundation for automatic inventory deduction on every sale.',features:['Ingredient mapping','Quantity linking','Cost calculation','Menu sync']},
+    {icon:'factory',    name:'Vendors',      tag:'Supply Chain',      desc:'Supplier ledger with purchase records, contact management, and incoming stock tracking integrated with inventory.',features:['Supplier contacts','Purchase orders','Stock receipts','Ledger history']}
   ];
 
   var grid=document.getElementById('modules-grid');
@@ -1542,7 +1538,9 @@ img{display:block;max-width:100%}
     card.className='mod-card rv';
     card.style.transitionDelay=(i*0.04)+'s';
 
-    var icon=document.createElement('div');icon.className='mod-icon';icon.textContent=m.icon;
+    var icon=document.createElement('div');icon.className='mod-icon';
+    var _msvg=document.createElementNS('http://www.w3.org/2000/svg','svg');_msvg.setAttribute('class','ui-icon');_msvg.setAttribute('viewBox','0 0 24 24');_msvg.setAttribute('aria-hidden','true');
+    var _muse=document.createElementNS('http://www.w3.org/2000/svg','use');_muse.setAttribute('href','#icon-'+m.icon);_msvg.appendChild(_muse);icon.appendChild(_msvg);
     var name=document.createElement('div');name.className='mod-name';name.textContent=m.name;
     var tag=document.createElement('div');tag.className='mod-tag';tag.textContent=m.tag;
     card.appendChild(icon);card.appendChild(name);card.appendChild(tag);
@@ -1773,6 +1771,213 @@ img{display:block;max-width:100%}
     entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');window._rvObserver.unobserve(en.target);}});
   },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 })();
+
+/* ── Pulse Beams — Architecture Diagram ── */
+(function(){
+  var diagram = document.getElementById('arch-diagram');
+  if(!diagram) return;
+
+  /* SVG overlay — behind nodes */
+  var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.id = 'arch-pulse-svg';
+  diagram.insertBefore(svg, diagram.firstChild);
+
+  var defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  svg.appendChild(defs);
+
+  /* Connection map — each beam goes from bottom-center of 'from' node to top-center of 'to' node */
+  var connections = [
+    /* entry → server */
+    {from:'walkin',   to:'server', delay:0,   dur:2.2, color:'#18CCFC'},
+    {from:'whatsapp', to:'server', delay:0.5, dur:2.0, color:'#18CCFC'},
+    {from:'delivery', to:'server', delay:1.0, dur:2.4, color:'#18CCFC'},
+    /* server → middleware */
+    {from:'server',   to:'auth',   delay:0.3, dur:1.8, color:'#6344F5'},
+    {from:'server',   to:'logic',  delay:0.7, dur:1.6, color:'#6344F5'},
+    {from:'server',   to:'ai',     delay:1.1, dur:2.0, color:'#6344F5'},
+    /* middleware → db */
+    {from:'auth',     to:'db',     delay:0.4, dur:1.8, color:'#AE48FF'},
+    {from:'logic',    to:'db',     delay:0.8, dur:1.6, color:'#AE48FF'},
+    {from:'ai',       to:'db',     delay:1.2, dur:2.0, color:'#AE48FF'},
+    /* db → outputs */
+    {from:'db', to:'pos',     delay:0.2, dur:2.0, color:'#22C55E'},
+    {from:'db', to:'kitchen', delay:0.5, dur:1.8, color:'#22C55E'},
+    {from:'db', to:'inv',     delay:0.8, dur:2.2, color:'#22C55E'},
+    {from:'db', to:'gst',     delay:1.1, dur:2.0, color:'#22C55E'},
+    {from:'db', to:'dash',    delay:1.4, dur:1.8, color:'#22C55E'}
+  ];
+
+  var beamEls = [];
+
+  connections.forEach(function(conn, idx){
+    var gradId = 'apg-'+idx;
+
+    /* Gradient: solid color with fade-in/out on each end */
+    var grad = document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
+    grad.setAttribute('id', gradId);
+    grad.setAttribute('gradientUnits','userSpaceOnUse');
+    [
+      {o:'0%',  c:conn.color, a:0},
+      {o:'20%', c:conn.color, a:1},
+      {o:'80%', c:conn.color, a:1},
+      {o:'100%',c:conn.color, a:0}
+    ].forEach(function(s){
+      var stop = document.createElementNS('http://www.w3.org/2000/svg','stop');
+      stop.setAttribute('offset', s.o);
+      stop.setAttribute('stop-color', s.c);
+      stop.setAttribute('stop-opacity', s.a);
+      grad.appendChild(stop);
+    });
+    defs.appendChild(grad);
+
+    /* Track — dim background path */
+    var track = document.createElementNS('http://www.w3.org/2000/svg','path');
+    track.setAttribute('fill','none');
+    track.setAttribute('stroke','rgba(148,163,184,0.08)');
+    track.setAttribute('stroke-width','1');
+    svg.appendChild(track);
+
+    /* Glow — wider, lower opacity pulse */
+    var glow = document.createElementNS('http://www.w3.org/2000/svg','path');
+    glow.setAttribute('fill','none');
+    glow.setAttribute('stroke',conn.color);
+    glow.setAttribute('stroke-width','5');
+    glow.setAttribute('stroke-linecap','round');
+    glow.setAttribute('stroke-opacity','0.18');
+    svg.appendChild(glow);
+
+    /* Beam — sharp traveling pulse */
+    var beam = document.createElementNS('http://www.w3.org/2000/svg','path');
+    beam.setAttribute('fill','none');
+    beam.setAttribute('stroke','url(#'+gradId+')');
+    beam.setAttribute('stroke-width','2');
+    beam.setAttribute('stroke-linecap','round');
+    svg.appendChild(beam);
+
+    /* Endpoint dots */
+    var dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('r','2.5');
+    dot.setAttribute('fill',conn.color);
+    dot.setAttribute('opacity','0.5');
+    svg.appendChild(dot);
+
+    beamEls.push({conn:conn, grad:grad, track:track, glow:glow, beam:beam, dot:dot, len:0});
+  });
+
+  function getEl(key){ return document.querySelector('[data-key="'+key+'"]'); }
+
+  function getBottom(el){
+    var dr = diagram.getBoundingClientRect();
+    var er = el.getBoundingClientRect();
+    return {x: er.left - dr.left + er.width/2, y: er.bottom - dr.top};
+  }
+
+  function getTop(el){
+    var dr = diagram.getBoundingClientRect();
+    var er = el.getBoundingClientRect();
+    return {x: er.left - dr.left + er.width/2, y: er.top - dr.top};
+  }
+
+  function buildPath(a, b){
+    /* L-shaped path with rounded bezier corner at the midpoint */
+    var r = 10;
+    if(Math.abs(a.x - b.x) < 6){
+      return 'M '+a.x+','+a.y+' L '+b.x+','+b.y;
+    }
+    var mid = (a.y + b.y) / 2;
+    var dir = b.x > a.x ? 1 : -1;
+    return [
+      'M', a.x+','+a.y,
+      'L', a.x+','+(mid-r),
+      'Q', a.x+','+mid, (a.x+dir*r)+','+mid,
+      'L', (b.x-dir*r)+','+mid,
+      'Q', b.x+','+mid, b.x+','+(mid+r),
+      'L', b.x+','+b.y
+    ].join(' ');
+  }
+
+  function updateAll(){
+    var dw = diagram.offsetWidth, dh = diagram.offsetHeight;
+    svg.setAttribute('viewBox','0 0 '+dw+' '+dh);
+    svg.setAttribute('width', dw);
+    svg.setAttribute('height', dh);
+
+    beamEls.forEach(function(be){
+      var fromEl = getEl(be.conn.from), toEl = getEl(be.conn.to);
+      if(!fromEl||!toEl) return;
+      var a = getBottom(fromEl), b = getTop(toEl);
+      var d = buildPath(a, b);
+
+      be.track.setAttribute('d', d);
+      be.glow.setAttribute('d', d);
+      be.beam.setAttribute('d', d);
+
+      /* Dot at source */
+      be.dot.setAttribute('cx', a.x);
+      be.dot.setAttribute('cy', a.y);
+
+      /* Gradient spans from→to */
+      be.grad.setAttribute('x1', a.x); be.grad.setAttribute('y1', a.y);
+      be.grad.setAttribute('x2', b.x); be.grad.setAttribute('y2', b.y);
+
+      /* Dasharray for traveling segment */
+      be.len = be.track.getTotalLength();
+      var seg = Math.max(28, be.len * 0.28);
+      var gap = be.len + seg;
+      be.beam.setAttribute('stroke-dasharray', seg+' '+gap);
+      be.glow.setAttribute('stroke-dasharray', seg+' '+gap);
+    });
+  }
+
+  var t0 = null;
+  function animate(ts){
+    if(!t0) t0 = ts;
+    var elapsed = (ts - t0) / 1000;
+
+    beamEls.forEach(function(be){
+      if(!be.len) return;
+      var seg = Math.max(28, be.len * 0.28);
+      var total = be.len + seg;
+      var phase = ((elapsed - be.conn.delay) % be.conn.dur + be.conn.dur) % be.conn.dur / be.conn.dur;
+      var offset = be.len - phase * total;
+      be.beam.setAttribute('stroke-dashoffset', offset);
+      be.glow.setAttribute('stroke-dashoffset', offset);
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  setTimeout(function(){
+    updateAll();
+    requestAnimationFrame(animate);
+    window.addEventListener('resize', updateAll);
+  }, 150);
+})();
 </script>
+<svg xmlns="http://www.w3.org/2000/svg" id="icon-sprite" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="icon-message-circle" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="icon-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></symbol>
+  <symbol id="icon-credit-card" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
+  <symbol id="icon-cloud" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
+  <symbol id="icon-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="icon-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></symbol>
+  <symbol id="icon-smartphone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+  <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
+  <symbol id="icon-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="icon-bar-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="icon-store" viewBox="0 0 24 24"><path d="M3 2h18l2 6H1l2-6z"/><path d="M1 8v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V8"/><path d="M10 2v6M14 2v6"/><path d="M8 14h8v6H8z"/></symbol>
+  <symbol id="icon-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="icon-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></symbol>
+  <symbol id="icon-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></symbol>
+  <symbol id="icon-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/></symbol>
+  <symbol id="icon-package" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="icon-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+  <symbol id="icon-utensils" viewBox="0 0 24 24"><line x1="3" y1="2" x2="3" y2="22"/><path d="M7 2v6a2 2 0 0 0 2 2 2 2 0 0 0 2-2V2"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></symbol>
+  <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="icon-factory" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4H2v16z"/><line x1="7" y1="14" x2="9" y2="14"/><line x1="7" y1="18" x2="9" y2="18"/><line x1="13" y1="14" x2="15" y2="14"/><line x1="13" y1="18" x2="15" y2="18"/></symbol>
+</svg>
 </body>
 </html>

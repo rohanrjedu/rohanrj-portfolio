@@ -390,20 +390,28 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 
 /* ── AI DECISION FLOW ── */
 #s-ai-flow{background:var(--bg)}
-.flow-diagram{max-width:600px;margin:48px auto 0}
-.flow-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:0}
-.flow-node{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;border:1px solid var(--border);background:var(--surface);color:var(--fg-m);transition:all .4s;cursor:pointer;min-width:120px}
-.flow-node.start{background:var(--accent-dim);border-color:rgba(232,96,44,.3);color:var(--accent)}
-.flow-node.layer{background:var(--surface-2);border-color:var(--border-h);color:var(--fg)}
-.flow-node.decision{background:var(--surface);color:var(--fg-m);border-style:dashed}
-.flow-node.execute{background:var(--green-dim);border-color:rgba(34,197,94,.3);color:var(--green)}
-.flow-node.active{box-shadow:0 0 0 2px rgba(232,96,44,.3)}
-.flow-connector{display:flex;flex-direction:column;align-items:center;margin:6px 0}
-.flow-line{width:1px;height:20px;background:var(--border)}
-.flow-arrow-d{color:var(--fg-d);font-size:10px}
-.flow-branch{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin:0;align-items:start}
-.flow-branch-yes,.flow-branch-no{display:flex;flex-direction:column;align-items:center;gap:6px}
-.flow-branch-label{font-size:10px;color:var(--fg-d);letter-spacing:.06em;text-transform:uppercase}
+/* ── Animated Beam Graph ── */
+.ab-wrap{position:relative;width:100%;max-width:900px;margin:64px auto 0;height:360px}
+@media(max-width:700px){.ab-wrap{height:510px}}
+.ab-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.ab-node{position:absolute;display:flex;align-items:center;gap:10px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(18,22,30,.88);backdrop-filter:blur(8px);font-size:11px;font-weight:500;color:var(--fg-m);letter-spacing:.02em;white-space:nowrap;padding:10px 14px;transform:translate(-50%,-50%);transition:border-color .3s,box-shadow .3s,transform .3s}
+.ab-node:hover{border-color:rgba(232,96,44,.38);box-shadow:0 0 0 1px rgba(232,96,44,.12),0 12px 40px rgba(0,0,0,.4);transform:translate(-50%,-50%) translateY(-2px)}
+.ab-node.center{padding:14px 22px;font-size:13px;font-weight:700;color:#fff;border-color:rgba(232,96,44,.4);background:linear-gradient(145deg,rgba(232,96,44,.14) 0%,rgba(13,17,23,.96) 100%);box-shadow:0 0 0 1px rgba(232,96,44,.2),0 0 70px rgba(232,96,44,.14),0 24px 64px rgba(0,0,0,.5)}
+.ab-node.center .ab-node-icon{font-size:18px}
+.ab-node.output{border-color:rgba(34,197,94,.25);background:rgba(18,30,22,.9);color:rgba(134,239,172,.9)}
+.ab-node.output:hover{border-color:rgba(34,197,94,.5);box-shadow:0 0 0 1px rgba(34,197,94,.15),0 12px 40px rgba(0,0,0,.4)}
+.ab-node-icon{font-size:15px;line-height:1;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ab-node-icon svg.ui-icon{width:16px;height:16px;display:block}
+.ab-node.center .ab-node-icon svg.ui-icon{width:20px;height:20px}
+.sc-tag svg.ui-icon{width:16px;height:16px;display:block}
+.ui-icon{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.ab-node-label{display:flex;flex-direction:column;gap:2px}
+.ab-node-name{line-height:1.2}
+.ab-node-sub{font-size:9px;color:var(--fg-d);font-weight:400;letter-spacing:.06em;text-transform:uppercase;opacity:.65}
+/* hub pulse ring */
+.ab-hub-ring{position:absolute;border-radius:14px;border:1px solid rgba(232,96,44,.2);pointer-events:none;transform:translate(-50%,-50%);animation:hubPulse 2.6s ease-out infinite}
+@keyframes hubPulse{0%{opacity:.5;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.6)}}
+.flow-diagram{display:none}
 .flow-branch-line{width:1px;height:16px;background:var(--border)}
 
 /* ── PROJECTS CARD STACK ── */
@@ -439,6 +447,8 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 #s-tech{background:var(--bg)}
 .tech-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:48px}
 .tech-cat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+.stack-row{display:grid;grid-template-columns:1fr 1.4fr 1.4fr;gap:24px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:start}
+@media(max-width:639px){.stack-row{display:block;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.04)}.stack-row-hdr{display:none}}
 .cat-title{font-size:10px;color:var(--fg-d);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .cat-items{display:flex;flex-direction:column;gap:10px}
 .cat-item{display:flex;align-items:center;gap:10px}
@@ -613,7 +623,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
     <a href="#s-projects">Projects</a>
     <a href="#s-tech">Tech</a>
     <a href="#s-contact">Contact</a>
-    <a href="assets/rohan-rj-cv.docx" class="nav-cta" download>Resume</a>
+    <a href="assets/rohan-rj-cv.pdf" class="nav-cta" download>Resume</a>
   </div>
 </nav>
 
@@ -638,7 +648,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
     <div class="hero-btns" id="hero-btns" style="opacity:0;transform:translateY(12px);transition:opacity .8s var(--ease) 1.1s,transform .8s var(--ease) 1.1s">
       <a href="#s-stemlyn" class="btn-primary">Explore Systems →</a>
       <a href="#s-projects" class="btn-secondary">View Projects</a>
-      <a href="assets/rohan-rj-cv.docx" class="btn-outline" download>↓ Resume</a>
+      <a href="assets/rohan-rj-cv.pdf" class="btn-outline" download>↓ Resume</a>
     </div>
   </div>
 
@@ -883,6 +893,9 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
       <div class="adp-inner" id="adp-inner"></div>
     </div>
   </div>
+
+  <!-- Feature cards — populated by JS -->
+  <div id="stemlyn-cards" class="stemlyn-cards rv" style="transition-delay:.15s"></div>
 </section>
 
 <!-- ── AI DECISION FLOW ── -->
@@ -891,8 +904,9 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
   <h2 class="section-h2 wreveal rv" style="transition-delay:.05s">AI Decision Engine</h2>
   <p class="section-p rv" style="transition-delay:.1s">Three-layer AI processing ensures every customer message is handled intelligently — from rule-based flows to LLM fallback.</p>
 
-  <div class="flow-diagram rv" style="transition-delay:.15s" id="flow-diagram">
-    <!-- populated by JS -->
+  <div class="ab-wrap rv" style="transition-delay:.15s" id="ab-wrap">
+    <svg class="ab-svg" id="ab-svg"></svg>
+    <!-- nodes injected by JS -->
   </div>
 </section>
 
@@ -1177,45 +1191,45 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
 
     <div class="tl-entry rv">
       <div class="tl-dot"></div>
-      <div class="tl-date">2023 — Present</div>
-      <div class="tl-role">Founder &amp; Lead Engineer</div>
+      <div class="tl-date">Nov 2025 — Present</div>
+      <div class="tl-role">Founder &amp; AI Systems Builder</div>
       <div class="tl-org">STEMLYN · Revenue Infrastructure Platform</div>
-      <p class="tl-desc">Built 3 production AI systems from scratch — MENZO (Restaurant OS), AARNA (WhatsApp AI Commerce), and Outbound Email AI. 19 modules deployed, all solo. Systems handle real transactions, real users, zero downtime.</p>
+      <p class="tl-desc">Built a reusable business-operations platform — 19-module BMS, WhatsApp AI commerce agent, e-commerce storefront, and marketing site — solo, from architecture to deployment. Deployed live across two verticals: AARNA (retail) and MENZO (hospitality).</p>
       <div class="tl-tags">
         <span class="tl-tag accent">Solo Built</span>
-        <span class="tl-tag">Python</span>
+        <span class="tl-tag">Node.js</span>
+        <span class="tl-tag">Next.js 15</span>
         <span class="tl-tag">WhatsApp API</span>
-        <span class="tl-tag">Claude AI</span>
-        <span class="tl-tag">n8n</span>
+        <span class="tl-tag">Groq · Llama 3.3 70B</span>
         <span class="tl-tag">PostgreSQL</span>
       </div>
     </div>
 
     <div class="tl-entry rv" style="transition-delay:.06s">
       <div class="tl-dot"></div>
-      <div class="tl-date">2024</div>
-      <div class="tl-role">GTM Engineering Intern</div>
-      <div class="tl-org">B2B SaaS · Outbound Infrastructure</div>
-      <p class="tl-desc">Designed and deployed outbound AI pipeline that automated lead research, email personalisation, and follow-up sequencing. Reduced BDR workload by 60%, improved reply rates 3×.</p>
+      <div class="tl-date">Feb – Jun 2024</div>
+      <div class="tl-role">Software Development Intern</div>
+      <div class="tl-org">Encode Data Tech · Mangaluru</div>
+      <p class="tl-desc">Built user-facing web applications alongside senior developers. Delivered CharterWheels — a motorbike-sharing platform with integrated payment gateway. Improved application efficiency by 15% through performance optimisations and code reviews.</p>
       <div class="tl-tags">
-        <span class="tl-tag">Apollo</span>
-        <span class="tl-tag">Instantly</span>
-        <span class="tl-tag">OpenAI</span>
-        <span class="tl-tag">Airtable</span>
+        <span class="tl-tag">PHP</span>
+        <span class="tl-tag">MySQL</span>
+        <span class="tl-tag">JavaScript</span>
+        <span class="tl-tag">Bootstrap</span>
       </div>
-      <div class="tl-award">60% BDR workload eliminated · 3× reply rate improvement</div>
+      <div class="tl-award">15% efficiency improvement · CharterWheels delivered</div>
     </div>
 
     <div class="tl-entry rv" style="transition-delay:.12s">
       <div class="tl-dot dim"></div>
-      <div class="tl-date dim">2022 — 2026</div>
-      <div class="tl-role">B.Tech · Computer Science</div>
-      <div class="tl-org">NMAM Institute of Technology · Nitte University</div>
-      <p class="tl-desc">Core CS fundamentals with a self-directed focus on AI systems, business automation, and production software. Built STEMLYN alongside academics — not as a project, as a real business.</p>
+      <div class="tl-date dim">2021 — 2024</div>
+      <div class="tl-role">BCA · Bachelor of Computer Applications</div>
+      <div class="tl-org">Sharada College · Mangaluru · CGPA 7.75</div>
+      <p class="tl-desc">Web Development, Database Management, Advanced Programming. President of Student Council (2023–24). 1st Prize — Paper Presentation: 'Future of AI in Web Development', TechFest 2024. Built STEMLYN alongside academics — not as a project, as a real business.</p>
       <div class="tl-tags">
-        <span class="tl-tag">Algorithms</span>
-        <span class="tl-tag">Systems Design</span>
-        <span class="tl-tag">AI/ML</span>
+        <span class="tl-tag">Web Development</span>
+        <span class="tl-tag">Database Management</span>
+        <span class="tl-tag">Advanced Programming</span>
       </div>
     </div>
 
@@ -1242,7 +1256,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
           <div class="ct-link-icon">gh</div>
           github.com/rohanrjedu
         </a>
-        <a href="assets/rohan-rj-cv.docx" class="ct-link" download>
+        <a href="assets/rohan-rj-cv.pdf" class="ct-link" download>
           <div class="ct-link-icon">↓</div>
           Resume · Download
         </a>
@@ -1272,7 +1286,7 @@ section{padding:clamp(64px,10vh,120px) var(--gutter)}
           </div>
           <div class="ct-output-line">
             <span class="ct-num">04</span>
-            <a href="assets/rohan-rj-cv.docx" download>Download resume →</a>
+            <a href="assets/rohan-rj-cv.pdf" download>Download resume →</a>
           </div>
         </div>
         <div class="ct-input-row">
@@ -1787,18 +1801,18 @@ window.addEventListener('load', function(){
   var container = document.getElementById('stemlyn-cards');
   if(!container) return;
   var cards = [
-    {icon:'🛒',name:'POS System',desc:'Multi-item cart, UPI + cash checkout, GST per slab, thermal receipt, credit wallet redemption'},
-    {icon:'📦',name:'Inventory',desc:'FIFO batch tracking with expiry dates, cost price, per-product stock flag below reorder threshold'},
-    {icon:'👥',name:'CRM',desc:'Customer profiles, credit wallet with full transaction history, birthday/anniversary WhatsApp triggers'},
-    {icon:'📒',name:'Vendor Ledger',desc:'Full purchase orders, batch-linked receiving, outstanding balance, credit limit, payment history'},
-    {icon:'📊',name:'Analytics',desc:'30-day revenue charts, P&L, top products by revenue, AI-powered campaign targeting recommendations'},
-    {icon:'💬',name:'WhatsApp AI',desc:'3-layer routing: flow engine → keyword rules → Llama 3.3 70B via Groq, Razorpay QR on checkout'},
-    {icon:'🏪',name:'Storefront API',desc:'Public REST API with OTP customer auth, product catalogue, orders, subscriptions — frontend in progress'},
-    {icon:'📣',name:'Broadcast',desc:'Template campaigns (any contact) + session messages (active 24hr window), campaign history tracked'},
-    {icon:'💳',name:'Payments',desc:'Razorpay payment links sent as QR via WhatsApp, polling-based confirmation, manual PAID fallback'},
-    {icon:'🧾',name:'GST & Reports',desc:'CA-ready P&L, GST slab breakdown with CGST/SGST split, GSTR-1 reminder, CSV export'},
-    {icon:'🚚',name:'Delivery',desc:'Partner dispatch, pending → assigned → out for delivery → delivered, salary disbursement tracking'},
-    {icon:'⚡',name:'Real-time',desc:'Socket.io live WhatsApp inbox (wa:message), connection status, and escalation alert events'},
+    {icon:'shopping-cart', name:'POS System',     desc:'Multi-item cart, UPI + cash checkout, GST per slab, thermal receipt, credit wallet redemption'},
+    {icon:'package',       name:'Inventory',       desc:'FIFO batch tracking with expiry dates, cost price, per-product stock flag below reorder threshold'},
+    {icon:'users',         name:'CRM',             desc:'Customer profiles, credit wallet with full transaction history, birthday/anniversary WhatsApp triggers'},
+    {icon:'book',          name:'Vendor Ledger',   desc:'Full purchase orders, batch-linked receiving, outstanding balance, credit limit, payment history'},
+    {icon:'bar-chart',     name:'Analytics',       desc:'30-day revenue charts, P&L, top products by revenue, AI-powered campaign targeting recommendations'},
+    {icon:'message-circle',name:'WhatsApp AI',     desc:'3-layer routing: flow engine → keyword rules → Llama 3.3 70B via Groq, Razorpay QR on checkout'},
+    {icon:'store',         name:'Storefront API',  desc:'Public REST API with OTP customer auth, product catalogue, orders, subscriptions — frontend in progress'},
+    {icon:'megaphone',     name:'Broadcast',       desc:'Template campaigns (any contact) + session messages (active 24hr window), campaign history tracked'},
+    {icon:'credit-card',   name:'Payments',        desc:'Razorpay payment links sent as QR via WhatsApp, polling-based confirmation, manual PAID fallback'},
+    {icon:'receipt',       name:'GST & Reports',   desc:'CA-ready P&L, GST slab breakdown with CGST/SGST split, GSTR-1 reminder, CSV export'},
+    {icon:'truck',         name:'Delivery',        desc:'Partner dispatch, pending → assigned → out for delivery → delivered, salary disbursement tracking'},
+    {icon:'zap',           name:'Real-time',       desc:'Socket.io live WhatsApp inbox (wa:message), connection status, and escalation alert events'},
   ];
   cards.forEach(function(c, i){
     var card = document.createElement('div');
@@ -1824,7 +1838,14 @@ window.addEventListener('load', function(){
 
     var tag = document.createElement('div');
     tag.className = 'sc-tag';
-    tag.textContent = c.icon;
+    var _stag = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    _stag.setAttribute('class','ui-icon');
+    _stag.setAttribute('viewBox','0 0 24 24');
+    _stag.setAttribute('aria-hidden','true');
+    var _stagU = document.createElementNS('http://www.w3.org/2000/svg','use');
+    _stagU.setAttribute('href','#icon-'+c.icon);
+    _stag.appendChild(_stagU);
+    tag.appendChild(_stag);
 
     card.appendChild(num);
     card.appendChild(main);
@@ -1833,72 +1854,212 @@ window.addEventListener('load', function(){
   });
 })();
 
-/* ── AI Decision Flow ── */
+/* ── Animated Beam — AI Decision Engine ── */
 (function(){
-  var container = document.getElementById('flow-diagram');
-  if(!container) return;
+  var wrap = document.getElementById('ab-wrap');
+  var svg  = document.getElementById('ab-svg');
+  if(!wrap || !svg) return;
 
-  function addRow(nodes, cls){
-    var row = document.createElement('div');
-    row.className = 'flow-row';
-    nodes.forEach(function(n){
-      var node = document.createElement('div');
-      node.className = 'flow-node ' + (cls||'');
-      node.textContent = n;
-      row.appendChild(node);
+  var isMob = window.innerWidth < 700;
+
+  var nodes = [
+    {id:'wa',    icon:'message-circle', label:'WhatsApp',          sub:'Meta Graph API', cls:'',       dx:10, dy:22, mx:10, my:14},
+    {id:'web',   icon:'shopping-cart',  label:'Storefront',         sub:'Next.js',        cls:'',       dx:10, dy:50, mx:10, my:36},
+    {id:'staff', icon:'user',           label:'Staff Portal',       sub:'Dashboard',      cls:'',       dx:10, dy:78, mx:10, my:58},
+    {id:'hub',   icon:'zap',            label:'AI Decision Engine', sub:'3-Layer Router',  cls:'center', dx:50, dy:50, mx:50, my:38},
+    {id:'l1',    icon:'settings',       label:'Flow Engine',        sub:'Layer 1',        cls:'',       dx:90, dy:22, mx:88, my:16},
+    {id:'l2',    icon:'key',            label:'Keywords',           sub:'Layer 2',        cls:'',       dx:90, dy:50, mx:88, my:38},
+    {id:'l3',    icon:'cpu',            label:'Llama 3.3 70B',      sub:'Layer 3 · Groq', cls:'',       dx:90, dy:78, mx:88, my:60},
+    {id:'out',   icon:'check-circle',   label:'Order Created',      sub:'Razorpay + DB',  cls:'output', dx:50, dy:92, mx:50, my:82}
+  ];
+
+  /* phase: 0–1 offset within the shared speed cycle — no dur needed */
+  var beams = [
+    {from:'wa',    to:'hub', c1:'#E8602C', c2:'#ff9d6e', phase:0.00},
+    {from:'web',   to:'hub', c1:'#E8602C', c2:'#ff9d6e', phase:0.15},
+    {from:'staff', to:'hub', c1:'#E8602C', c2:'#ff9d6e', phase:0.30},
+    {from:'hub',   to:'l1',  c1:'#8bb8ff', c2:'#4d8cff', phase:0.08},
+    {from:'hub',   to:'l2',  c1:'#8bb8ff', c2:'#4d8cff', phase:0.23},
+    {from:'hub',   to:'l3',  c1:'#8bb8ff', c2:'#4d8cff', phase:0.38},
+    {from:'hub',   to:'out', c1:'#22C55E', c2:'#86efac', phase:0.50}
+  ];
+
+  /* Build node DOM */
+  var nodeEls = {};
+  nodes.forEach(function(n){
+    var el = document.createElement('div');
+    el.className = 'ab-node' + (n.cls ? ' '+n.cls : '');
+    el.id = 'abn-'+n.id;
+
+    var iconEl = document.createElement('span');
+    iconEl.className = 'ab-node-icon';
+    var _svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    _svg.setAttribute('class','ui-icon');
+    _svg.setAttribute('viewBox','0 0 24 24');
+    _svg.setAttribute('aria-hidden','true');
+    var _use = document.createElementNS('http://www.w3.org/2000/svg','use');
+    _use.setAttribute('href','#icon-'+n.icon);
+    _svg.appendChild(_use);
+    iconEl.appendChild(_svg);
+
+    var lblWrap = document.createElement('div');
+    lblWrap.className = 'ab-node-label';
+
+    var lbl = document.createElement('div');
+    lbl.className = 'ab-node-name';
+    lbl.textContent = n.label;
+
+    var sub = document.createElement('div');
+    sub.className = 'ab-node-sub';
+    sub.textContent = n.sub;
+
+    lblWrap.appendChild(lbl);
+    lblWrap.appendChild(sub);
+    el.appendChild(iconEl);
+    el.appendChild(lblWrap);
+
+    el.style.left = (isMob ? n.mx : n.dx) + '%';
+    el.style.top  = (isMob ? n.my : n.dy) + '%';
+
+    wrap.appendChild(el);
+    nodeEls[n.id] = el;
+
+    if(n.cls === 'center'){
+      var ring = document.createElement('div');
+      ring.className = 'ab-hub-ring';
+      ring.id = 'ab-hub-ring';
+      wrap.appendChild(ring);
+    }
+  });
+
+  svg.appendChild(document.createElementNS('http://www.w3.org/2000/svg','defs'));
+
+  var beamEls = [];
+
+  beams.forEach(function(b){
+    var trackPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+    trackPath.setAttribute('fill','none');
+    trackPath.setAttribute('stroke','rgba(255,255,255,0.04)');
+    trackPath.setAttribute('stroke-width','1.5');
+    trackPath.setAttribute('stroke-linecap','round');
+    svg.appendChild(trackPath);
+
+    var beamPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+    beamPath.setAttribute('fill','none');
+    beamPath.setAttribute('stroke', b.c1);
+    beamPath.setAttribute('stroke-width','2');
+    beamPath.setAttribute('stroke-linecap','round');
+    svg.appendChild(beamPath);
+
+    var glowPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+    glowPath.setAttribute('fill','none');
+    glowPath.setAttribute('stroke', b.c2);
+    glowPath.setAttribute('stroke-width','5');
+    glowPath.setAttribute('stroke-linecap','round');
+    glowPath.setAttribute('stroke-opacity','0.3');
+    svg.appendChild(glowPath);
+
+    beamEls.push({b:b, track:trackPath, beam:beamPath, glow:glowPath, anims:[]});
+  });
+
+  function getCenter(el){
+    var wr = wrap.getBoundingClientRect();
+    var er = el.getBoundingClientRect();
+    return {x: er.left - wr.left + er.width/2, y: er.top - wr.top + er.height/2};
+  }
+
+  /* L-shaped path with rounded corners — clean architecture diagram look */
+  function buildPath(fromEl, toEl){
+    var a = getCenter(fromEl), b = getCenter(toEl);
+    var dx = Math.abs(b.x - a.x), dy = Math.abs(b.y - a.y);
+    if(dx < 6) return 'M '+a.x+','+a.y+' L '+b.x+','+b.y;
+    if(dy < 6) return 'M '+a.x+','+a.y+' L '+b.x+','+b.y;
+    var r = Math.min(14, dx/2, dy/2);
+    var dirX = b.x > a.x ? 1 : -1;
+    var dirY = b.y > a.y ? 1 : -1;
+    var mid = (a.y + b.y) / 2;
+    return [
+      'M', a.x+','+a.y,
+      'L', a.x+','+(mid - dirY*r),
+      'Q', a.x+','+mid, (a.x + dirX*r)+','+mid,
+      'L', (b.x - dirX*r)+','+mid,
+      'Q', b.x+','+mid, b.x+','+(mid + dirY*r),
+      'L', b.x+','+b.y
+    ].join(' ');
+  }
+
+  function positionRing(){
+    var ring = document.getElementById('ab-hub-ring');
+    var hub  = nodeEls['hub'];
+    if(!ring || !hub) return;
+    var wr = wrap.getBoundingClientRect();
+    var hr = hub.getBoundingClientRect();
+    var cx = hr.left - wr.left + hr.width/2;
+    var cy = hr.top  - wr.top  + hr.height/2;
+    var w = hr.width + 20, h = hr.height + 20;
+    ring.style.left   = cx + 'px';
+    ring.style.top    = cy + 'px';
+    ring.style.width  = w + 'px';
+    ring.style.height = h + 'px';
+    ring.style.marginLeft = -(w/2) + 'px';
+    ring.style.marginTop  = -(h/2) + 'px';
+  }
+
+  /* Single rAF loop — shared clock, constant px/sec speed per beam.
+     rAF + setAttribute is more predictable than WAAPI for SVG stroke
+     properties which are not compositor-threaded regardless of API. */
+  var _raf = null;
+  var _t0  = null;
+  var SPEED = 155; /* px / sec — all beams same visual velocity */
+
+  function tick(ts){
+    if(!_t0) _t0 = ts;
+    var t = (ts - _t0) / 1000;
+    beamEls.forEach(function(be){
+      if(!be.len) return;
+      var cycleTime = be.len / SPEED;
+      var phase = ((t / cycleTime) + be.b.phase) % 1;
+      var segLen = be.segLen;
+      /* offset: len = beam fully past end (hidden), -segLen = beam fully before start (hidden) */
+      var offset = be.len - phase * (be.len + segLen);
+      be.beam.setAttribute('stroke-dashoffset', offset);
+      be.glow.setAttribute('stroke-dashoffset', offset);
     });
-    container.appendChild(row);
-  }
-  function addConn(){
-    var c = document.createElement('div');
-    c.className = 'flow-connector';
-    var line = document.createElement('div');
-    line.className = 'flow-line';
-    var arr = document.createElement('div');
-    arr.className = 'flow-arrow-d';
-    arr.textContent = '▾';
-    c.appendChild(line);
-    c.appendChild(arr);
-    container.appendChild(c);
+    _raf = requestAnimationFrame(tick);
   }
 
-  addRow(['Customer Message'], 'start');
-  addConn();
-  addRow(['Layer 1 — Flow Engine'], 'layer');
-  addConn();
+  function measurePaths(){
+    beamEls.forEach(function(be){
+      be.len    = be.track.getTotalLength();
+      be.segLen = Math.max(50, be.len * 0.28);
+      var dashArr = be.segLen + ' ' + (be.len * 3); /* gap >> len → only one segment visible */
+      be.beam.setAttribute('stroke-dasharray', dashArr);
+      be.glow.setAttribute('stroke-dasharray', dashArr);
+    });
+  }
 
-  var branch1 = document.createElement('div');
-  branch1.className = 'flow-branch';
-  var yes1 = document.createElement('div');
-  yes1.className = 'flow-branch-yes';
-  var yLabel1 = document.createElement('div'); yLabel1.className='flow-branch-label'; yLabel1.textContent='YES';
-  var yLine1 = document.createElement('div'); yLine1.className='flow-branch-line';
-  var yNode1 = document.createElement('div'); yNode1.className='flow-node execute'; yNode1.textContent='Execute Action';
-  yes1.appendChild(yLabel1); yes1.appendChild(yLine1); yes1.appendChild(yNode1);
+  function updatePaths(){
+    var w = wrap.offsetWidth, h = wrap.offsetHeight;
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    beamEls.forEach(function(be){
+      var fromEl = nodeEls[be.b.from], toEl = nodeEls[be.b.to];
+      if(!fromEl || !toEl) return;
+      var d = buildPath(fromEl, toEl);
+      be.track.setAttribute('d', d);
+      be.beam.setAttribute('d', d);
+      be.glow.setAttribute('d', d);
+    });
+    positionRing();
+    measurePaths();
+  }
 
-  var mid = document.createElement('div');
-  mid.style.cssText='display:flex;align-items:center;justify-content:center;padding-top:24px';
-  var midLabel = document.createElement('div');
-  midLabel.style.cssText='font-size:10px;color:var(--fg-d);letter-spacing:.06em;text-transform:uppercase';
-  midLabel.textContent='Matched?';
-  mid.appendChild(midLabel);
-
-  var no1 = document.createElement('div');
-  no1.className = 'flow-branch-no';
-  var nLabel1 = document.createElement('div'); nLabel1.className='flow-branch-label'; nLabel1.textContent='NO';
-  var nLine1 = document.createElement('div'); nLine1.className='flow-branch-line';
-  var nNode1 = document.createElement('div'); nNode1.className='flow-node layer'; nNode1.textContent='Layer 2 — Keywords';
-  no1.appendChild(nLabel1); no1.appendChild(nLine1); no1.appendChild(nNode1);
-
-  branch1.appendChild(yes1);
-  branch1.appendChild(mid);
-  branch1.appendChild(no1);
-  container.appendChild(branch1);
-
-  addConn();
-  addRow(['Layer 3 — LLM (Groq · Llama 3.3 70B)'], 'layer');
-  addConn();
-  addRow(['Contextual AI Reply'], 'execute');
+  setTimeout(function(){
+    updatePaths();
+    _raf = requestAnimationFrame(tick);
+    window.addEventListener('resize', function(){
+      updatePaths(); /* recompute lengths; tick loop keeps running */
+    });
+  }, 150);
 })();
 
 /* ── Card Stack Projects ── */
@@ -1912,7 +2073,7 @@ window.addEventListener('load', function(){
     {tag:'WhatsApp Commerce Agent',title:'AARNA — Flower Shop AI',desc:'Retail flower business taking orders manually on WhatsApp — staff reading messages, writing orders by hand, collecting payments separately.',impact:'Built a 3-layer AI commerce agent (state machine → keyword triggers → Llama 3.3 70B) that runs the complete purchase journey autonomously: product discovery → cart → Razorpay payment → order record. Zero staff involvement after 9PM.',tech:['WhatsApp Business API','Groq · Llama 3.3 70B','Node.js','MySQL','Razorpay'],link:'https://aarna.rjglobalgroup.in',linkText:'View Live →',img:'assets/ai/card-aarna.png'},
     {tag:'Email Revenue Agent',title:'Outbound Email AI',desc:'Sales team sending generic blasts. No personalisation, no follow-up logic, leads going cold after first touch.',impact:'AI agent personalises each email from CRM context, auto-sequences follow-ups based on open/click signals, books meetings autonomously.',tech:['Node.js','Groq · Llama 3.3 70B','Resend','HubSpot API','Webhook'],link:'#',img:'assets/ai/card-email-ai.png'},
     {tag:'Business Operating System',title:'STEMLYN',desc:'Businesses juggling POS, inventory, CRM, vendors and reporting across 6+ disconnected tools. Data fragmented, decisions slow.',impact:'Single platform replacing all disconnected workflows — 19 modules, 3 AI layers, one operational backbone for retail and hospitality.',tech:['Next.js','Node.js','Groq · Llama 3.3 70B','Razorpay','Socket.io'],link:'#',img:'assets/ai/card-stemlyn.png'},
-    {tag:'Transportation Management',title:'CharterWheels',desc:'Charter bus operators managing bookings via phone calls. No fleet visibility, no digital trail, no way to scale.',impact:'Full booking digitisation: fleet visibility dashboard, customer self-service portal, driver coordination, automated confirmations.',tech:['React','Node.js','MySQL','Razorpay'],link:'#',img:'assets/ai/card-charterwheels.png'},
+    {tag:'Transportation Management',title:'CharterWheels',desc:'Motorbike-sharing platform built during internship at Encode Data Tech. Manual booking process with no digital trail.',impact:'Full platform digitisation: Bootstrap frontend, PHP/MySQL backend, integrated payment gateway, 20% usability improvement through UI/UX enhancements.',tech:['PHP','MySQL','JavaScript','Bootstrap'],link:'#',img:'assets/ai/card-charterwheels.png'},
   ];
 
   var CARD_W=520,CARD_H=310,SPACING=Math.round(520*(1-0.48)),SPREAD=44,MAX_OFF=3,STEP=SPREAD/MAX_OFF,DEPTH=130,AS=1.03,IS=0.93,TX=11;
@@ -2043,22 +2204,32 @@ window.addEventListener('load', function(){
   container.style.display = 'block';
   container.style.borderTop = '1px solid rgba(255,255,255,0.06)';
 
+  var hdr = document.createElement('div');
+  hdr.className = 'stack-row stack-row-hdr';
+  hdr.style.cssText = 'padding:0 0 14px;border-bottom:1px solid rgba(255,255,255,0.08);font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-d)';
+  var h1 = document.createElement('div'); h1.textContent = 'Domain';
+  var h2 = document.createElement('div'); h2.textContent = 'Tech Stack';
+  var h3 = document.createElement('div'); h3.textContent = 'Real-World Application';
+  hdr.appendChild(h1); hdr.appendChild(h2); hdr.appendChild(h3);
+  container.appendChild(hdr);
+
   domains.forEach(function(d, i){
     var row = document.createElement('div');
-    row.style.cssText = 'display:grid;grid-template-columns:1fr 1.4fr 1.4fr;gap:24px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:start';
+    row.className = 'stack-row';
 
     var col1 = document.createElement('div');
+    col1.style.cssText = 'margin-bottom:6px';
     var num = document.createElement('div');
-    num.style.cssText = 'font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:.15em;margin-bottom:8px';
+    num.style.cssText = 'font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:.15em;margin-bottom:6px';
     num.textContent = '0' + (i + 1);
     var lbl = document.createElement('div');
-    lbl.style.cssText = 'font-size:12px;font-weight:600;color:var(--fg);line-height:1.3;letter-spacing:-.01em';
+    lbl.style.cssText = 'font-size:13px;font-weight:600;color:var(--fg);line-height:1.3;letter-spacing:-.01em;margin-bottom:8px';
     lbl.textContent = d.domain;
     col1.appendChild(num);
     col1.appendChild(lbl);
 
     var col2 = document.createElement('div');
-    col2.style.cssText = 'font-family:var(--mono);font-size:10px;color:var(--fg-m);line-height:1.7';
+    col2.style.cssText = 'font-family:var(--mono);font-size:10px;color:var(--fg-m);line-height:1.7;margin-bottom:6px';
     col2.textContent = d.stack;
 
     var col3 = document.createElement('div');
@@ -2070,14 +2241,6 @@ window.addEventListener('load', function(){
     row.appendChild(col3);
     container.appendChild(row);
   });
-
-  var hdr = document.createElement('div');
-  hdr.style.cssText = 'display:grid;grid-template-columns:1fr 1.4fr 1.4fr;gap:24px;padding:0 0 14px;border-bottom:1px solid rgba(255,255,255,0.08);font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-d)';
-  var h1 = document.createElement('div'); h1.textContent = 'Domain';
-  var h2 = document.createElement('div'); h2.textContent = 'Tech Stack';
-  var h3 = document.createElement('div'); h3.textContent = 'Real-World Application';
-  hdr.appendChild(h1); hdr.appendChild(h2); hdr.appendChild(h3);
-  container.insertBefore(hdr, container.firstChild);
 })();
 
 
@@ -2282,5 +2445,38 @@ window.addEventListener('load', function(){
   onScroll();
 })();
 </script>
+<svg xmlns="http://www.w3.org/2000/svg" id="icon-sprite" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="icon-message-circle" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="icon-shopping-cart" viewBox="0 0 24 24"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="icon-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="icon-key" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></symbol>
+  <symbol id="icon-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></symbol>
+  <symbol id="icon-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="icon-package" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="icon-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="icon-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+  <symbol id="icon-bar-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+  <symbol id="icon-store" viewBox="0 0 24 24"><path d="M3 2h18l2 6H1l2-6z"/><path d="M1 8v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V8"/><path d="M10 2v6M14 2v6"/><path d="M8 14h8v6H8z"/></symbol>
+  <symbol id="icon-megaphone" viewBox="0 0 24 24"><path d="M11.5 5.5H5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6.5l8 5V.5l-8 5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></symbol>
+  <symbol id="icon-credit-card" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
+  <symbol id="icon-receipt" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="icon-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+  <symbol id="icon-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="icon-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></symbol>
+  <symbol id="icon-cloud" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
+  <symbol id="icon-smartphone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+  <symbol id="icon-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
+  <symbol id="icon-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+  <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="icon-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></symbol>
+  <symbol id="icon-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></symbol>
+  <symbol id="icon-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/></symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+  <symbol id="icon-utensils" viewBox="0 0 24 24"><line x1="3" y1="2" x2="3" y2="22"/><path d="M7 2v6a2 2 0 0 0 2 2 2 2 0 0 0 2-2V2"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></symbol>
+  <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="icon-factory" viewBox="0 0 24 24"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4H2v16z"/><line x1="7" y1="14" x2="9" y2="14"/><line x1="7" y1="18" x2="9" y2="18"/><line x1="13" y1="14" x2="15" y2="14"/><line x1="13" y1="18" x2="15" y2="18"/></symbol>
+</svg>
 </body>
 </html>
